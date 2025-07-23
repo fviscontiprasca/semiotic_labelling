@@ -1,0 +1,13 @@
+# --- Core Dependencies ---
+label-studio>=1.10.0
+ultralytics>=8.1.23
+opencv-python
+Pillow
+numpy
+
+# --- Label Studio Export Processing ---
+jsonlines
+
+# --- Optional (dev support) ---
+matplotlib
+tqdm

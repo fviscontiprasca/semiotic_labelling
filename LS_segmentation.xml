@@ -1,0 +1,55 @@
+<View>
+  <Image name="image" value="$image"/>
+
+  <PolygonLabels name="label" toName="image" strokewidth="2">
+    
+    <Label value="building" background="#FF9999">
+      <Label value="window" background="#FFB3B3"/>
+      <Label value="door" background="#FFB3B3"/>
+      <Label value="balcony" background="#FFB3B3"/>
+      <Label value="storefront" background="#FFB3B3"/>
+      <Label value="awning" background="#FFB3B3"/>
+      <Label value="signage" background="#FFB3B3"/>
+      <Label value="column" background="#FFB3B3"/>
+      <Label value="beam" background="#FFB3B3"/>
+      <Label value="cornice" background="#FFB3B3"/>
+      <Label value="pilaster" background="#FFB3B3"/>
+      <Label value="arch" background="#FFB3B3"/>
+      <Label value="parapet" background="#FFB3B3"/>
+      <Label value="overhang / canopy" background="#FFB3B3"/>
+      <Label value="roof" background="#FFB3B3"/>
+      <Label value="chimney" background="#FFB3B3"/>
+      <Label value="dormer" background="#FFB3B3"/>
+      <Label value="rooftop equipment" background="#FFB3B3"/>
+    </Label>
+
+    <Label value="road" background="#CCCCFF"/>
+    <Label value="walkway" background="#CCCCFF"/>
+
+    <Label value="vegetation" background="#99FF99">
+      <Label value="planter" background="#B3FFB3"/>
+      <Label value="flowerbed" background="#B3FFB3"/>
+      <Label value="tree" background="#B3FFB3"/>
+    </Label>
+
+    <Label value="people" background="#FFD966"/>
+
+    <Label value="vehicle" background="#B6D7A8"/>
+
+    <Label value="urban furniture" background="#D9EAD3">
+      <Label value="bench" background="#E6F0DB"/>
+      <Label value="lamp post / street light" background="#E6F0DB"/>
+      <Label value="trash bin" background="#E6F0DB"/>
+      <Label value="bike rack" background="#E6F0DB"/>
+      <Label value="bus stop shelter" background="#E6F0DB"/>
+      <Label value="public art / sculpture" background="#E6F0DB"/>
+      <Label value="utility box" background="#E6F0DB"/>
+      <Label value="bollard" background="#E6F0DB"/>
+      <Label value="kiosk / newsstand" background="#E6F0DB"/>
+      <Label value="water fountain (public)" background="#E6F0DB"/>
+    </Label>
+
+    <Label value="sky" background="#87CEEB"/>
+    
+  </PolygonLabels>
+</View>

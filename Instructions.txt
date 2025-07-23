@@ -1,0 +1,31 @@
+🧠 GOAL: A 3-STAGE INTELLIGENT PIPELINE
+🔹 Stage 1: Automate Image Segmentation
+Using:
+
+Label Studio for hierarchical labels
+
+YOLOv8 pretrained to help label
+
+Your manual annotations + automated pre-labeling to fine-tune the model
+
+🔹 Stage 2: Image Captioning Fine-Tuning
+Using:
+
+A pretrained captioning model (e.g., BLIP, BLIP-2, or Llava)
+
+Fine-tune it with your images + custom captions
+
+🔹 Stage 3: Merge Both Models into One
+Use:
+
+A multi-modal model (e.g., BLIP-2 + YOLO pipeline)
+
+Or create a custom Python API to expose both tasks together
+
+✅ STAGE 1: SEMI-AUTOMATED SEGMENTATION
+🔹 What You Need to Know
+| Question                                   | Answer                                                            |
+| ------------------------------------------ | ----------------------------------------------------------------- |
+| **How many images must I label manually?** | Minimum: \~50–100 per class. Ideal: 300–500 total.                |
+| **Can I use YOLOv8 to auto-label?**        | Yes. Use it to create draft masks, then correct them.             |
+| **Can I define hierarchical labels?**      | Yes, with Label Studio (e.g., `vehicle > car`, `vehicle > truck`) |
