@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
 
-image_folder = Path("/home/you/projects/my-labeling/images")
-images = sorted(image_folder.glob("*.jpg"))
+image_folder = Path("Datasets/gtFinePanopticParts_trainval/manual_labeling")
+images = sorted(image_folder.glob("*.tif"))
 
 data = [{"image": str(img.resolve())} for img in images]
 

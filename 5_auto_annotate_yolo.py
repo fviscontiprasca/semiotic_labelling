@@ -1,36 +1,33 @@
-from ultralytics import YOLO
+import argparse
 from pathlib import Path
-import cv2
-import os
+from ultralytics import YOLO
+import shutil
 
-# Setup
-model = YOLO("yolov8n-seg.pt")
-image_dir = Path("dataset/images/train")
-label_dir = Path("dataset/labels/train")
-label_dir.mkdir(parents=True, exist_ok=True)
+def run_inference(model_path, source_dir, output_dir):
+    model = YOLO(model_path)
+    source_dir = Path(source_dir)
+    out_images = Path(output_dir) / "images"
+    out_labels = Path(output_dir) / "labels"
+    out_images.mkdir(parents=True, exist_ok=True)
+    out_labels.mkdir(parents=True, exist_ok=True)
 
-# Define your label mapping manually
-label_map = {
-    0: "Car",
-    1: "Truck",
-    2: "Dragon"
-}
+    results = model.predict(source=source_dir, save=False, save_txt=True, save_conf=False, stream=True, imgsz=640)
 
-# Inference and save YOLO-format masks
-for img_path in image_dir.glob("*.jpg"):
-    result = model(img_path)[0]
-    lines = []
-    for i in range(len(result.masks)):
-        cls = int(result.boxes.cls[i])
-        if cls not in label_map:
-            continue
-        box = result.boxes.xywhn[i]
-        seg = result.masks.xy[i].flatten().tolist()
-        seg_norm = [
-            round(seg[j] / (result.orig_shape[1 if j % 2 == 0 else 0]), 6)
-            for j in range(len(seg))
-        ]
-        line = f"{cls} {box[0]:.6f} {box[1]:.6f} {box[2]:.6f} {box[3]:.6f} " + " ".join(map(str, seg_norm))
-        lines.append(line)
-    with open(label_dir / f"{img_path.stem}.txt", "w") as f:
-        f.write("\n".join(lines))
+    for r in results:
+        img_path = r.path
+        label_path = Path(r.save_dir) / "labels" / (Path(img_path).stem + ".txt")
+        
+        # Copy image
+        shutil.copy(img_path, out_images / Path(img_path).name)
+        # Copy label
+        if label_path.exists():
+            shutil.copy(label_path, out_labels / label_path.name)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Auto-label images using YOLOv8")
+    parser.add_argument("--model", type=str, required=True, help="Path to YOLOv8 model checkpoint (.pt)")
+    parser.add_argument("--source", type=str, required=True, help="Directory of images to annotate")
+    parser.add_argument("--output", type=str, required=True, help="Where to save labeled data")
+    args = parser.parse_args()
+    
+    run_inference(args.model, args.source, args.output)
