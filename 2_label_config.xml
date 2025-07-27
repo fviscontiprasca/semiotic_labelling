@@ -1,11 +1,10 @@
 <View>
-  <Image name="image" value="$image"/>
-    <Image name="image" value="$captioning"/>
+  <Image name="image" value="$image" zoom="true"/>
   <Header value="Describe the image:"/>
   <TextArea name="caption" toName="image" placeholder="Enter description here..."
             rows="5" maxSubmissions="1"/>
-
-  <PolygonLabels name="label" toName="image" strokewidth="2">
+ 
+  <BrushLabels name="label" toName="image" strokewidth="2">
     
     <Label value="building" background="#FF9999">
       <Label value="window" background="#FFB3B3"/>
@@ -55,5 +54,5 @@
 
     <Label value="sky" background="#87CEEB"/>
     
-  </PolygonLabels>
+  </BrushLabels>
 </View>

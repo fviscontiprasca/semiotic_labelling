@@ -1,13 +1,23 @@
 # --- Core Dependencies ---
 label-studio>=1.10.0
+label-studio-sdk
 ultralytics>=8.1.23
 opencv-python
 Pillow
 numpy
+torch
+torchvision
+
+# --- Additional Dependencies ---
+label-studio-converter
+label-studio-ml-backend
+labelformat
 
 # --- Label Studio Export Processing ---
 jsonlines
 
 # --- Optional (dev support) ---
+scipy
+scikit-learn
 matplotlib
 tqdm
