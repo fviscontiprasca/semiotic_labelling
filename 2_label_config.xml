@@ -1,5 +1,9 @@
 <View>
   <Image name="image" value="$image"/>
+    <Image name="image" value="$captioning"/>
+  <Header value="Describe the image:"/>
+  <TextArea name="caption" toName="image" placeholder="Enter description here..."
+            rows="5" maxSubmissions="1"/>
 
   <PolygonLabels name="label" toName="image" strokewidth="2">
     
