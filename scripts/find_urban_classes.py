@@ -1,7 +1,6 @@
-import pandas as pd
-
-# Load the OIDv7 class descriptions
-df = pd.read_csv('data/oid_urban/oidv7-class-descriptions.csv')
+# Load the actual classes from text file
+with open('data/oid_urban/actual_classes.txt', 'r') as f:
+    available_classes = [line.strip() for line in f.readlines()]
 
 # Current classes in my_classes.txt
 current_classes = [
@@ -16,14 +15,14 @@ current_classes = [
 ]
 
 # Check which current classes are found
-found_current = df[df['DisplayName'].isin(current_classes)]
-print("Current classes found in OIDv7:")
-for item in found_current['DisplayName'].tolist():
+found_current = [cls for cls in current_classes if cls in available_classes]
+print("Current classes found in actual_classes.txt:")
+for item in found_current:
     print(f"  ✓ {item}")
 
-missing_current = [cls for cls in current_classes if cls not in found_current['DisplayName'].tolist()]
+missing_current = [cls for cls in current_classes if cls not in available_classes]
 if missing_current:
-    print(f"\nCurrent classes NOT found in OIDv7:")
+    print(f"\nCurrent classes NOT found in actual_classes.txt:")
     for item in missing_current:
         print(f"  ✗ {item}")
 
@@ -43,20 +42,20 @@ additional_terms = [
     'Metro', 'Train station', 'Bus station', 'Parking lot', 'Gas station'
 ]
 
-found_additional = df[df['DisplayName'].isin(additional_terms)]
-print(f"\n\nAdditional urban/architectural classes found in OIDv7:")
-for item in sorted(found_additional['DisplayName'].tolist()):
+found_additional = [cls for cls in additional_terms if cls in available_classes]
+print(f"\n\nAdditional urban/architectural classes found in actual_classes.txt:")
+for item in sorted(found_additional):
     print(f"  + {item}")
 
 print(f"\nTotal additional found: {len(found_additional)}")
 
 # Combine all found classes
-all_found = set(found_current['DisplayName'].tolist() + found_additional['DisplayName'].tolist())
+all_found = set(found_current + found_additional)
 print(f"\nTotal combined urban/architectural classes: {len(all_found)}")
 
 # Save combined list to a file
-with open('urban_classes_oidv7.txt', 'w') as f:
+with open('my_classes.txt', 'w') as f:
     for cls in sorted(all_found):
         f.write(f"{cls}\n")
 
-print(f"\nCombined list saved to 'urban_classes_oidv7.txt'")
+print(f"\nCombined list saved to 'my_classes.txt'")

@@ -1,25 +1,24 @@
 #!/usr/bin/env python3
 """
-Check `my_classes.txt` against Open Images V7 class descriptions.
+Check `my_classes.txt` against actual available classes.
 
 This script reads the class list from `my_classes.txt` (repo root) and compares each
-entry against `data/oid_urban/class-descriptions-boxable.csv`. It prints exact
+entry against `data/oid_urban/actual_classes.txt`. It prints exact
 matches and suggests similar matches when exact ones are missing.
 """
 
 import sys
 from pathlib import Path
-import pandas as pd
 
 
-def find_similar_matches(df, term, max_results=5):
-    """Return up to max_results similar display names for term."""
+def find_similar_matches(available_classes, term, max_results=5):
+    """Return up to max_results similar class names for term."""
     keywords = [w.lower() for w in term.replace('/', ' ').replace('(', '').replace(')', '').split() if w.strip()]
     matches = []
     for kw in keywords:
         if len(kw) <= 2:
             continue
-        found = df[df['DisplayName'].str.contains(kw, case=False, na=False)]['DisplayName'].tolist()
+        found = [cls for cls in available_classes if kw in cls.lower()]
         matches.extend(found)
     # Deduplicate preserving order
     seen = set()
@@ -38,48 +37,44 @@ def main():
     repo_root = script_dir.parent
 
     classes_file = repo_root / 'my_classes.txt'
-    class_desc_file = repo_root / 'data' / 'oid_urban' / 'oidv7-class-descriptions.csv'
+    actual_classes_file = repo_root / 'data' / 'oid_urban' / 'actual_classes.txt'
 
     if not classes_file.exists():
         print(f'Error: {classes_file} not found', file=sys.stderr)
         return
-    if not class_desc_file.exists():
-        print(f'Error: {class_desc_file} not found', file=sys.stderr)
+    if not actual_classes_file.exists():
+        print(f'Error: {actual_classes_file} not found', file=sys.stderr)
         return
 
     with open(classes_file, 'r', encoding='utf-8') as f:
         my_classes = [line.strip() for line in f if line.strip()]
 
-    # Read OIDv7 CSV (has header row)
+    # Read actual classes from text file
     try:
-        df = pd.read_csv(class_desc_file, dtype=str, encoding='utf-8')
+        with open(actual_classes_file, 'r', encoding='utf-8') as f:
+            available_classes = [line.strip() for line in f if line.strip()]
     except Exception as e:
-        print(f'Error: failed to read {class_desc_file}: {e}', file=sys.stderr)
+        print(f'Error: failed to read {actual_classes_file}: {e}', file=sys.stderr)
         return
 
-    # Normalize display names
-    df['DisplayName'] = df['DisplayName'].astype(str).str.strip()
-
-    print('=== CHECKING YOUR CLASSES AGAINST OID V7 ===\n')
+    print('=== CHECKING YOUR CLASSES AGAINST ACTUAL CLASSES ===\n')
 
     found = []
     not_found = []
     corrections = {}
 
     for my_class in my_classes:
-        exact_match = df[df['DisplayName'] == my_class]
-        if not exact_match.empty:
+        if my_class in available_classes:
             found.append(my_class)
             print(f'✓ FOUND: {my_class}')
         else:
             not_found.append(my_class)
             print(f'✗ NOT FOUND: {my_class}')
-            similar = find_similar_matches(df, my_class, max_results=5)
+            similar = find_similar_matches(available_classes, my_class, max_results=5)
             if similar:
                 print('  Possible matches:')
                 for match in similar:
-                    label_id = df[df['DisplayName'] == match].iloc[0]['LabelName']
-                    print(f'    - {match} ({label_id})')
+                    print(f'    - {match}')
                 # Suggest correction when similarity is high (simple heuristic)
                 for match in similar:
                     if my_class.lower() in match.lower() or any(kw in match.lower() for kw in my_class.lower().replace('/', ' ').split()):
@@ -99,12 +94,12 @@ def main():
         for old_name, new_name in corrections.items():
             print(f'"{old_name}" → "{new_name}"')
 
-    # Check for some specific architectural terms that might not be in OID
+    # Check for some specific architectural terms that might not be available
     architectural_terms = ['Balcony', 'Cornice', 'Pilaster', 'Parapet', 'Dormer']
     missing_architectural = [term for term in architectural_terms if term in not_found]
     if missing_architectural:
         print(f'\n=== NOTE ===')
-        print('These architectural terms are not in Open Images V7:')
+        print('These architectural terms are not in the actual classes:')
         for term in missing_architectural:
             print(f'  - {term}')
         print('Consider using more general terms like "Building" or removing these specific architectural elements.')
