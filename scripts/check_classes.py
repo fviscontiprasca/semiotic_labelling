@@ -38,7 +38,7 @@ def main():
     repo_root = script_dir.parent
 
     classes_file = repo_root / 'my_classes.txt'
-    class_desc_file = repo_root / 'data' / 'oid_urban' / 'extended_class-descriptions.csv'
+    class_desc_file = repo_root / 'data' / 'oid_urban' / 'oidv7-class-descriptions.csv'
 
     if not classes_file.exists():
         print(f'Error: {classes_file} not found', file=sys.stderr)
@@ -50,24 +50,15 @@ def main():
     with open(classes_file, 'r', encoding='utf-8') as f:
         my_classes = [line.strip() for line in f if line.strip()]
 
-    # Read extended CSV robustly (handles quoted/comma-containing names)
-    # Read the CSV trying common encodings (some extended files contain non-UTF8 bytes)
-    encodings_to_try = ['utf-8', 'cp1252', 'latin-1']
-    df = None
-    for enc in encodings_to_try:
-        try:
-            df = pd.read_csv(class_desc_file, header=None, names=['LabelName', 'DisplayName'], dtype=str, engine='python', encoding=enc)
-            # If read succeeds, break
-            break
-        except Exception:
-            df = None
-            continue
-    if df is None:
-        print(f'Error: failed to read {class_desc_file} with tried encodings {encodings_to_try}', file=sys.stderr)
+    # Read OIDv7 CSV (has header row)
+    try:
+        df = pd.read_csv(class_desc_file, dtype=str, encoding='utf-8')
+    except Exception as e:
+        print(f'Error: failed to read {class_desc_file}: {e}', file=sys.stderr)
         return
 
-    # Normalize and clean display names (remove weird control characters)
-    df['DisplayName'] = df['DisplayName'].astype(str).str.strip().str.replace(r'[\x00-\x1F\x7F]', '', regex=True)
+    # Normalize display names
+    df['DisplayName'] = df['DisplayName'].astype(str).str.strip()
 
     print('=== CHECKING YOUR CLASSES AGAINST OID V7 ===\n')
 
