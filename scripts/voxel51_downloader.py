@@ -9,7 +9,7 @@ seed = random.randint(1000, 9999)
 print(f"Using random seed: {seed}")
 
 # Set up download directory structure
-base_dir = Path(__file__).parent.parent / 'data' / 'oid_urban'
+base_dir = Path(__file__).parent.parent / 'data' / 'oid_urban' / 'images'
 train_dir = base_dir / 'train'
 val_dir = base_dir / 'validation'
 test_dir = base_dir / 'test'
