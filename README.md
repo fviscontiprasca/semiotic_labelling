@@ -1,673 +1,308 @@
+# Semiocity — Semiotic-Aware Urban Image Generation Pipeline
 
-# Semiotic-Aware Urban Image Generation Pipeline
+**Repository for the Master Thesis "Semiocity: Generating Semiotic‑Enriched 3D Models from Text Inputs"**
 
----
+**Degree:** Master in Advanced Computation for Architecture and Design (MaCAD), Institute for Advanced Architecture of Catalonia (IaaC)
 
-**This project is part of the Master Thesis "Semiocity" for the Master in Advanced Computation for Architecture and Design (MaCAD) at the Institute of Advanced Architecture of Catalonia (IaaC).**
+**Primary authors:** Francesco Visconti Prasca, Jose Lazokafatty ([DrArc](https://github.com/DrArc)), Paul Suarez Fuenmayor
 
-**Thesis Title:** Semiocity: Generating Semiotic-Enriched 3D Models from Text Inputs
-
-**Authors:**
-- Francesco Visconti Prasca
-- Jose Lazokafatty ([DrArc](https://github.com/DrArc))
-- Paul Suarez Fuenmayor
-
-**Adviser:** David Andres Leon (MaCAD Director)
-
-The Semiocity thesis aims to develop a pipeline for generating 3D models enriched with semiotic information, starting from text prompts. This repository contains the image-based pipeline and foundational work for the broader 3D generative system.
+**Adviser:** David Andrés León (MaCAD Director)
 
 ---
 
+## Abstract
 
-A comprehensive, modular pipeline for generating semiotic-aware architectural images using fine-tuned Flux.1d diffusion models, advanced prompt engineering, and multi-modal conditioning.
+This repository implements a modular, reproducible pipeline for producing semiotic‑aware architectural images from textual prompts and for preparing semiotic conditioning information for downstream 3D generation. The approach combines multi‑modal feature extraction (captioning, segmentation, semantic embeddings), curated real and synthetic datasets, and LoRA fine‑tuning of a diffusion backbone (Flux.1d) to produce images conditioned on architectural style, materials, mood and other semiotic tokens.
 
-## Data Sources and Acknowledgements
+The codebase supports: dataset preparation and unification, BLIP‑2 captioning, segmentation with SAM (and optional YOLO variants), multi‑modal semiotic feature extraction, Flux.1d data preparation and LoRA fine‑tuning, evaluation, and inference (CLI and optional Gradio UI).
 
-This project leverages two primary datasets:
+---
 
-- **OpenImages v7 (OIDv7) Urban Classes**: A large-scale, publicly available dataset of real-world urban and architectural images. OIDv7 provides the foundation for real image analysis, segmentation, and semiotic feature extraction. See [OpenImages Dataset](https://storage.googleapis.com/openimages/web/index.html) for more information and licensing.
-
-- **Synthetic Imaginary Cities Dataset**: A unique collection of synthetic architectural images depicting imaginary cities. This dataset was authored and curated by **Paul Suarez Fuenmayor**, who generated the images using the Flux 1 Dev model in ComfyUI. The generation workflow, including prompt engineering and model configuration, is fully documented in `data/imaginary_synthetic/Imaginary Cities Generation Workflow.json`. This synthetic dataset enables advanced experimentation in semiotic-aware generative modeling and style transfer.
-
-We gratefully acknowledge the contributions of both the OpenImages project and Paul Suarez Fuenmayor for enabling this research.
-
-
-## Pipeline Overview
-
-
-This project implements a multi-phase pipeline for semiotic-aware urban image generation. The pipeline processes both real (OIDv7) and synthetic (Imaginary Cities) urban image datasets, extracts rich semantic and architectural features, and enables advanced generative modeling and evaluation. Each phase is encapsulated in a dedicated script, allowing for flexible execution, debugging, and extension.
-
-### About the Synthetic Dataset
-
-The synthetic dataset, "Imaginary Cities," was created by Paul Suarez Fuenmayor using the Flux 1 Dev model in ComfyUI. The images were generated through a custom workflow that leverages prompt engineering, CLIP-based conditioning, and advanced diffusion techniques. The full workflow, including all nodes and parameters, is available in [`data/imaginary_synthetic/Imaginary Cities Generation Workflow.json`]. This dataset is intended for research and creative exploration in the field of semiotic-aware generative design.
-
-**Pipeline Phases:**
-1. Data Preparation
-2. Caption Generation (BLIP-2)
-3. Caption Export (BLIP-2 Export)
-4. Segmentation (SAM)
-5. Semiotic Feature Extraction
-6. Flux Data Preparation
-7. Flux Training
-8. Evaluation
-9. Inference
-
-## Architecture Diagram
+## Repository layout (high level)
 
 ```
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│ OID Dataset   │    │ Synthetic Data│    │ FiftyOne      │
-│ Urban Classes │───▶│ Imaginary City│───▶│ Integration   │
-└───────────────┘    └───────────────┘    └───────────────┘
-                                              │
-                  ┌───────────────────────────┘
-                  ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│   BLIP-2      │    │   SAM         │    │ Semiotic      │
-│ Captioning    │───▶│ Segmentation  │───▶│ Feature       │
-│               │    │               │    │ Extraction    │
-└───────────────┘    └───────────────┘    └───────────────┘
-                                              │
-                  ┌───────────────────────────┘
-                  ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│   Flux.1d     │    │ Evaluation    │    │ Inference     │
-│ Fine-tuning   │───▶│ Pipeline      │───▶│ Pipeline      │
-│ (LoRA)        │    │               │    │ (Gradio UI)   │
-└───────────────┘    └───────────────┘    └───────────────┘
+├── data/                      # raw and processed datasets
+├── models/                    # downloaded and trained checkpoints
+├── scripts/                   # processing, training, evaluation, inference scripts
+├── notebooks/                 # experiments and visualizations
+├── docs/                      # supplementary documentation / diagrams
+├── requirements.txt
+├── LICENSE
+└── README.md                  # this document
 ```
 
 ---
 
-## Requirements
+## Contributions and external resources (acknowledgements)
 
-To run the pipeline, you need:
+This research builds on multiple third‑party datasets, model families and tools. All are acknowledged and must be respected under their respective licences:
+
+- **OpenImages v7 (Urban classes)** — primary source of real urban/architectural images.
+- **Imaginary Cities (synthetic dataset)** — authored and curated by Paul Suarez Fuenmayor; generation workflow and prompt/configuration exported at `data/imaginary_synthetic/Imaginary Cities Generation Workflow.json`.
+- **Flux.1d** (Black Forest Labs) — diffusion backbone used for fine‑tuning and inference.
+- **BLIP‑2** (Salesforce) — used for caption generation and semiotic prompt extraction.
+- **Segment Anything Model (SAM)** (Meta AI) — primary segmentation component; alternative detectors (e.g. Ultralytics/YOLO) are supported where noted.
+- **FiftyOne (Voxel51)** — dataset management and visual inspection tools.
+- **Hugging Face ecosystem** — transformers, diffusers and model hosting.
+
+Please consult the original projects for licensing and citation details before any commercial use. See the `LICENSE` file for this repository's licence (MIT).
+
+---
+
+## Quick technical prerequisites
+
 - Python 3.8+
-- PyTorch (with CUDA for GPU acceleration)
-- Transformers (HuggingFace)
-- FiftyOne
-- Diffusers, PEFT, Accelerate (for Flux training/inference)
-- scikit-learn, pandas, numpy, Pillow, tqdm, sentence-transformers
-- BLIP-2, SAM, and Flux model weights (see scripts for download locations)
+- CUDA‑capable GPU recommended (see `Performance` for hardware guidance)
+- Install required packages:
 
-Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## Usage: Full Pipeline
-
-To run the entire pipeline in sequence:
-
-```bash
-python run_pipeline.py --base_path .
-```
-
-This will execute all phases, printing progress and output for each step. You can also run each script individually as described below.
+Model weights (Flux.1d, BLIP‑2, SAM/YOLO variants) are not included in the repository and must be obtained separately — scripts assume standard Hugging Face identifiers or local paths (see `scripts/*` headers for expected locations).
 
 ---
 
-## 01_data_pipeline.py
-**Scope:** Combines OpenImages v7 urban classes and synthetic datasets into a unified FiftyOne dataset for downstream processing.
+## Pipeline overview (phases)
 
-**How it works:**
-- Loads urban class definitions and image metadata
-- Merges real and synthetic images, ensuring class consistency
-- Outputs a standardized dataset for captioning and segmentation
-- Handles dataset deduplication and cleaning
+1. **Data ingestion & unification** — combine OpenImages urban classes and the synthetic Imaginary Cities set into a standardized FiftyOne dataset, deduplicate and normalize metadata.
+2. **Captioning** — generate descriptive, semiotic‑oriented captions using BLIP‑2 with structured prompts.
+3. **Segmentation** — extract masks and regions of architectural relevance using SAM (or YOLO as an alternative).
+4. **Semiotic feature extraction** — compute CLIP and sentence‑transformer embeddings, derive style/mood/material tags and other conditioning vectors.
+5. **Flux data preparation** — format images, captions and metadata for LoRA fine‑tuning of Flux.1d.
+6. **Training (LoRA)** — fine‑tune Flux.1d adapters with the prepared dataset, supporting mixed precision and distributed modes.
+7. **Evaluation** — quantitative (CLIP, style/mood accuracy) and qualitative reporting.
+8. **Inference** — conditioned image generation via CLI or optional Gradio UI.
 
-**Requirements:** FiftyOne, pandas, OpenImages/Synthetic data
-
-**Usage Example:**
-```bash
-python scripts/01_data_pipeline.py --base_path .
-```
+Each phase is implemented as a discrete script under `scripts/` and can be executed independently or via the master orchestrator `run_pipeline.py`.
 
 ---
 
-## 02_blip2_captioner.py
-**Scope:** Generates rich, semiotic-aware captions for each image using BLIP-2. Prompts are designed to elicit architectural, spatial, and cultural details.
+## Pipeline at a glance (diagram)
 
-**How it works:**
-- Loads images from the unified dataset
-- Uses BLIP-2 with custom prompts for style, mood, materials, etc.
-- Stores captions and metadata for each image
-- Supports GPU acceleration
+```mermaid
+flowchart LR
+	A[Real dataset: OpenImages v7\nUrban classes] --> C[01 Data Ingestion\nFiftyOne dataset]
+	B[Synthetic dataset: Imaginary Cities\n(ComfyUI Flux 1 Dev)] --> C
 
-**Requirements:** transformers, BLIP-2 weights, torch, PIL
-
-**Usage Example:**
-```bash
-python scripts/02_blip2_captioner.py --input_dir data/outputs/01_data_pipeline --output_file data/outputs/blip2_captions.json
+	C --> D[02 BLIP-2 Captioning\nsemiotic captions]
+	D --> E[03 SAM Segmentation\narchitectural masks]
+	E --> F[04 Semiotic Feature Extraction\nembeddings + tokens]
+	F --> G[05 Flux Data Prep\nimages + prompts + metadata]
+	G --> H[06 Flux Training (LoRA)]
+	H --> I[07 Evaluation]
+	H --> J[08 Inference (CLI/Gradio)]
 ```
 
 ---
 
-## 02b_blip2_captioner_export.py
-**Scope:** Processes exported data pipeline files and generates enhanced semiotic-aware captions, with advanced GPU and precision controls.
+## Selected scripts (concise reference)
 
-**How it works:**
-- Loads exported image data
-- Runs BLIP-2 captioning with flexible device/dtype options
-- Outputs captions in a format ready for segmentation and feature extraction
+- `scripts/01_data_pipeline.py` — unify datasets into a FiftyOne collection.
+- `scripts/02_blip2_captioner.py` and `02b_blip2_captioner_export.py` — caption generation with advanced device/dtype options.
+- `scripts/03_sam_segmenter.py` — segmentation, mask extraction and export.
+- `scripts/04_semiotic_extractor.py` — embeddings, token extraction and feature export.
+- `scripts/05_flux_data_prep.py` — build Flux.1d training corpus (images + prompts + metadata).
+- `scripts/06_flux_trainer.py` — LoRA adapter training and checkpointing.
+- `scripts/07_evaluation_pipeline.py` — evaluation metrics and report generation.
+- `scripts/08_inference_pipeline.py` — generation CLI and optional Gradio UI.
+- `scripts/99_fiftyone_setup.py` — helper to launch FiftyOne for inspection.
 
-**Requirements:** transformers, BLIP-2 weights, torch, PIL
-
-**Usage Example:**
-```bash
-python scripts/02b_blip2_captioner_export.py --input data/outputs/01_data_pipeline --output data/outputs/blip2_captioner_export
-```
-
----
-
-## 03_sam_segmenter.py
-**Scope:** Segments architectural elements in images using the Segment Anything Model (SAM), replacing YOLO for more precise and flexible segmentation.
-
-**How it works:**
-- Loads images and runs SAM segmentation
-- Extracts masks and bounding boxes for architectural elements
-- Outputs segmentation data for use in semiotic feature extraction
-- Supports multiple SAM model variants and checkpoints
-
-**Requirements:** segment-anything, torch, cv2, PIL, numpy
-
-**Usage Example:**
-```bash
-python scripts/03_sam_segmenter.py --input_dir data/outputs/01_data_pipeline --output_dir data/outputs/sam_segments
-```
+Each script includes argument parsing and a header documenting required model files, expected input paths and primary outputs.
 
 ---
 
-## 04_semiotic_extractor.py
-**Scope:** Extracts comprehensive semiotic features by combining BLIP-2 captions, SAM segmentation, and architectural analysis. Produces embeddings and metadata for Flux training.
+## Scripts — detailed reference
 
-**How it works:**
-- Loads captions and segmentation data
-- Computes CLIP and sentence-transformer embeddings
-- Analyzes style, mood, materials, spatial hierarchy, and more
-- Outputs feature-rich JSON or dataset for Flux
+Below is a practical, per‑script guide: the scope, typical inputs/outputs, and the most relevant arguments. Commands are PowerShell‑friendly.
 
-**Requirements:** transformers, sentence-transformers, scikit-learn, torch, numpy, PIL
-
-**Usage Example:**
-```bash
-python scripts/04_semiotic_extractor.py --input_data data/outputs/blip2_captioner_export --segmentation_dir data/outputs/sam_segments --output_features data/outputs/semiotic_features.json
+### 01_data_pipeline.py — unify datasets
+- Scope: Build a unified FiftyOne dataset from OIDv7 urban classes and the synthetic Imaginary Cities set; export a clean split for downstream steps.
+- Inputs: `data/oid_urban/` (OIDv7 assets managed via FiftyOne), `data/imaginary_synthetic/` (CSV + images + annotations)
+- Outputs: FiftyOne dataset named like `semiotic_urban_combined`; export under `data/outputs/01_data_pipeline/` with `images/{train,val}` and `labels/{train,val}`
+- Key args: `--base_path`, `--dataset_name`, `--max_oid_samples`
+- Example:
+```powershell
+python scripts/01_data_pipeline.py --base_path . --dataset_name semiotic_urban_combined --max_oid_samples 1000
 ```
 
----
-
-## 05_flux_data_prep.py
-**Scope:** Prepares the dataset for Flux.1d fine-tuning, formatting images, captions, and metadata into the required structure.
-
-**How it works:**
-- Loads semiotic features and images
-- Applies prompt templates for enhanced captioning
-- Organizes data into images, captions, and metadata folders
-- Ensures compatibility with Flux training scripts
-
-**Requirements:** pandas, numpy, PIL, fiftyone, datasets
-
-**Usage Example:**
-```bash
-python scripts/05_flux_data_prep.py --input_dataset data/outputs/semiotic_features.json --output_dir data/outputs/flux_training_data
+### 02_blip2_captioner.py — semiotic BLIP‑2 captions
+- Scope: Generate rich, structured captions (architecture, mood, materials, lighting, culture) and a unified caption per image.
+- Inputs: directory of images or a FiftyOne dataset
+- Outputs: JSON mapping image path → captions dict (includes `unified_caption`)
+- Key args: `--input_dir`, `--output_file`, `--device auto|cpu|cuda`
+- Example:
+```powershell
+python scripts/02_blip2_captioner.py --input_dir data/unified/images --output_file data/unified/captions.json --device auto
 ```
 
----
-
-## 06_flux_trainer.py
-**Scope:** Fine-tunes the Flux.1d model using LoRA and the prepared semiotic-aware dataset. Supports advanced training options and experiment tracking.
-
-**How it works:**
-- Loads training data and configuration
-- Sets up LoRA adapters and training loop
-- Supports mixed precision, distributed training, and experiment tracking (wandb)
-- Saves trained model checkpoints
-
-**Requirements:** torch, diffusers, peft, accelerate, transformers, wandb (optional)
-
-**Usage Example:**
-```bash
-python scripts/06_flux_trainer.py --base_model models/flux1d --training_data data/outputs/flux_training_data --output_dir models/flux_finetuned --epochs 10
+### 02b_blip2_captioner_export.py — BLIP‑2 with device/dtype controls
+- Scope: Enhance/export captions for the training split created by 01; supports GPU selection and quantization flags.
+- Inputs: `data/outputs/01_data_pipeline/{images,labels}`
+- Outputs: enhanced captions per split under your chosen output dir
+- Key args: `--input`, `--output`, `--device`, `--gpu_id`, `--dtype auto|fp16|bf16|fp32`, `--load_in_8bit`, `--load_in_4bit`
+- Example:
+```powershell
+python scripts/02b_blip2_captioner_export.py --input data/outputs/01_data_pipeline --output data/outputs/blip2_captioner_export --device cuda --gpu_id 0 --dtype fp16
 ```
 
----
-
-## 07_evaluation_pipeline.py
-**Scope:** Evaluates generated images for semiotic coherence, architectural accuracy, and visual quality. Supports both quantitative and qualitative metrics.
-
-**How it works:**
-- Loads generated images and reference data
-- Computes similarity metrics, style/mood accuracy, and other scores
-- Supports custom evaluation modules and fallback logic
-- Outputs detailed evaluation reports
-
-**Requirements:** torch, numpy, pandas, PIL, scikit-learn, cv2 (optional)
-
-**Usage Example:**
-```bash
-python scripts/07_evaluation_pipeline.py --model_path models/flux_finetuned --test_data data/outputs/flux_test_data
+### 03_sam_segmenter.py — architectural segmentation (SAM)
+- Scope: Replace YOLO with SAM for dense architectural masks; produce per‑image analysis (dominant elements, hierarchy, density).
+- Inputs: directory of images
+- Outputs: segmentation JSON (masks + analysis), optional visualizations
+- Key args: `--model_type vit_h|vit_l|vit_b`, `--checkpoint_path models/SAM/sam_vit_h_4b8939.pth`, `--input_dir`, `--output_dir`
+- Example:
+```powershell
+python scripts/03_sam_segmenter.py --input_dir data/unified/images --output_dir data/outputs/sam_segments --model_type vit_h --checkpoint_path models/SAM/sam_vit_h_4b8939.pth
 ```
 
----
-
-## 08_inference_pipeline.py
-**Scope:** Generates new images using the fine-tuned Flux.1d model, with advanced prompt engineering and optional Gradio interface for interactive use.
-
-**How it works:**
-- Loads trained model and LoRA adapters
-- Accepts prompts (single or batch)
-- Generates images and saves outputs
-- Optionally launches a Gradio web UI for interactive generation
-
-**Requirements:** torch, diffusers, peft, gradio (optional), PIL, numpy
-
-**Usage Example:**
-```bash
-python scripts/08_inference_pipeline.py --model_path models/flux_finetuned --prompt "Modern glass office building in contemplative urban setting" --output_dir generated_samples/
+### 04_semiotic_extractor.py — multi‑modal features
+- Scope: Fuse captions, SAM analysis, and visual embeddings (CLIP, sentence transformers) into a single semiotic feature payload.
+- Inputs: unified dataset metadata + SAM outputs
+- Outputs: features JSON (per image: textual, visual, spatial, interpretations, unified embedding, score)
+- Key args: `--input_data`, `--segmentation_dir`, `--output_features`
+- Example:
+```powershell
+python scripts/04_semiotic_extractor.py --input_data data/unified --segmentation_dir data/outputs/sam_segments --output_features data/outputs/semiotic_features.json
 ```
 
----
+### 05_flux_data_prep.py — training corpus builder
+- Scope: Filter high‑quality samples; generate enhanced prompts; standardize images; split into train/val/test; export metadata.
+- Inputs: FiftyOne dataset enriched with semiotic fields
+- Outputs: `data/outputs/05_flux_training_data/{images, captions, metadata}` + training config JSON
+- Key args: `--base_path`, `--output_path`, split ratios, quality thresholds (inside script)
+- Example:
+```powershell
+python scripts/05_flux_data_prep.py --base_path . --output_path data/outputs/05_flux_training_data
+```
 
-## 99_fiftyone_setup.py
-**Scope:** Utility script to quickly set up and launch a FiftyOne dataset/app for visualizing and exploring your image data.
+### 06_flux_trainer.py — LoRA fine‑tuning
+- Scope: Train Flux.1d adapters using semiotic prompts; mixed precision + Accelerator supported.
+- Inputs: prepared training data (`train/`, `val/`) and config
+- Outputs: `models/semiotic_flux/{checkpoints, samples}` with periodic samples and checkpoints
+- Key args: via CLI or a config dict (see dataclass `TrainingConfig`); typical: `--dataset_path`, `--output_dir`, `--model_name`, `--num_epochs`, `--lora_rank`
+- Example:
+```powershell
+python scripts/06_flux_trainer.py --dataset_path data/outputs/05_flux_training_data --output_dir models/semiotic_flux --model_name black-forest-labs/FLUX.1-dev --num_epochs 10 --lora_rank 64
+```
 
-**How it works:**
-- Loads or creates a FiftyOne dataset
-- Adds images from a specified directory
-- Launches the FiftyOne web app for interactive exploration
+### 07_evaluation_pipeline.py — quality and coherence
+- Scope: Quantitative and qualitative evaluation of generated images across semiotic, architectural, and visual metrics.
+- Inputs: generated images + prompts (and optionally pipeline components)
+- Outputs: CSV/JSON reports and plots
+- Key args: vary by evaluation mode; typical: `--images_dir`, `--prompts_file`, thresholds within the script
+- Example:
+```powershell
+python scripts/07_evaluation_pipeline.py --images_dir generated_samples --prompts_file prompts.json
+```
 
-**Requirements:** fiftyone
+### 08_inference_pipeline.py — generation (CLI or Gradio)
+- Scope: Load base model + LoRA; apply semiotic tokens; generate images; optional live UI.
+- Inputs: prompt(s) + conditioning tokens
+- Outputs: images and optional evaluation summaries
+- Key args: `--model_path`, `--lora_path` (optional), `--prompt`, `--height`, `--width`, `--num_inference_steps`, `--guidance_scale`, `--num_images`, `--seed`, `--gradio`
+- Example:
+```powershell
+python scripts/08_inference_pipeline.py --model_path models/semiotic_flux --prompt "Modern glass office building in contemplative urban setting" --num_images 2 --seed 42
+```
 
-**Usage Example:**
-```bash
+### 99_fiftyone_setup.py — dataset viewer
+- Scope: Quickly open a FiftyOne session to browse your dataset.
+- Example:
+```powershell
 python scripts/99_fiftyone_setup.py
 ```
 
 ---
 
-## Utility Scripts
+## Quick start (example)
 
-### 00_check_classes.py
-**Scope:** Checks your custom class list (`my_classes_final.txt`) against the actual available classes in OpenImages. Suggests similar matches for missing classes.
+1. Prepare data
 
-**Usage Example:**
 ```bash
-python scripts/utilities/00_check_classes.py
+python scripts/01_data_pipeline.py --oid_path data/oid_urban/ --synthetic_path data/imaginary_synthetic/ --output_dir data/unified/
 ```
 
-### 00_find_urban_classes.py
-**Scope:** Searches for additional urban/architectural classes in OpenImages, reporting which are present or missing. Useful for expanding or debugging your class list.
+2. Generate captions
 
-**Usage Example:**
 ```bash
-python scripts/utilities/00_find_urban_classes.py
+python scripts/02_blip2_captioner.py --input_dir data/unified/images/ --output_file data/unified/captions.json
+```
+
+3. Run segmentation and extract semiotic features
+
+```bash
+python scripts/03_sam_segmenter.py --input_dir data/unified/images/ --output_dir data/outputs/sam_segments
+python scripts/04_semiotic_extractor.py --input_data data/unified/ --segmentation_dir data/outputs/sam_segments --output_features data/outputs/semiotic_features.json
+```
+
+4. Prepare training data and fine‑tune
+
+```bash
+python scripts/05_flux_data_prep.py --input_dataset data/outputs/semiotic_features.json --output_dir data/outputs/flux_training_data
+python scripts/06_flux_trainer.py --base_model black-forest-labs/FLUX.1-dev --training_data data/outputs/flux_training_data --output_dir models/semiotic_flux/ --epochs 10
+```
+
+5. Inference
+
+```bash
+python scripts/08_inference_pipeline.py --model_path models/semiotic_flux/ --prompt "Modern glass office building in contemplative urban setting" --output_dir generated_samples/
 ```
 
 ---
 
-## Components
+## Configuration notes
 
-### 1. Data Pipeline (`scripts/data_pipeline.py`)
-- **Purpose**: Unified dataset creation and management
-- **Features**:
-  - Loads OpenImages v7 urban architectural classes
-  - Integrates imaginary synthetic images with CSV mappings
-  - Extracts semiotic features (style, mood, materials)
-  - Exports training-ready datasets
-- **Usage**: `python data_pipeline.py --config config.yaml`
-
-### 2. BLIP-2 Captioning (`scripts/blip2_captioner.py`)
-- **Purpose**: Generate semiotic-aware captions for architectural images
-- **Features**:
-  - Style-aware caption generation (modernist, brutalist, etc.)
-  - Mood detection and description (contemplative, vibrant, etc.)
-  - Material and temporal context integration
-  - Comprehensive architectural analysis
-- **Usage**: `python blip2_captioner.py --input_dir images/ --output_file captions.json`
-
-### 3. YOLO11 Segmentation (`scripts/yolo_segmenter.py`)
-- **Purpose**: Extract architectural elements and spatial relationships
-- **Features**:
-  - Urban element detection (buildings, towers, houses, etc.)
-  - Spatial composition analysis
-  - Semiotic spatial interpretation
-  - FiftyOne integration for visualization
-- **Usage**: `python yolo_segmenter.py --dataset_name urban_dataset --export_dir segments/`
-
-### 4. Semiotic Feature Extraction (`scripts/semiotic_extractor.py`)
-- **Purpose**: Multi-modal feature extraction and embedding creation
-- **Features**:
-  - CLIP-based visual embeddings
-  - Sentence transformer text embeddings
-  - Architectural style classification
-  - Unified embedding space for conditioning
-- **Usage**: `python semiotic_extractor.py --input_data data.json --output_features features.pkl`
-
-### 5. Flux Training Data Preparation (`scripts/flux_data_prep.py`)
-- **Purpose**: Format dataset for Flux.1d fine-tuning
-- **Features**:
-  - Enhanced caption generation with templates
-  - Quality filtering and validation
-  - Train/validation/test splits
-  - Metadata preservation
-- **Usage**: `python flux_data_prep.py --input_dataset combined_data --output_dir training_data/`
-
-### 6. Flux.1d Fine-tuning (`scripts/flux_trainer.py`)
-- **Purpose**: LoRA fine-tuning of Flux.1d for semiotic conditioning
-- **Features**:
-  - Efficient LoRA parameter training
-  - Semiotic token integration
-  - Distributed training support
-  - Automatic checkpointing and logging
-- **Usage**: `python flux_trainer.py --config training_config.yaml --output_dir models/`
-
-### 7. Evaluation Pipeline (`scripts/evaluation_pipeline.py`)
-- **Purpose**: Comprehensive evaluation of generated images
-- **Features**:
-  - Semiotic coherence assessment
-  - Architectural style accuracy
-  - Visual quality metrics (CLIP score, etc.)
-  - Batch evaluation with detailed reports
-- **Usage**: `python evaluation_pipeline.py --model_path model/ --test_data test.json`
-
-### 8. Inference Pipeline (`scripts/inference_pipeline.py`)
-- **Purpose**: End-to-end image generation with advanced interfaces
-- **Features**:
-  - Advanced prompt engineering with semiotic tokens
-  - Gradio web interface for interactive generation
-  - Batch processing capabilities
-  - Real-time evaluation integration
-- **Usage**: 
-  - CLI: `python inference_pipeline.py --model_path model/ --prompt "Modern glass office building"`
-  - Web UI: `python inference_pipeline.py --model_path model/ --gradio`
-
-## Installation
-
-### Prerequisites
-- Python 3.8+
-- CUDA-capable GPU (recommended)
-- 16GB+ RAM
-- 50GB+ storage space
-
-### Environment Setup
-
-1. **Clone the repository**:
-```bash
-git clone <repository_url>
-cd semiotic_labelling
-```
-
-2. **Create virtual environment**:
-```bash
-python -m venv venv
-# Windows
-venv\Scripts\activate
-# Linux/Mac
-source venv/bin/activate
-```
-
-3. **Install dependencies**:
-```bash
-pip install -r requirements.txt
-```
-
-### Required Models
-
-The pipeline requires several pre-trained models:
-
-1. **Flux.1d Base Model**:
-```bash
-# Download from Hugging Face
-huggingface-cli login
-huggingface-cli download black-forest-labs/FLUX.1-dev
-```
-
-2. **BLIP-2 Model**:
-```bash
-# Downloaded automatically via transformers
-```
-
-3. **YOLO11 Model**:
-```bash
-# Downloaded automatically via ultralytics
-```
-
-## Quick Start
-
-### 1. Prepare Data
-```bash
-python scripts/data_pipeline.py --oid_path data/oid_urban/ --synthetic_path data/imaginary_synthetic/ --output_dir data/unified/
-```
-
-### 2. Generate Captions
-```bash
-python scripts/blip2_captioner.py --input_dir data/unified/images/ --output_file data/unified/captions.json
-```
-
-### 3. Extract Features
-```bash
-python scripts/semiotic_extractor.py --input_data data/unified/ --output_features data/features.pkl
-```
-
-### 4. Prepare Training Data
-```bash
-python scripts/flux_data_prep.py --input_dataset data/unified/ --output_dir training_data/
-```
-
-### 5. Fine-tune Model
-```bash
-python scripts/flux_trainer.py --base_model black-forest-labs/FLUX.1-dev --training_data training_data/ --output_dir models/semiotic_flux/
-```
-
-### 6. Generate Images
-```bash
-# Command line
-python scripts/inference_pipeline.py --model_path models/semiotic_flux/ --prompt "Brutalist concrete housing complex" --style brutalist --mood dramatic
-
-# Web interface
-python scripts/inference_pipeline.py --model_path models/semiotic_flux/ --gradio
-```
-
-## Configuration
-
-### Semiotic Tokens
-
-The pipeline uses specialized tokens for architectural conditioning:
-
-**Architectural Styles**:
-- `<modernist>`: Clean geometric lines, minimal ornamentation
-- `<brutalist>`: Raw concrete, massive geometric forms
-- `<postmodern>`: Eclectic mix, colorful facades
-- `<minimalist>`: Pure geometric forms, essential elements
-- `<baroque>`: Ornate decoration, curved forms
-- `<gothic>`: Pointed arches, vertical emphasis
-- `<industrial>`: Exposed structural elements
-- `<art_deco>`: Streamlined forms, geometric patterns
-
-**Urban Moods**:
-- `<contemplative>`: Peaceful atmosphere, soft lighting
-- `<vibrant>`: Energetic colors, dynamic composition
-- `<tense>`: Dramatic contrasts, sharp angles
-- `<serene>`: Harmonious proportions, balanced
-- `<dramatic>`: Bold contrasts, striking lighting
-- `<peaceful>`: Gentle transitions, natural integration
-- `<energetic>`: Dynamic lines, bright colors
-- `<melancholic>`: Muted colors, weathered surfaces
-
-**Materials**: `<concrete>`, `<glass>`, `<steel>`, `<stone>`, `<wood>`, `<brick>`
-
-**Time Periods**: `<dawn>`, `<morning>`, `<afternoon>`, `<dusk>`, `<night>`, `<golden_hour>`, `<blue_hour>`
-
-### Training Configuration
-
-Key parameters for fine-tuning:
-
-```yaml
-# training_config.yaml
-model:
-  base_model: "black-forest-labs/FLUX.1-dev"
-  lora_rank: 64
-  lora_alpha: 64
-  lora_dropout: 0.1
-
-training:
-  batch_size: 1
-  gradient_accumulation_steps: 8
-  learning_rate: 1e-4
-  num_epochs: 10
-  warmup_steps: 500
-  mixed_precision: "fp16"
-
-generation:
-  resolution: 1024
-  guidance_scale: 7.5
-  num_inference_steps: 20
-```
-
-## Dataset Structure
-
-```
-data/
-├── oid_urban/                    # OpenImages v7 urban classes
-│   ├── images/
-│   ├── annots/
-│   └── metadata/
-├── imaginary_synthetic/          # Synthetic architectural images
-│   ├── images/
-│   ├── annotations/
-│   └── 02 Imaginary Cities - Mapping.csv
-├── export/                       # Processed training data
-│   ├── images/
-│   │   ├── train/
-│   │   └── val/
-│   └── labels/
-│       ├── train/
-│       └── val/
-└── unified/                      # Combined dataset
-    ├── metadata.json
-    ├── captions.json
-    └── features.pkl
-```
-
-## Evaluation Metrics
-
-The pipeline provides comprehensive evaluation:
-
-### Semiotic Coherence
-- **Style Accuracy**: Measures alignment between requested and generated architectural styles
-- **Mood Accuracy**: Evaluates atmospheric and emotional consistency
-- **Material Recognition**: Assesses correct material representation
-
-### Visual Quality
-- **CLIP Score**: Semantic similarity between text and image
-- **Architectural Realism**: Structural and proportional accuracy
-- **Technical Quality**: Resolution, sharpness, composition
-
-### Batch Metrics
-- **Consistency**: Variation across multiple generations
-- **Diversity**: Creative range within style constraints
-- **Error Analysis**: Common failure modes and improvements
-
-## Performance
-
-### Hardware Requirements
-
-**Minimum**:
-- GPU: GTX 1080 (8GB VRAM)
-- RAM: 16GB
-- Storage: 50GB
-
-**Recommended**:
-- GPU: RTX 4090 (24GB VRAM)
-- RAM: 32GB
-- Storage: 100GB SSD
-
-### Timing Benchmarks
-
-| Operation | Time (RTX 4090) | Time (RTX 3080) |
-|-----------|-----------------|-----------------|
-| Data Processing | 2-3 hours | 4-6 hours |
-| BLIP-2 Captioning | 1-2 hours | 3-4 hours |
-| Feature Extraction | 30-60 min | 1-2 hours |
-| LoRA Fine-tuning | 6-12 hours | 12-24 hours |
-| Single Image Gen | 3-5 seconds | 8-12 seconds |
-| Batch Evaluation | 2-5 min/100 images | 5-10 min/100 images |
-
-## Troubleshooting
-
-### Common Issues
-
-1. **CUDA Out of Memory**:
-   - Reduce batch size in training config
-   - Use gradient checkpointing
-   - Enable CPU offloading
-
-2. **Model Loading Errors**:
-   - Verify model paths are correct
-   - Check Hugging Face authentication
-   - Ensure sufficient disk space
-
-3. **Slow Generation**:
-   - Enable xformers for memory efficiency
-   - Use mixed precision (fp16)
-   - Optimize inference steps
-
-4. **Poor Quality Outputs**:
-   - Increase training epochs
-   - Improve caption quality
-   - Adjust LoRA parameters
-
-### Performance Optimization
-
-```python
-# Enable optimizations
-pipeline.enable_xformers_memory_efficient_attention()
-torch.backends.cudnn.benchmark = True
-torch.backends.cuda.matmul.allow_tf32 = True
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests and documentation
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Citation
-
-If you use this pipeline in your research, please cite:
-
-```bibtex
-@misc{semiotic_architectural_generation,
-  title={Semiotic-Aware Architectural Image Generation with Fine-tuned Flux.1d},
-  author={Your Name},
-  year={2024},
-  url={https://github.com/your-repo/semiotic_labelling}
-}
-```
-
-## Acknowledgments
-
-- **Black Forest Labs** for Flux.1d diffusion model
-- **Salesforce** for BLIP-2 captioning model
-- **Ultralytics** for YOLO11 segmentation
-- **Voxel51** for FiftyOne dataset management
-- **Hugging Face** for transformers and diffusers libraries
-
-## Support
-
-For questions and issues:
-- Open an issue on GitHub
-- Check the documentation
-- Review existing discussions
+- Training hyperparameters and generation settings are specified in `training_config.yaml` (example included).
+- Semiotic tokens (styles, moods, materials, time periods) are used to structure conditioning prompts; these tokens are defined in `scripts/config_tokens.py` or in the documentation directory.
 
 ---
 
-**Note**: This pipeline is designed for research and educational purposes. Commercial use may require additional licensing for some model components.
+## Evaluation metrics (summary)
+
+- **Semiotic coherence**: style and mood alignment, material recognition.
+- **Visual quality**: CLIP‑based semantic similarity, image sharpness and composition.
+- **Dataset metrics**: diversity and intra‑style consistency.
+
+Reports are exported as CSV/JSON and can be visualized via the included notebooks.
+
+---
+
+## Performance and hardware guidance
+
+Minimum: GTX 1080 (8 GB), 16 GB RAM, 50 GB storage.
+Recommended: RTX 4090 (24 GB), 32 GB RAM, SSD storage.
+
+Timings depend strongly on batch size, resolution and model variants; see the `Performance` table in `docs/` for measured baselines.
+
+---
+
+## Troubleshooting (common remedies)
+
+- **OOM errors**: reduce batch size, enable gradient checkpointing, use mixed precision or CPU offload.
+- **Model download/auth failures**: verify Hugging Face authentication and model identifiers.
+- **Low quality outputs**: refine captions, increase training iterations, review dataset balance.
+
+---
+
+## Contribution guidelines
+
+Contributions are welcome. Please fork, create a feature branch, include tests or example outputs, update documentation and submit a pull request. For substantial contributions (new datasets, model variants) please contact the maintainers to coordinate licensing and reproducibility checks.
+
+---
+
+## License & citation
+
+This repository is provided under the MIT License. See `LICENSE` for details.
+
+If you use the pipeline or datasets in academic work, please cite the thesis and relevant third‑party projects. Example BibTeX for the thesis is provided in `CITATION.bib`.
+
+---
+
+## Contact
+
+For questions, issues or collaboration requests, open an issue or contact the primary authors via their GitHub profiles.
+
+---
+
+**Note**: This pipeline is provided for research and educational purposes. Some model components may require separate licensing for commercial use.
