@@ -335,7 +335,7 @@ class SemioticFluxTrainer:
             }
         
         # Create dataloaders
-        train_dataloader = torch.utils.data.DataLoader(
+    train_dataloader = torch.utils.data.DataLoader(
             train_dataset,
             batch_size=self.config.batch_size,
             shuffle=True,
@@ -392,7 +392,7 @@ class SemioticFluxTrainer:
         trainable_params = [p for p in self.transformer.parameters() if p.requires_grad]
         
         # Setup optimizer
-        self.optimizer = torch.optim.AdamW(
+    self.optimizer = torch.optim.AdamW(
             trainable_params,
             lr=self.config.learning_rate,
             betas=(0.9, 0.999),
@@ -500,7 +500,7 @@ class SemioticFluxTrainer:
             "lr_scheduler_state_dict": self.lr_scheduler.state_dict()
         }
         
-        torch.save(training_state, checkpoint_path / "training_state.pt")
+    torch.save(training_state, checkpoint_path / "training_state.pt")
         
         logger.info(f"Checkpoint saved at step {step}")
     

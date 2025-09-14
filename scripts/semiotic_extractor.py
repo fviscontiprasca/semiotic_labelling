@@ -257,7 +257,7 @@ class SemioticFeatureExtractor:
         
         # CLIP embedding
         inputs = self.clip_processor(images=image, return_tensors="pt").to(self.device)
-        with torch.no_grad():
+    with torch.no_grad():
             image_features = self.clip_model.get_image_features(**inputs)
             features["clip_embedding"] = image_features.cpu().numpy().flatten()
         

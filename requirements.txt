@@ -1,5 +1,5 @@
 # Core ML Framework - Strict compatibility
-torch==2.8.0  # LTS version with stable CUDA support
+pytorch==2.8.0  # LTS version with stable CUDA support (Conda)
 torchvision==0.23.0  # Must match torch version
 torchaudio==2.5.1  # Compatible with torch 2.8.0
 
@@ -14,7 +14,7 @@ peft==0.17.1  # LoRA fine-tuning
 
 # Computer Vision & Image Processing
 ultralytics==8.3.199  # YOLO11 with segmentation
-opencv-python==4.10.0  # Stable CV operations
+opencv==4.10.0  # Stable CV operations (Conda)
 Pillow==11.3.0  # Latest PIL
 
 # Text-Image Alignment & Embeddings
