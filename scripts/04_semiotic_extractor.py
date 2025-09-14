@@ -257,7 +257,7 @@ class SemioticFeatureExtractor:
         
         # CLIP embedding
         inputs = self.clip_processor(images=image, return_tensors="pt").to(self.device)
-    with torch.no_grad():
+        with torch.no_grad():
             image_features = self.clip_model.get_image_features(**inputs)
             features["clip_embedding"] = image_features.cpu().numpy().flatten()
         
@@ -635,32 +635,214 @@ class SemioticFeatureExtractor:
                 continue
         
         logger.info(f"Completed feature extraction for {processed} samples")
+    
+    def _extract_features_from_data(self, image_path: Path, seg_analysis: Dict, captions: Optional[Dict]) -> SemioticFeatures:
+        """Extract features directly from image path and analysis data."""
+        
+        try:
+            # Load image
+            image = Image.open(image_path).convert("RGB")
+            
+            # Extract textual features
+            text_sources = []
+            if captions:
+                if isinstance(captions, dict):
+                    for caption_type, caption_text in captions.items():
+                        if caption_text:
+                            text_sources.append(caption_text)
+                elif isinstance(captions, str):
+                    text_sources.append(captions)
+            
+            combined_text = " ".join(text_sources) if text_sources else "architectural building urban scene"
+            
+            # Generate text embedding
+            caption_embedding = self.sentence_model.encode(combined_text)
+            
+            # Extract visual features
+            visual_features = self._extract_visual_features(image)
+            
+            # Extract spatial features from segmentation analysis
+            spatial_features = {}
+            if seg_analysis:
+                spatial_features["density"] = seg_analysis.get("density_analysis", {}).get("total_coverage", 0.0)
+                spatial_features["hierarchy"] = seg_analysis.get("architectural_hierarchy", {}).get("hierarchy_type")
+                spatial_features["dominant_elements"] = seg_analysis.get("architectural_hierarchy", {}).get("dominant_elements", [])
+                spatial_features["functional_composition"] = seg_analysis.get("functional_composition", {})
+            
+            # Perform semiotic analysis
+            textual_dict = {"caption_embedding": caption_embedding}
+            semiotic_analysis = self._perform_semiotic_analysis(textual_dict, visual_features, spatial_features)
+            
+            # Create SemioticFeatures object
+            features = SemioticFeatures(
+                caption_embedding=caption_embedding if isinstance(caption_embedding, np.ndarray) else np.array(caption_embedding),
+                clip_embedding=np.array(visual_features.get("clip_embedding")) if visual_features.get("clip_embedding") is not None else np.zeros(512),
+                color_palette=visual_features.get("color_palette", []),
+                composition_features=visual_features.get("composition_features", {}),
+                object_density=float(spatial_features.get("density", 0.0)),
+                spatial_hierarchy=spatial_features.get("hierarchy") or "uniform_scale",
+                dominant_elements=spatial_features.get("dominant_elements", []),
+                cultural_context=semiotic_analysis.get("cultural_context"),
+                architectural_style=semiotic_analysis.get("typology"),
+                materials=semiotic_analysis.get("materials", [])
+            )
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"Error extracting features from {image_path}: {e}")
+            # Return minimal features object
+            return SemioticFeatures(
+                caption_embedding=np.zeros(384),  # Default sentence transformer size
+                object_density=0.0,
+                dominant_elements=[]
+            )
 
-def main():
-    """Main execution for testing feature extraction."""
+def process_sam_outputs(input_dir: str, output_dir: str):
+    """Process SAM segmentation outputs directly without FiftyOne."""
+    
+    import argparse
+    from pathlib import Path
+    import json
+    
+    input_path = Path(input_dir)
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
     
     # Initialize feature extractor
     extractor = SemioticFeatureExtractor()
     
-    # Load dataset
-    dataset_name = "semiotic_urban_combined"
-    if fo.dataset_exists(dataset_name):
-        dataset = fo.load_dataset(dataset_name)
-        
-        # Process subset for testing
-        test_view = dataset.take(3)
-        extractor.process_dataset(test_view)
-        
-        # Launch FiftyOne to view results
-        session = fo.launch_app(dataset, port=5151)
-        print("Semiotic features extracted. View results at http://localhost:5151")
-        
+    # Load SAM segmentation summary
+    segmentation_summary_file = input_path / "segmentation_summary.json"
+    if not segmentation_summary_file.exists():
+        logger.error(f"Segmentation summary not found: {segmentation_summary_file}")
+        return
+    
+    with open(segmentation_summary_file, 'r') as f:
+        segmentation_data = json.load(f)
+    
+    # Load BLIP-2 captions if available
+    blip_captions = {}
+    blip_dir = input_path.parent / "02_blip2_captioner"
+    if blip_dir.exists():
+        blip_files = list(blip_dir.glob("*.json"))
+        for blip_file in blip_files:
+            with open(blip_file, 'r') as f:
+                blip_data = json.load(f)
+                blip_captions.update(blip_data)
+    
+    logger.info(f"Processing {len(segmentation_data)} images with semiotic analysis")
+    
+    results = {}
+    processed = 0
+    
+    for image_key, seg_analysis in segmentation_data.items():
         try:
-            session.wait()
-        except KeyboardInterrupt:
-            print("Shutting down...")
+            # Get image path
+            if "/" in image_key:
+                split, image_name = image_key.split("/", 1)
+                image_path = input_path.parent / "01_data_pipeline" / "images" / split / image_name
+            else:
+                image_path = input_path.parent / "01_data_pipeline" / "images" / "train" / image_key
+            
+            if not image_path.exists():
+                logger.warning(f"Image not found: {image_path}")
+                continue
+            
+            # Extract features directly from data
+            features = extractor._extract_features_from_data(
+                image_path=image_path,
+                seg_analysis=seg_analysis.get("semiotic_segmentation_analysis", {}),
+                captions=blip_captions.get(image_path.name, None)
+            )
+            
+            # Convert to serializable format
+            features_dict = asdict(features)
+            for key, value in features_dict.items():
+                if isinstance(value, np.ndarray):
+                    features_dict[key] = value.tolist()
+            
+            results[image_key] = {
+                "image_path": str(image_path),
+                "semiotic_features": features_dict,
+                "segmentation_summary": seg_analysis,
+                "timestamp": seg_analysis.get("timestamp")
+            }
+            
+            processed += 1
+            if processed % 5 == 0:
+                logger.info(f"Processed {processed}/{len(segmentation_data)} images")
+                
+        except Exception as e:
+            logger.error(f"Error processing {image_key}: {e}")
+            continue
+    
+    # Save results
+    output_file = output_path / "semiotic_features.json"
+    with open(output_file, 'w') as f:
+        json.dump(results, f, indent=2)
+    
+    # Save summary
+    summary = {
+        "timestamp": results[list(results.keys())[0]]["timestamp"] if results else None,
+        "total_images": len(segmentation_data),
+        "processed_images": processed,
+        "failed_images": len(segmentation_data) - processed,
+        "output_file": str(output_file),
+        "feature_types": ["caption_embedding", "clip_embedding", "color_palette", "composition_features", "object_density", "spatial_hierarchy", "dominant_elements", "cultural_context", "architectural_style", "materials"] if processed > 0 else []
+    }
+    
+    summary_file = output_path / "semiotic_features_summary.json"
+    with open(summary_file, 'w') as f:
+        json.dump(summary, f, indent=2)
+    
+    logger.info(f"✅ Semiotic feature extraction complete!")
+    logger.info(f"Processed: {processed}/{len(segmentation_data)} images")
+    logger.info(f"Features saved to: {output_file}")
+    logger.info(f"Summary saved to: {summary_file}")
+    
+    return results
+
+def main():
+    """Main execution with command-line interface."""
+    
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="Semiotic Feature Extraction")
+    parser.add_argument("--input_data", help="Input directory with SAM segmentation data")
+    parser.add_argument("--output_features", help="Output directory for semiotic features")
+    parser.add_argument("--fiftyone_mode", action="store_true", help="Use FiftyOne dataset mode (default)")
+    
+    args = parser.parse_args()
+    
+    if args.input_data and args.output_features:
+        # Process SAM outputs directly
+        process_sam_outputs(args.input_data, args.output_features)
+        
     else:
-        print(f"Dataset {dataset_name} not found. Run the full pipeline first.")
+        # Original FiftyOne mode
+        # Initialize feature extractor
+        extractor = SemioticFeatureExtractor()
+        
+        # Load dataset
+        dataset_name = "semiotic_urban_combined"
+        if fo.dataset_exists(dataset_name):
+            dataset = fo.load_dataset(dataset_name)
+            
+            # Process subset for testing
+            test_view = dataset.take(3)
+            extractor.process_dataset(test_view)
+            
+            # Launch FiftyOne to view results
+            session = fo.launch_app(dataset, port=5151)
+            print("Semiotic features extracted. View results at http://localhost:5151")
+            
+            try:
+                session.wait()
+            except KeyboardInterrupt:
+                print("Shutting down...")
+        else:
+            print(f"Dataset {dataset_name} not found. Run the full pipeline first.")
 
 if __name__ == "__main__":
     main()
