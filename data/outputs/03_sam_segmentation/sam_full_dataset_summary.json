@@ -1,0 +1,52 @@
+{
+  "timestamp": "2025-09-14T20:27:06.226593",
+  "total_images": 5,
+  "processed_images": 5,
+  "failed_images": 0,
+  "total_segments": 829,
+  "total_architectural_segments": 829,
+  "model_info": {
+    "type": "SAM",
+    "variant": "vit_h",
+    "device": "cuda"
+  },
+  "train_images": 5,
+  "val_images": 0,
+  "image_results": [
+    {
+      "image_name": "train_000000.png",
+      "split": "train",
+      "total_segments": 165,
+      "architectural_segments": 165,
+      "success": true
+    },
+    {
+      "image_name": "train_000001.jpg",
+      "split": "train",
+      "total_segments": 98,
+      "architectural_segments": 98,
+      "success": true
+    },
+    {
+      "image_name": "train_000002.png",
+      "split": "train",
+      "total_segments": 204,
+      "architectural_segments": 204,
+      "success": true
+    },
+    {
+      "image_name": "train_000003.jpg",
+      "split": "train",
+      "total_segments": 165,
+      "architectural_segments": 165,
+      "success": true
+    },
+    {
+      "image_name": "train_000004.jpg",
+      "split": "train",
+      "total_segments": 197,
+      "architectural_segments": 197,
+      "success": true
+    }
+  ]
+}

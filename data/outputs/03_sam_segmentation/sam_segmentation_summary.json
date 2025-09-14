@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-09-14T20:23:37.743132",
+  "total_images": 1,
+  "processed_images": 1,
+  "failed_images": 0,
+  "total_segments": 178,
+  "total_architectural_segments": 178,
+  "model_info": {
+    "type": "SAM",
+    "variant": "vit_h",
+    "device": "cuda"
+  },
+  "image_results": [
+    {
+      "image_name": "train_000694.jpg",
+      "total_segments": 178,
+      "architectural_segments": 178,
+      "success": true
+    }
+  ]
+}

@@ -329,12 +329,14 @@ class SAMArchitecturalSegmenter:
         analysis_dir.mkdir(exist_ok=True)
         masks_dir.mkdir(exist_ok=True)
         
-        # Find image files
+        # Find image files (avoiding duplicates from case variations)
         image_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff']
         image_files = []
         for ext in image_extensions:
             image_files.extend(input_path.glob(f"*{ext}"))
-            image_files.extend(input_path.glob(f"*{ext.upper()}"))
+        
+        # Remove duplicates and sort for consistent processing
+        image_files = sorted(list(set(image_files)))
         
         if max_images:
             image_files = image_files[:max_images]
@@ -432,10 +434,152 @@ class SAMArchitecturalSegmenter:
         logger.info(f"Results saved to: {output_path}")
         
         return results_summary
+    
+    def segment_full_dataset(self, base_dir: str, output_dir: str, max_images: Optional[int] = None):
+        """
+        Segment complete dataset including both train and val directories.
+        
+        Args:
+            base_dir: Base directory containing train/ and val/ subdirectories
+            output_dir: Directory for output results
+            max_images: Maximum number of images to process (None for all)
+        """
+        base_path = Path(base_dir)
+        train_dir = base_path / "train"
+        val_dir = base_path / "val"
+        
+        output_path = Path(output_dir)
+        output_path.mkdir(parents=True, exist_ok=True)
+        
+        # Create subdirectories
+        analysis_dir = output_path / "analysis"
+        masks_dir = output_path / "masks"
+        analysis_dir.mkdir(exist_ok=True)
+        masks_dir.mkdir(exist_ok=True)
+        
+        # Collect all image files from both directories
+        image_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff']
+        all_image_files = []
+        
+        for directory in [train_dir, val_dir]:
+            if directory.exists():
+                logger.info(f"Scanning {directory}")
+                for ext in image_extensions:
+                    image_files = list(directory.glob(f"*{ext}"))
+                    all_image_files.extend([(f, directory.name) for f in image_files])
+                    logger.info(f"Found {len(image_files)} {ext} files in {directory.name}")
+        
+        # Remove duplicates and sort for consistent processing
+        all_image_files = sorted(list(set(all_image_files)), key=lambda x: x[0].name)
+        
+        if max_images:
+            all_image_files = all_image_files[:max_images]
+        
+        logger.info(f"Total images to process: {len(all_image_files)}")
+        
+        results_summary = {
+            "timestamp": datetime.now().isoformat(),
+            "total_images": len(all_image_files),
+            "processed_images": 0,
+            "failed_images": 0,
+            "total_segments": 0,
+            "total_architectural_segments": 0,
+            "model_info": {
+                "type": "SAM",
+                "variant": self.model_type,
+                "device": str(self.device)
+            },
+            "train_images": len([f for f, split in all_image_files if split == "train"]),
+            "val_images": len([f for f, split in all_image_files if split == "val"]),
+            "image_results": []
+        }
+        
+        for i, (image_file, split) in enumerate(all_image_files):
+            try:
+                logger.info(f"Processing {i+1}/{len(all_image_files)}: {split}/{image_file.name}")
+                
+                # Segment image
+                result = self.segment_image(str(image_file))
+                
+                if "error" in result:
+                    logger.error(f"Failed to process {image_file.name}: {result['error']}")
+                    results_summary["failed_images"] += 1
+                    continue
+                
+                # Save individual analysis with split prefix
+                analysis_file = analysis_dir / f"{split}_{image_file.stem}_sam_analysis.json"
+                with open(analysis_file, 'w') as f:
+                    json.dump(result, f, indent=2)
+                
+                # Update summary
+                results_summary["processed_images"] += 1
+                results_summary["total_segments"] += result["total_segments"]
+                results_summary["total_architectural_segments"] += result["architectural_segments"]
+                
+                results_summary["image_results"].append({
+                    "image_name": image_file.name,
+                    "split": split,
+                    "total_segments": result["total_segments"],
+                    "architectural_segments": result["architectural_segments"],
+                    "success": True
+                })
+                
+            except Exception as e:
+                logger.error(f"Unexpected error processing {image_file.name}: {str(e)}")
+                results_summary["failed_images"] += 1
+                results_summary["image_results"].append({
+                    "image_name": image_file.name,
+                    "split": split,
+                    "error": str(e),
+                    "success": False
+                })
+        
+        # Save summary in format compatible with pipeline expectations
+        summary_file = output_path / "segmentation_summary.json"
+        
+        # Create pipeline-compatible summary format
+        pipeline_compatible_summary = {}
+        for result in results_summary["image_results"]:
+            if result["success"]:
+                image_name = result["image_name"]
+                split = result["split"]
+                # Read the detailed analysis for this image
+                analysis_file = analysis_dir / f"{split}_{Path(image_name).stem}_sam_analysis.json"
+                if analysis_file.exists():
+                    with open(analysis_file, 'r') as f:
+                        detailed_analysis = json.load(f)
+                    
+                    # Format compatible with Phase 04 expectations
+                    pipeline_compatible_summary[f"{split}/{image_name}"] = {
+                        "total_segments": result["total_segments"],
+                        "architectural_segments": result["architectural_segments"],
+                        "semiotic_segmentation_analysis": detailed_analysis["segment_analysis"],
+                        "model_type": "SAM",
+                        "split": split,
+                        "timestamp": detailed_analysis["timestamp"]
+                    }
+        
+        with open(summary_file, 'w') as f:
+            json.dump(pipeline_compatible_summary, f, indent=2)
+        
+        # Also save the detailed summary
+        detailed_summary_file = output_path / "sam_full_dataset_summary.json"
+        with open(detailed_summary_file, 'w') as f:
+            json.dump(results_summary, f, indent=2)
+        
+        logger.info(f"✅ SAM full dataset segmentation complete!")
+        logger.info(f"Processed: {results_summary['processed_images']}/{results_summary['total_images']}")
+        logger.info(f"Train images: {results_summary['train_images']}, Val images: {results_summary['val_images']}")
+        logger.info(f"Total segments: {results_summary['total_segments']}")
+        logger.info(f"Architectural segments: {results_summary['total_architectural_segments']}")
+        logger.info(f"Results saved to: {output_path}")
+        
+        return results_summary
 
 def main():
     parser = argparse.ArgumentParser(description="SAM-based architectural segmentation")
-    parser.add_argument("--input_dir", required=True, help="Input directory with images")
+    parser.add_argument("--input_dir", help="Input directory with images (single directory)")
+    parser.add_argument("--dataset_dir", help="Dataset base directory containing train/ and val/ subdirectories")
     parser.add_argument("--output_dir", required=True, help="Output directory for results")
     parser.add_argument("--model_type", default="vit_h", choices=["vit_h", "vit_l", "vit_b"],
                        help="SAM model variant")
@@ -456,12 +600,30 @@ def main():
         print("Checkpoints: https://github.com/facebookresearch/segment-anything#model-checkpoints")
         return
     
-    # Process directory
-    results = segmenter.segment_directory(
-        input_dir=args.input_dir,
-        output_dir=args.output_dir,
-        max_images=args.max_images
-    )
+    # Validate arguments
+    if not args.input_dir and not args.dataset_dir:
+        print("❌ Please specify either --input_dir for single directory or --dataset_dir for full dataset processing")
+        return
+    
+    if args.input_dir and args.dataset_dir:
+        print("❌ Please specify either --input_dir OR --dataset_dir, not both")
+        return
+    
+    # Process directory or full dataset
+    if args.dataset_dir:
+        print("🔄 Processing full dataset (train + val directories)")
+        results = segmenter.segment_full_dataset(
+            base_dir=args.dataset_dir,
+            output_dir=args.output_dir,
+            max_images=args.max_images
+        )
+    else:
+        print("🔄 Processing single directory")
+        results = segmenter.segment_directory(
+            input_dir=args.input_dir,
+            output_dir=args.output_dir,
+            max_images=args.max_images
+        )
     
     print(f"\n✅ SAM segmentation completed successfully!")
     print(f"Success rate: {results['processed_images']}/{results['total_images']} images")
