@@ -8,25 +8,45 @@ import os
 import json
 import logging
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional, Any
+from typing import Dict, List, Tuple, Optional, Any, TYPE_CHECKING, cast
 from dataclasses import dataclass, asdict
 import argparse
 
 import numpy as np
-import pandas as pd
+try:
+    import pandas as pd  # type: ignore
+    PANDAS_AVAILABLE = True
+except Exception:
+    pd = None  # type: ignore
+    PANDAS_AVAILABLE = False
+from datetime import datetime
 from PIL import Image
-import cv2
-from sklearn.metrics.pairwise import cosine_similarity
+try:
+    import cv2  # type: ignore
+    CV2_AVAILABLE = True
+except Exception:
+    CV2_AVAILABLE = False
+    cv2 = None  # type: ignore
+try:
+    from sklearn.metrics.pairwise import cosine_similarity  # type: ignore
+except Exception:
+    def cosine_similarity(a, b):  # type: ignore
+        """Simple cosine similarity fallback for 2D arrays using numpy."""
+        import numpy as _np
+        a = _np.asarray(a)
+        b = _np.asarray(b)
+        a_norm = a / _np.linalg.norm(a, axis=1, keepdims=True)
+        b_norm = b / _np.linalg.norm(b, axis=1, keepdims=True)
+        return a_norm @ b_norm.T
 
 # ML libraries with error handling
 try:
-    import torch
-    import clip
-    from sentence_transformers import SentenceTransformer
+    import torch  # type: ignore
     ML_AVAILABLE = True
-except ImportError as e:
+except Exception as e:
     ML_AVAILABLE = False
-    print(f"ML libraries not available: {e}")
+    torch = None  # type: ignore
+    print(f"Torch not available: {e}")
 
 # Import pipeline components with error handling
 try:
@@ -36,14 +56,19 @@ try:
     PIPELINE_AVAILABLE = True
 except ImportError as e:
     PIPELINE_AVAILABLE = False
+    SemioticBLIPCaptioner = None  # type: ignore
+    UrbanYOLOSegmenter = None  # type: ignore
+    SemioticFeatureExtractor = None  # type: ignore
     print(f"Pipeline components not available: {e}")
 
 # Plotting
 try:
-    import matplotlib.pyplot as plt
-    import seaborn as sns
+    import matplotlib.pyplot as plt  # type: ignore
+    import seaborn as sns  # type: ignore
     PLOTTING_AVAILABLE = True
-except ImportError:
+except Exception:
+    plt = None  # type: ignore
+    sns = None  # type: ignore
     PLOTTING_AVAILABLE = False
     print("Plotting libraries not available")
 
@@ -88,7 +113,7 @@ class SemioticImageEvaluator:
         
         # Set device
         if device == "auto":
-            self.device = "cuda" if torch.cuda.is_available() else "cpu"
+            self.device = "cuda" if ML_AVAILABLE and torch is not None and torch.cuda.is_available() else "cpu"  # type: ignore[attr-defined]
         else:
             self.device = device
         
@@ -96,11 +121,11 @@ class SemioticImageEvaluator:
         self._load_evaluation_models()
         
         # Initialize pipeline components if available
-        if PIPELINE_AVAILABLE:
+        if PIPELINE_AVAILABLE and all(x is not None for x in [SemioticBLIPCaptioner, UrbanYOLOSegmenter, SemioticFeatureExtractor]):
             try:
-                self.blip_captioner = SemioticBLIPCaptioner(device=self.device)
-                self.yolo_segmenter = UrbanYOLOSegmenter()
-                self.semiotic_extractor = SemioticFeatureExtractor(device=self.device)
+                self.blip_captioner = cast(Any, SemioticBLIPCaptioner)(device=self.device)
+                self.yolo_segmenter = cast(Any, UrbanYOLOSegmenter)()
+                self.semiotic_extractor = cast(Any, SemioticFeatureExtractor)(device=self.device)
                 logger.info("Pipeline components loaded successfully")
             except Exception as e:
                 logger.warning(f"Could not load pipeline components: {e}")
@@ -120,17 +145,24 @@ class SemioticImageEvaluator:
     def _load_evaluation_models(self):
         """Load models needed for evaluation."""
         
-        # Load CLIP for text-image alignment
+        # Load CLIP (transformers) for text-image alignment
         try:
-            self.clip_model, self.clip_preprocess = clip.load("ViT-B/32", device=self.device)
-            logger.info("CLIP model loaded")
+            # Lazy import to avoid top-level dependency errors
+            from transformers import CLIPModel, CLIPProcessor  # type: ignore
+            # Use OpenAI CLIP ViT-B/32 via transformers
+            self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+            self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+            self.clip_model = self.clip_model.to(self.device)
+            logger.info("CLIP model (transformers) loaded")
         except Exception as e:
             logger.error(f"Could not load CLIP: {e}")
             self.clip_model = None
-            self.clip_preprocess = None
+            self.clip_processor = None
         
         # Load sentence transformer for text similarity
         try:
+            # Lazy import
+            from sentence_transformers import SentenceTransformer  # type: ignore
             self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
             logger.info("Sentence transformer loaded")
         except Exception as e:
@@ -165,7 +197,7 @@ class SemioticImageEvaluator:
         }
     
     def evaluate_single_image(self, image_path: str, original_prompt: str,
-                            expected_style: str = None, expected_mood: str = None) -> EvaluationMetrics:
+                            expected_style: Optional[str] = None, expected_mood: Optional[str] = None) -> EvaluationMetrics:
         """Evaluate a single generated image comprehensively."""
         
         logger.info(f"Evaluating image: {Path(image_path).name}")
@@ -265,7 +297,7 @@ class SemioticImageEvaluator:
     
     def _evaluate_style_accuracy(self, captions: Dict[str, str], 
                                original_prompt: str, 
-                               expected_style: str = None) -> float:
+                               expected_style: Optional[str] = None) -> float:
         """Evaluate accuracy of architectural style detection."""
         
         # Extract style from generated captions
@@ -297,7 +329,7 @@ class SemioticImageEvaluator:
     
     def _evaluate_mood_accuracy(self, captions: Dict[str, str], 
                               original_prompt: str, 
-                              expected_mood: str = None) -> float:
+                              expected_mood: Optional[str] = None) -> float:
         """Evaluate accuracy of urban mood detection."""
         
         # Similar logic to style accuracy
@@ -372,11 +404,11 @@ class SemioticImageEvaluator:
         # Score based on detection rate and confidence
         if detected_architectural > 0:
             if hasattr(segmentation_result, 'confidences') and segmentation_result.confidences:
-                avg_confidence = np.mean([
+                avg_confidence = float(np.mean([
                     conf for cls, conf in zip(segmentation_result.classes, segmentation_result.confidences)
                     if cls in architectural_objects
-                ])
-                return avg_confidence
+                ]))
+                return float(avg_confidence)
             else:
                 return 0.5  # Default score if no confidence scores
         
@@ -422,15 +454,20 @@ class SemioticImageEvaluator:
         realism_score += color_score * 0.3
         
         # 2. Edge coherence (architectural edges should be well-defined)
-        gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
-        edges = cv2.Canny(gray, 50, 150)
-        edge_density = np.sum(edges > 0) / (gray.shape[0] * gray.shape[1])
-        edge_score = 1.0 if 0.05 < edge_density < 0.3 else 0.5
-        realism_score += edge_score * 0.4
+        if CV2_AVAILABLE and cv2 is not None:
+            cv2_local = cast(Any, cv2)
+            gray = cv2_local.cvtColor(img_array, cv2_local.COLOR_RGB2GRAY)
+            edges = cv2_local.Canny(gray, 50, 150)
+            edge_density = np.sum(edges > 0) / (gray.shape[0] * gray.shape[1])
+            edge_score = 1.0 if 0.05 < edge_density < 0.3 else 0.5
+            realism_score += edge_score * 0.4
+        else:
+            # Fallback: give neutral contribution when OpenCV isn't available
+            realism_score += 0.2
         
         # 3. Object detection confidence (higher confidence = more realistic)
         if hasattr(segmentation_result, 'confidences') and segmentation_result.confidences:
-            avg_confidence = np.mean(segmentation_result.confidences)
+            avg_confidence = float(np.mean(segmentation_result.confidences))
             conf_score = avg_confidence
             realism_score += conf_score * 0.3
         
@@ -439,25 +476,26 @@ class SemioticImageEvaluator:
     def _calculate_clip_score(self, image: Image.Image, text: str) -> float:
         """Calculate CLIP score for text-image alignment."""
         
-        if not self.clip_model:
+        if not self.clip_model or not self.clip_processor:
             return 0.0
         
         try:
-            # Preprocess image and text
-            image_input = self.clip_preprocess(image).unsqueeze(0).to(self.device)
-            text_input = clip.tokenize([text]).to(self.device)
-            
+            # Prepare inputs using transformers processor
+            inputs = self.clip_processor(text=[text], images=image, return_tensors="pt", padding=True)
+            inputs = {k: v.to(self.device) for k, v in inputs.items()}
+
             # Calculate features
-            with torch.no_grad():
-                image_features = self.clip_model.encode_image(image_input)
-                text_features = self.clip_model.encode_text(text_input)
-                
+            with torch.no_grad():  # type: ignore[attr-defined]
+                image_features = self.clip_model.get_image_features(pixel_values=inputs["pixel_values"])  # (1, D)
+                text_features = self.clip_model.get_text_features(input_ids=inputs["input_ids"], attention_mask=inputs.get("attention_mask"))  # (1, D)
+
                 # Normalize features
                 image_features = image_features / image_features.norm(dim=-1, keepdim=True)
                 text_features = text_features / text_features.norm(dim=-1, keepdim=True)
                 
                 # Calculate cosine similarity
-                clip_score = torch.cosine_similarity(image_features, text_features).item()
+                # Compute cosine similarity using normalized features
+                clip_score = float((image_features @ text_features.T).squeeze().item())
             
             return max(0.0, clip_score)  # Ensure non-negative
             
@@ -476,14 +514,22 @@ class SemioticImageEvaluator:
         
         # Check for artifacts (very basic)
         # Calculate image sharpness using Laplacian variance
-        gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
-        sharpness = cv2.Laplacian(gray, cv2.CV_64F).var()
-        sharpness_score = min(sharpness / 1000, 1.0)  # Normalize
+        if CV2_AVAILABLE and cv2 is not None:
+            cv2_local = cast(Any, cv2)
+            gray = cv2_local.cvtColor(img_array, cv2_local.COLOR_RGB2GRAY)
+            sharpness = cv2_local.Laplacian(gray, cv2_local.CV_64F).var()
+            sharpness_score = min(float(sharpness) / 1000, 1.0)  # Normalize
+        else:
+            sharpness_score = 0.5
         
         # Check color saturation
-        hsv = cv2.cvtColor(img_array, cv2.COLOR_RGB2HSV)
-        saturation = np.mean(hsv[:, :, 1])
-        saturation_score = min(saturation / 255, 1.0)
+        if CV2_AVAILABLE and cv2 is not None:
+            cv2_local = cast(Any, cv2)
+            hsv = cv2_local.cvtColor(img_array, cv2_local.COLOR_RGB2HSV)
+            saturation = float(np.mean(hsv[:, :, 1]))
+            saturation_score = min(saturation / 255, 1.0)
+        else:
+            saturation_score = 0.5
         
         # Combine scores
         quality_score = (resolution_score * 0.4 + sharpness_score * 0.4 + saturation_score * 0.2)
@@ -507,7 +553,7 @@ class SemioticImageEvaluator:
                 similarity = cosine_similarity(original_embedding, caption_embedding)[0][0]
                 similarities.append(similarity)
         
-        return np.mean(similarities) if similarities else 0.0
+        return float(np.mean(similarities)) if similarities else 0.0
     
     def _evaluate_prompt_following(self, image: Image.Image, 
                                  original_prompt: str, 
@@ -560,7 +606,7 @@ class SemioticImageEvaluator:
                 )[0][0]
                 similarities.append(sim)
         
-        return np.mean(similarities) if similarities else 0.0
+        return float(np.mean(similarities)) if similarities else 0.0
     
     def _calculate_semiotic_score(self, metrics: EvaluationMetrics) -> float:
         """Calculate composite semiotic awareness score."""
@@ -589,7 +635,7 @@ class SemioticImageEvaluator:
     
     def evaluate_batch(self, image_paths: List[str], 
                       prompts: List[str],
-                      output_path: str = None) -> Dict[str, Any]:
+                      output_path: Optional[str] = None) -> Dict[str, Any]:
         """Evaluate a batch of images and generate comprehensive report."""
         
         logger.info(f"Evaluating batch of {len(image_paths)} images")
@@ -616,7 +662,7 @@ class SemioticImageEvaluator:
         report = {
             "summary": {
                 "total_images": len(image_paths),
-                "evaluation_date": pd.Timestamp.now().isoformat(),
+                "evaluation_date": datetime.now().isoformat(),
                 "aggregate_metrics": aggregate_stats
             },
             "detailed_results": detailed_results,
@@ -625,17 +671,17 @@ class SemioticImageEvaluator:
         
         # Save report if output path provided
         if output_path:
-            output_path = Path(output_path)
-            output_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path = Path(output_path)
+            out_path.parent.mkdir(parents=True, exist_ok=True)
             
-            with open(output_path, 'w', encoding='utf-8') as f:
+            with open(out_path, 'w', encoding='utf-8') as f:
                 json.dump(report, f, indent=2, ensure_ascii=False)
             
             # Also create visualizations if possible
             if PLOTTING_AVAILABLE:
-                self._create_evaluation_visualizations(all_metrics, output_path.parent)
+                self._create_evaluation_visualizations(all_metrics, out_path.parent)
             
-            logger.info(f"Evaluation report saved to {output_path}")
+            logger.info(f"Evaluation report saved to {out_path}")
         
         return report
     
@@ -716,98 +762,97 @@ class SemioticImageEvaluator:
     def _create_evaluation_visualizations(self, metrics_list: List[EvaluationMetrics], 
                                         output_dir: Path):
         """Create visualization plots for evaluation results."""
-        
-        # Create metrics DataFrame
+        if not (PLOTTING_AVAILABLE and PANDAS_AVAILABLE and plt is not None and pd is not None):
+            logger.warning("Plotting or pandas not available; skipping visualization generation")
+            return
+
         metrics_data = [asdict(m) for m in metrics_list]
-        df = pd.DataFrame(metrics_data)
-        
-        # Set up the plotting style
-        plt.style.use('default')
-        fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+        pd_local = cast(Any, pd)
+        df = pd_local.DataFrame(metrics_data)
+
+        _plt = cast(Any, plt)
+        _plt.style.use('default')
+        fig, axes = _plt.subplots(2, 2, figsize=(15, 12))
         fig.suptitle('Semiotic Image Evaluation Results', fontsize=16)
-        
+
         # 1. Overall score distribution
         axes[0, 0].hist(df['overall_score'], bins=20, alpha=0.7, color='skyblue')
         axes[0, 0].set_title('Overall Score Distribution')
         axes[0, 0].set_xlabel('Score')
         axes[0, 0].set_ylabel('Frequency')
-        
+
         # 2. Semiotic metrics comparison
         semiotic_cols = ['style_accuracy', 'mood_accuracy', 'semiotic_consistency']
         semiotic_means = df[semiotic_cols].mean()
-        axes[0, 1].bar(range(len(semiotic_cols)), semiotic_means, 
-                       color=['lightcoral', 'lightgreen', 'gold'])
+        axes[0, 1].bar(range(len(semiotic_cols)), semiotic_means, color=['lightcoral', 'lightgreen', 'gold'])
         axes[0, 1].set_title('Semiotic Metrics Comparison')
         axes[0, 1].set_xticks(range(len(semiotic_cols)))
         axes[0, 1].set_xticklabels([col.replace('_', ' ').title() for col in semiotic_cols])
         axes[0, 1].set_ylabel('Mean Score')
-        
+
         # 3. Quality metrics comparison
         quality_cols = ['clip_score', 'image_quality_score', 'architectural_realism']
         quality_means = df[quality_cols].mean()
-        axes[1, 0].bar(range(len(quality_cols)), quality_means, 
-                       color=['mediumpurple', 'orange', 'lightblue'])
+        axes[1, 0].bar(range(len(quality_cols)), quality_means, color=['mediumpurple', 'orange', 'lightblue'])
         axes[1, 0].set_title('Quality Metrics Comparison')
         axes[1, 0].set_xticks(range(len(quality_cols)))
         axes[1, 0].set_xticklabels([col.replace('_', ' ').title() for col in quality_cols])
         axes[1, 0].set_ylabel('Mean Score')
-        
+
         # 4. Score correlation heatmap
         correlation_cols = ['overall_score', 'semiotic_score', 'clip_score', 'architectural_realism']
         corr_matrix = df[correlation_cols].corr()
-        im = axes[1, 1].imshow(corr_matrix, cmap='coolwarm', aspect='auto')
+        axes[1, 1].imshow(corr_matrix, cmap='coolwarm', aspect='auto')
         axes[1, 1].set_title('Score Correlations')
         axes[1, 1].set_xticks(range(len(correlation_cols)))
         axes[1, 1].set_yticks(range(len(correlation_cols)))
         axes[1, 1].set_xticklabels([col.replace('_', ' ').title() for col in correlation_cols], rotation=45)
         axes[1, 1].set_yticklabels([col.replace('_', ' ').title() for col in correlation_cols])
-        
+
         # Add correlation values to heatmap
         for i in range(len(correlation_cols)):
             for j in range(len(correlation_cols)):
-                axes[1, 1].text(j, i, f'{corr_matrix.iloc[i, j]:.2f}', 
-                               ha='center', va='center', color='white')
-        
-        plt.tight_layout()
-        plt.savefig(output_dir / 'evaluation_metrics.png', dpi=300, bbox_inches='tight')
-        plt.close()
-        
+                axes[1, 1].text(j, i, f'{corr_matrix.iloc[i, j]:.2f}', ha='center', va='center', color='white')
+
+        _plt.tight_layout()
+        _plt.savefig(output_dir / 'evaluation_metrics.png', dpi=300, bbox_inches='tight')
+        _plt.close()
+
         logger.info(f"Evaluation visualizations saved to {output_dir}")
 
 def main():
     """Main execution for testing evaluation system."""
-    
     parser = argparse.ArgumentParser(description="Evaluate generated images")
     parser.add_argument("--images", nargs="+", help="Paths to images to evaluate")
     parser.add_argument("--prompts", nargs="+", help="Original prompts for the images")
     parser.add_argument("--output", type=str, default="evaluation_report.json", help="Output report path")
-    
+
     args = parser.parse_args()
-    
+
     # Initialize evaluator
     try:
         evaluator = SemioticImageEvaluator()
     except Exception as e:
         print(f"Could not initialize evaluator: {e}")
         return
-    
+
     # Example evaluation if no args provided
     if not args.images or not args.prompts:
         print("No test images provided. Example usage:")
         print("python evaluation_pipeline.py --images image1.jpg image2.jpg --prompts 'prompt 1' 'prompt 2' --output report.json")
         return
-    
+
     if len(args.images) != len(args.prompts):
         print("Error: Number of images must match number of prompts")
         return
-    
+
     # Evaluate batch
     report = evaluator.evaluate_batch(
-        args.images, 
-        args.prompts, 
+        args.images,
+        args.prompts,
         output_path=args.output
     )
-    
+
     print("Evaluation completed!")
     print(f"Overall mean score: {report['summary']['aggregate_metrics']['overall_score']['mean']:.3f}")
     print(f"Semiotic mean score: {report['summary']['aggregate_metrics']['semiotic_score']['mean']:.3f}")

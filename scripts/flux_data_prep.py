@@ -26,7 +26,9 @@ class FluxTrainingDataPreparator:
         """Initialize data preparation system."""
         
         self.base_path = Path(base_path)
-        self.output_path = Path(output_path) if output_path else self.base_path / "data" / "flux_training"
+        # Align with standardized outputs structure
+        default_output = self.base_path / "data" / "outputs" / "05_flux_training_data"
+        self.output_path = Path(output_path) if output_path else default_output
         
         # Create output directory structure
         self.images_dir = self.output_path / "images"
