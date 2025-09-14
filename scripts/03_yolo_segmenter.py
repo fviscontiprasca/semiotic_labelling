@@ -18,6 +18,7 @@ from dataclasses import dataclass
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from collections import defaultdict
+import argparse
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -431,8 +432,12 @@ class UrbanYOLOSegmenter:
                 # Perform segmentation
                 seg_result = self.segment_image(sample.filepath)
                 
+                # Get image dimensions for FiftyOne format conversion
+                img = Image.open(sample.filepath)
+                img_width, img_height = img.size
+                
                 # Convert to FiftyOne format
-                fo_detections = self._convert_to_fiftyone_format(seg_result)
+                fo_detections = self._convert_to_fiftyone_format(seg_result, img_width, img_height)
                 
                 # Add to sample
                 sample[segmentation_field] = fo_detections
@@ -450,7 +455,8 @@ class UrbanYOLOSegmenter:
         
         logger.info(f"Completed segmentation processing for {processed} samples")
     
-    def _convert_to_fiftyone_format(self, seg_result: SemioticSegmentation) -> fo.Detections:
+    def _convert_to_fiftyone_format(self, seg_result: SemioticSegmentation, 
+                                   image_width: int, image_height: int) -> fo.Detections:
         """Convert segmentation result to FiftyOne format."""
         
         detections = []
@@ -462,9 +468,8 @@ class UrbanYOLOSegmenter:
             x1, y1, x2, y2 = bbox
             
             # Convert to relative coordinates (FiftyOne format)
-            # Note: This assumes we know the image dimensions
-            # In practice, you'd need to get actual image dimensions
-            rel_bbox = [x1/1000, y1/1000, (x2-x1)/1000, (y2-y1)/1000]  # placeholder
+            rel_bbox = [x1/image_width, y1/image_height, 
+                       (x2-x1)/image_width, (y2-y1)/image_height]
             
             detection = fo.Detection(
                 label=cls,
@@ -518,13 +523,118 @@ class UrbanYOLOSegmenter:
         
         return overlay
 
+    def segment_directory(self, input_dir: str, output_dir: str, 
+                         confidence_threshold: float = 0.5,
+                         save_visualizations: bool = False) -> None:
+        """Segment all images in a directory and save results as JSON."""
+        
+        img_exts = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".tif", ".tiff"}
+        base = Path(input_dir)
+        images = [p for p in base.rglob("*") if p.suffix.lower() in img_exts]
+        
+        logger.info(f"Found {len(images)} images under {base}")
+        
+        output_path = Path(output_dir)
+        output_path.mkdir(parents=True, exist_ok=True)
+        
+        # Create subdirectories for different outputs
+        masks_dir = output_path / "masks"
+        analysis_dir = output_path / "analysis"
+        viz_dir = output_path / "visualizations"
+        
+        masks_dir.mkdir(exist_ok=True)
+        analysis_dir.mkdir(exist_ok=True)
+        if save_visualizations:
+            viz_dir.mkdir(exist_ok=True)
+        
+        # Process all images
+        all_results = {}
+        
+        for idx, img_path in enumerate(images, 1):
+            try:
+                # Get relative path for consistent naming
+                rel_path = str(img_path.relative_to(base))
+                
+                # Perform segmentation
+                seg_result = self.segment_image(str(img_path), confidence_threshold)
+                
+                # Save individual analysis
+                analysis_file = analysis_dir / f"{img_path.stem}_analysis.json"
+                with analysis_file.open("w", encoding="utf-8") as f:
+                    json.dump({
+                        "image_path": rel_path,
+                        "classes": seg_result.classes,
+                        "confidences": seg_result.confidences,
+                        "bboxes": seg_result.bboxes,
+                        "semiotic_analysis": seg_result.semiotic_analysis
+                    }, f, indent=2, ensure_ascii=False)
+                
+                # Save masks as numpy arrays
+                if len(seg_result.masks) > 0:
+                    masks_file = masks_dir / f"{img_path.stem}_masks.npz"
+                    np.savez_compressed(masks_file, 
+                                      masks=seg_result.masks,
+                                      classes=seg_result.classes,
+                                      confidences=seg_result.confidences,
+                                      bboxes=seg_result.bboxes)
+                
+                # Save visualization if requested
+                if save_visualizations and len(seg_result.masks) > 0:
+                    viz_file = viz_dir / f"{img_path.stem}_segmented.jpg"
+                    self.visualize_segmentation(str(img_path), seg_result, str(viz_file))
+                
+                # Add to combined results (compatible with Phase 04 expectations)
+                all_results[rel_path] = {
+                    "classes": seg_result.classes,
+                    "confidences": seg_result.confidences,
+                    "bboxes": seg_result.bboxes,
+                    "num_objects": len(seg_result.classes),
+                    "semiotic_segmentation_analysis": seg_result.semiotic_analysis,  # Expected by Phase 04
+                    "semiotic_interpretation": seg_result.semiotic_analysis.get("semiotic_interpretation", {})
+                }
+                
+                if idx % 25 == 0:
+                    logger.info(f"Segmented {idx}/{len(images)} images")
+                    
+            except Exception as e:
+                logger.error(f"Failed to segment {img_path}: {e}")
+                continue
+        
+        # Save combined results
+        summary_file = output_path / "segmentation_summary.json"
+        with summary_file.open("w", encoding="utf-8") as f:
+            json.dump(all_results, f, indent=2, ensure_ascii=False)
+        
+        logger.info(f"Completed segmentation: {len(all_results)} images processed")
+        logger.info(f"Results saved to: {output_path}")
+
 def main():
-    """Main execution for testing segmentation system."""
+    """CLI: segment an image directory and save results; fallback to demo."""
+    parser = argparse.ArgumentParser(description="YOLO11 Urban Segmenter (03)")
+    parser.add_argument("--input_dir", default=None, help="Directory with images to segment")
+    parser.add_argument("--output_dir", default=None, help="Output directory for segmentation results")
+    parser.add_argument("--confidence", type=float, default=0.5, help="Confidence threshold (0-1)")
+    parser.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"], help="Compute device")
+    parser.add_argument("--visualizations", action="store_true", help="Save visualization images")
+    parser.add_argument("--model_path", default=None, help="Path to custom YOLO model")
+    args = parser.parse_args()
     
-    # Initialize segmenter
-    segmenter = UrbanYOLOSegmenter()
+    # If CLI paths provided, run directory mode
+    if args.input_dir:
+        default_out = Path(__file__).parent.parent / "data" / "outputs" / "03_yolo_segmentation"
+        output_dir = args.output_dir if args.output_dir else str(default_out)
+        
+        segmenter = UrbanYOLOSegmenter(model_path=args.model_path, device=args.device)
+        segmenter.segment_directory(
+            args.input_dir, 
+            output_dir, 
+            confidence_threshold=args.confidence,
+            save_visualizations=args.visualizations
+        )
+        return
     
-    # Load dataset
+    # Fallback: FiftyOne demo
+    segmenter = UrbanYOLOSegmenter(device=args.device)
     dataset_name = "semiotic_urban_combined"
     if fo.dataset_exists(dataset_name):
         dataset = fo.load_dataset(dataset_name)
@@ -542,7 +652,7 @@ def main():
         except KeyboardInterrupt:
             print("Shutting down...")
     else:
-        print(f"Dataset {dataset_name} not found. Run data_pipeline.py first.")
+        print(f"Dataset {dataset_name} not found. Provide --input_dir to segment a folder.")
 
 if __name__ == "__main__":
     main()

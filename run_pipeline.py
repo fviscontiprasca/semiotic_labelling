@@ -65,9 +65,9 @@ def run_blip_captioning_export(input_dir: str, output_dir: str):
     command = f"python scripts/02b_blip2_captioner_export.py --input {input_dir} --output {output_dir}"
     return run_command(command, "Enhance captions with BLIP-2 export (02b)")
 
-def run_yolo_segmentation(dataset_name, export_dir):
+def run_yolo_segmentation(input_images_dir, output_dir):
     """Extract architectural elements with YOLO11 (03)."""
-    command = f"python scripts/03_yolo_segmenter.py --dataset_name {dataset_name} --export_dir {export_dir}"
+    command = f"python scripts/03_yolo_segmenter.py --input_dir {input_images_dir} --output_dir {output_dir}"
     return run_command(command, "Extract architectural elements with YOLO11 (03)")
 
 def run_feature_extraction(input_data, output_features):
@@ -153,7 +153,7 @@ def main():
                     success_steps.append("BLIP-2 Captioning Export (02b)")
             
             # Step 3: YOLO segmentation
-            if run_yolo_segmentation("unified_dataset", str(yolo_out)):
+            if run_yolo_segmentation(str(dp_out / "images"), str(yolo_out)):
                 success_steps.append("YOLO11 Segmentation")
             
             # Step 4: Feature extraction
