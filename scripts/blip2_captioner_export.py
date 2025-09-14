@@ -6,6 +6,7 @@ and generates enhanced semiotic-aware captions.
 import os
 import json
 import logging
+import argparse
 from pathlib import Path
 from typing import Dict, List, Optional
 import torch
@@ -19,25 +20,107 @@ logger = logging.getLogger(__name__)
 class ExportBLIPCaptioner:
     """BLIP-2 captioner for processing exported data pipeline files."""
     
-    def __init__(self, model_name: str = "Salesforce/blip2-opt-2.7b", device: str = "auto"):
-        """Initialize the BLIP-2 model."""
-        
-        if device == "auto":
-            self.device = "cuda" if torch.cuda.is_available() else "cpu"
+    def __init__(
+        self,
+        model_name: str = "Salesforce/blip2-opt-2.7b",
+        device: str = "auto",
+        gpu_id: int = 0,
+        dtype: str = "auto",
+        load_in_8bit: bool = False,
+        load_in_4bit: bool = False,
+    ):
+        """Initialize the BLIP-2 model with GPU controls.
+
+        Args:
+            model_name: HF model id to load.
+            device: "auto" | "cpu" | "cuda". If cuda and available, prefer GPU.
+            gpu_id: Target GPU index (used when device=="cuda").
+            dtype: "auto" | "fp16" | "bf16" | "fp32". Default auto picks fp16 on CUDA else fp32.
+            load_in_8bit: If True and bitsandbytes available, load in 8-bit.
+            load_in_4bit: If True and bitsandbytes available, load in 4-bit.
+        """
+
+        # Resolve desired device
+        requested_cuda = (device == "cuda") or (device == "auto" and torch.cuda.is_available())
+        if requested_cuda and torch.cuda.is_available():
+            # Restrict visibility to the requested GPU before model load
+            os.environ.setdefault("CUDA_VISIBLE_DEVICES", str(gpu_id))
+            # In case multiple GPUs remain visible, also set current device
+            try:
+                torch.cuda.set_device(0)
+            except Exception:
+                pass
+            self.device = "cuda"
         else:
-            self.device = device
-            
-        logger.info(f"Loading BLIP-2 model: {model_name} on {self.device}")
-        
-        # Load processor and model
-        self.processor = Blip2Processor.from_pretrained(model_name)
-        self.model = Blip2ForConditionalGeneration.from_pretrained(
-            model_name,
-            torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
-            device_map="auto" if self.device == "cuda" else None
+            self.device = "cpu"
+
+        # Resolve dtype
+        if dtype == "fp16":
+            torch_dtype = torch.float16
+        elif dtype == "bf16":
+            torch_dtype = torch.bfloat16
+        elif dtype == "fp32":
+            torch_dtype = torch.float32
+        else:  # auto
+            torch_dtype = torch.float16 if self.device == "cuda" else torch.float32
+
+        logger.info(
+            f"Loading BLIP-2 model: {model_name} on {self.device} (gpu_id={gpu_id if self.device=='cuda' else 'N/A'}, dtype={torch_dtype})"
         )
+
+        # Set local models cache directory
+        models_dir = Path(__file__).parent.parent / "models"
+        models_dir.mkdir(exist_ok=True)
+        cache_dir = str(models_dir)
+
+        # Check if model exists locally to avoid re-download
+        model_cache_name = model_name.replace("/", "--")
+        local_model_path = models_dir / f"models--{model_cache_name}"
         
+        if local_model_path.exists():
+            logger.info(f"Using existing local model at: {local_model_path}")
+            # Use local_files_only to prevent download attempts
+            self.processor = Blip2Processor.from_pretrained(
+                model_name, 
+                cache_dir=cache_dir,
+                local_files_only=True
+            )
+        else:
+            logger.info(f"Model not found locally, will download to: {local_model_path}")
+            # Load processor and model with download
+            self.processor = Blip2Processor.from_pretrained(model_name, cache_dir=cache_dir)
+
+        model_kwargs = {
+            "torch_dtype": torch_dtype,
+            "low_cpu_mem_usage": True,
+        }
+        # Quantization (optional)
+        if load_in_4bit:
+            model_kwargs["load_in_4bit"] = True
+        elif load_in_8bit:
+            model_kwargs["load_in_8bit"] = True
+
+        if self.device == "cuda":
+            # Use device_map auto within the constrained CUDA_VISIBLE_DEVICES
+            model_kwargs["device_map"] = "auto"
+
+        # Load model with same local check
+        if local_model_path.exists():
+            self.model = Blip2ForConditionalGeneration.from_pretrained(
+                model_name,
+                cache_dir=cache_dir,
+                local_files_only=True,
+                **model_kwargs,
+            )
+        else:
+            self.model = Blip2ForConditionalGeneration.from_pretrained(
+                model_name,
+                cache_dir=cache_dir,
+                **model_kwargs,
+            )
+
         if self.device != "cuda":
+            # CPU path
             self.model = self.model.to(self.device)
         
         # Semiotic prompts
@@ -223,22 +306,50 @@ class ExportBLIPCaptioner:
 
 def main():
     """Main execution."""
-    
-    # Initialize captioner
-    captioner = ExportBLIPCaptioner()
-    
+
+    parser = argparse.ArgumentParser(description="BLIP-2 captioner export")
+    parser.add_argument("--model", default="Salesforce/blip2-opt-2.7b", help="HF model id")
+    parser.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"], help="Compute device")
+    parser.add_argument("--gpu", type=int, default=1, help="GPU id to use when device=cuda")
+    parser.add_argument("--dtype", default="auto", choices=["auto", "fp16", "bf16", "fp32"], help="Computation dtype")
+    parser.add_argument("--load-in-8bit", action="store_true", help="Load model in 8-bit (bitsandbytes)")
+    parser.add_argument("--load-in-4bit", action="store_true", help="Load model in 4-bit (bitsandbytes)")
+    parser.add_argument("--input", default=None, help="Override data pipeline input path")
+    parser.add_argument("--output", default=None, help="Override captions output path")
+
+    args = parser.parse_args()
+
+    # Initialize captioner with GPU controls
+    captioner = ExportBLIPCaptioner(
+        model_name=args.model,
+        device=args.device,
+        gpu_id=args.gpu,
+        dtype=args.dtype,
+        load_in_8bit=args.load_in_8bit,
+        load_in_4bit=args.load_in_4bit,
+    )
+
     # Set paths
     base_path = Path(__file__).parent.parent
-    data_pipeline_path = base_path / "data" / "outputs" / "01_data_pipeline"
-    output_path = base_path / "data" / "outputs" / "02_blip2_captions"
-    
+    data_pipeline_path = (
+        Path(args.input) if args.input else base_path / "data" / "outputs" / "01_data_pipeline"
+    )
+    output_path = (
+        Path(args.output) if args.output else base_path / "data" / "outputs" / "02_blip2_captions"
+    )
+
     # Process exported data
     if data_pipeline_path.exists():
         logger.info(f"Processing data from: {data_pipeline_path}")
         logger.info(f"Output will be saved to: {output_path}")
-        
+
+        if captioner.device != "cuda":
+            logger.warning(
+                "CUDA not available or CPU selected. Running BLIP-2 on CPU will be slow."
+            )
+
         captioner.process_exported_data(str(data_pipeline_path), str(output_path))
-        
+
         logger.info("BLIP-2 captioning completed!")
     else:
         logger.error(f"Data pipeline output not found at: {data_pipeline_path}")

@@ -1,0 +1,8 @@
+name: semiotic-labelling
+channels:
+  - defaults
+dependencies:
+  - python=3.13.7
+  - pip
+  - pip:
+      - -r requirements.txt
