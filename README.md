@@ -54,12 +54,21 @@ Please consult the original projects for licensing and citation details before a
 
 ## Quick technical prerequisites
 
-- Python 3.8+
-- CUDA‑capable GPU recommended (see `Performance` for hardware guidance)
+- Python 3.8+ (Python 3.13 recommended)
+- CUDA‑capable GPU recommended:
+  - **LoRA Pipeline**: 8GB+ VRAM 
+  - **Full Fine-tuning**: 16GB+ VRAM (24GB+ optimal)
 - Install required packages:
 
 ```bash
+# Quick setup (interactive)
+python setup_environment.py
+
+# Manual installation
 pip install -r requirements.txt
+
+# Validate installation
+python check_environment.py
 ```
 
 Model weights (Flux.1d, BLIP‑2, SAM/YOLO variants) are not included in the repository and must be obtained separately — scripts assume standard Hugging Face identifiers or local paths (see `scripts/*` headers for expected locations).

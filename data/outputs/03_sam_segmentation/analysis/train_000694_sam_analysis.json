@@ -1,5 +1,5 @@
 {
-  "image_path": "data\\outputs\\01_data_pipeline\\images\\train\\train_000694.jpg",
+  "image_path": "/content/drive/MyDrive/ColabNotebooks/Thesis/semiotic_labelling/data/outputs/01_data_pipeline/images/train/train_000694.jpg",
   "total_segments": 178,
   "architectural_segments": 178,
   "segment_analysis": {
@@ -210,7 +210,7 @@
           219
         ],
         "area": 7202,
-        "stability_score": 0.9593874216079712,
+        "stability_score": 0.9595186114311218,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
           "semiotic_indicators": [
@@ -234,14 +234,14 @@
           "aspect_ratio": 11.847826086956522,
           "compactness": 1.020878851620059,
           "mean_color": [
-            139.81083361457982,
-            134.716841039487,
-            124.2716841039487
+            139.81004612442345,
+            134.71605354933064,
+            124.27067161660479
           ],
           "color_std": [
-            25.17465466179996,
-            24.38257551256571,
-            24.023118770199112
+            25.174898979537538,
+            24.38295391866674,
+            24.02447884482372
           ],
           "position": {
             "center_x": 272.5,
@@ -256,7 +256,7 @@
           46
         ],
         "area": 17778,
-        "stability_score": 0.9593799710273743,
+        "stability_score": 0.9594305157661438,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
           "semiotic_indicators": [
@@ -390,7 +390,7 @@
           30
         ],
         "area": 7117,
-        "stability_score": 0.9706939458847046,
+        "stability_score": 0.9709703922271729,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -406,24 +406,24 @@
             40,
             222
           ],
-          "area": 7627,
+          "area": 7626,
           "aspect_ratio": 0.18018018018018017,
-          "compactness": 0.3745111289676387,
+          "compactness": 0.3744620256335666,
           "mean_color": [
-            190.53939950177002,
-            182.02897600629342,
-            172.26091516979153
+            190.54038814581693,
+            182.03002884867558,
+            172.26265407815367
           ],
           "color_std": [
-            17.49384094524152,
-            16.738169841955237,
-            16.147456981242257
+            17.494774838873198,
+            16.739014714446505,
+            16.147801565380412
           ],
           "position": {
             "center_x": 592.0,
             "center_y": 435.0
           },
-          "relative_size": 0.009761785304718218
+          "relative_size": 0.009760505406290957
         },
         "bbox": [
           572,
@@ -431,7 +431,7 @@
           40,
           222
         ],
-        "area": 7627,
+        "area": 7626,
         "stability_score": 0.966967761516571,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
@@ -520,7 +520,7 @@
           143
         ],
         "area": 1965,
-        "stability_score": 0.952498733997345,
+        "stability_score": 0.9529935717582703,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -528,6 +528,48 @@
       },
       {
         "segment_id": 12,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            501,
+            309,
+            41,
+            233
+          ],
+          "area": 8651,
+          "aspect_ratio": 0.1759656652360515,
+          "compactness": 0.3758346599933175,
+          "mean_color": [
+            187.1615998150503,
+            178.6132239047509,
+            169.71379031325858
+          ],
+          "color_std": [
+            16.425851170955905,
+            15.831844691771776,
+            15.502582349704731
+          ],
+          "position": {
+            "center_x": 521.5,
+            "center_y": 425.5
+          },
+          "relative_size": 0.01107240129423329
+        },
+        "bbox": [
+          501,
+          309,
+          41,
+          233
+        ],
+        "area": 8651,
+        "stability_score": 0.9573454260826111,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 13,
         "architectural_type": "window_or_opening",
         "properties": {
           "bbox": [
@@ -562,7 +604,7 @@
           28
         ],
         "area": 925,
-        "stability_score": 0.9828141927719116,
+        "stability_score": 0.9817400574684143,
         "semiotic_analysis": {
           "architectural_type": "window_or_opening",
           "semiotic_indicators": [
@@ -570,48 +612,6 @@
             "interior_exterior_relationship",
             "privacy_and_accessibility"
           ]
-        }
-      },
-      {
-        "segment_id": 13,
-        "architectural_type": "detail_or_texture",
-        "properties": {
-          "bbox": [
-            501,
-            309,
-            41,
-            233
-          ],
-          "area": 8652,
-          "aspect_ratio": 0.1759656652360515,
-          "compactness": 0.37587810423115015,
-          "mean_color": [
-            187.164470642626,
-            178.6159269533056,
-            169.71613499768839
-          ],
-          "color_std": [
-            16.42707218828419,
-            15.832925969645283,
-            15.50322035489516
-          ],
-          "position": {
-            "center_x": 521.5,
-            "center_y": 425.5
-          },
-          "relative_size": 0.01107368119266055
-        },
-        "bbox": [
-          501,
-          309,
-          41,
-          233
-        ],
-        "area": 8652,
-        "stability_score": 0.9573502540588379,
-        "semiotic_analysis": {
-          "architectural_type": "detail_or_texture",
-          "semiotic_indicators": []
         }
       },
       {
@@ -696,7 +696,7 @@
           65
         ],
         "area": 3374,
-        "stability_score": 0.9655474424362183,
+        "stability_score": 0.9652554988861084,
         "semiotic_analysis": {
           "architectural_type": "window_or_opening",
           "semiotic_indicators": [
@@ -716,24 +716,24 @@
             68,
             38
           ],
-          "area": 2356,
+          "area": 2357,
           "aspect_ratio": 1.7894736842105263,
-          "compactness": 0.7118287572805602,
+          "compactness": 0.7179518139819151,
           "mean_color": [
-            168.30050933786077,
-            159.44567062818336,
-            145.3149405772496
+            168.27959270258805,
+            159.4242681374629,
+            145.29571489181163
           ],
           "color_std": [
-            31.097096143130937,
-            28.80011352376064,
-            26.422840820336543
+            31.10707109395787,
+            28.812737394669394,
+            26.433712345700254
           ],
           "position": {
             "center_x": 239.0,
             "center_y": 515.0
           },
-          "relative_size": 0.0030154406946264743
+          "relative_size": 0.003016720593053735
         },
         "bbox": [
           205,
@@ -741,7 +741,7 @@
           68,
           38
         ],
-        "area": 2356,
+        "area": 2357,
         "stability_score": 0.970723569393158,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
@@ -788,7 +788,7 @@
           208
         ],
         "area": 1688,
-        "stability_score": 0.9650145769119263,
+        "stability_score": 0.9644314646720886,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -872,7 +872,7 @@
           41
         ],
         "area": 2653,
-        "stability_score": 0.9783582091331482,
+        "stability_score": 0.9779850840568542,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -1216,7 +1216,7 @@
           121
         ],
         "area": 4888,
-        "stability_score": 0.9779307842254639,
+        "stability_score": 0.9781287908554077,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -1492,24 +1492,24 @@
             35,
             196
           ],
-          "area": 5562,
+          "area": 5563,
           "aspect_ratio": 0.17857142857142858,
-          "compactness": 0.34533701604156053,
+          "compactness": 0.34539910468162555,
           "mean_color": [
-            193.7601582164689,
-            185.38745055735347,
-            175.63214670981662
+            193.75408952004315,
+            185.3812690994068,
+            175.626101024627
           ],
           "color_std": [
-            16.22972029207068,
-            15.779916389061125,
-            15.360649254425685
+            16.23457159402513,
+            15.785231279827483,
+            15.365885078807455
           ],
           "position": {
             "center_x": 764.5,
             "center_y": 459.0
           },
-          "relative_size": 0.00711879505242464
+          "relative_size": 0.0071200749508519
         },
         "bbox": [
           747,
@@ -1517,7 +1517,7 @@
           35,
           196
         ],
-        "area": 5562,
+        "area": 5563,
         "stability_score": 0.9699221253395081,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
@@ -1736,7 +1736,7 @@
           58
         ],
         "area": 6105,
-        "stability_score": 0.9721952676773071,
+        "stability_score": 0.9720381498336792,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -1886,24 +1886,24 @@
             122,
             45
           ],
-          "area": 3937,
+          "area": 3938,
           "aspect_ratio": 2.7111111111111112,
-          "compactness": 0.483980511922137,
+          "compactness": 0.48410344321802784,
           "mean_color": [
-            175.26492252984505,
-            167.88366776733554,
-            157.6756413512827
+            175.26358557643474,
+            167.88318943626206,
+            157.67496190959878
           ],
           "color_std": [
-            17.804177716789884,
-            16.721483368849746,
-            16.097246967110284
+            17.802114663247387,
+            16.719387079132055,
+            16.095259462245576
           ],
           "position": {
             "center_x": 827.0,
             "center_y": 576.5
           },
-          "relative_size": 0.005038960108125819
+          "relative_size": 0.00504024000655308
         },
         "bbox": [
           766,
@@ -1911,7 +1911,7 @@
           122,
           45
         ],
-        "area": 3937,
+        "area": 3938,
         "stability_score": 0.9554283022880554,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
@@ -1970,24 +1970,24 @@
             182,
             19
           ],
-          "area": 2413,
+          "area": 2411,
           "aspect_ratio": 9.578947368421053,
-          "compactness": 0.20169062783650826,
+          "compactness": 0.20152345781758035,
           "mean_color": [
-            194.2523829258185,
-            185.46912556983008,
-            169.42602569415666
+            194.29780174201576,
+            185.50974699294898,
+            169.46868519286602
           ],
           "color_std": [
-            28.831227162158655,
-            28.766295764450714,
-            29.255324893769952
+            28.7960849390679,
+            28.741359554555522,
+            29.229865933980616
           ],
           "position": {
             "center_x": 706.0,
             "center_y": 676.5
           },
-          "relative_size": 0.0030883949049803406
+          "relative_size": 0.003085835108125819
         },
         "bbox": [
           615,
@@ -1995,7 +1995,7 @@
           182,
           19
         ],
-        "area": 2413,
+        "area": 2411,
         "stability_score": 0.9615699052810669,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
@@ -2080,7 +2080,7 @@
           46
         ],
         "area": 488,
-        "stability_score": 0.9676767587661743,
+        "stability_score": 0.965656578540802,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -2096,24 +2096,24 @@
             101,
             32
           ],
-          "area": 2474,
+          "area": 2475,
           "aspect_ratio": 3.15625,
-          "compactness": 0.519162987150709,
+          "compactness": 0.5158741115158708,
           "mean_color": [
-            107.80153597413096,
-            102.14470493128536,
-            64.6818916734034
+            107.83151515151515,
+            102.17212121212121,
+            64.71555555555555
           ],
           "color_std": [
-            40.724767540826605,
-            36.18961223618477,
-            37.13725469982728
+            40.74383508832122,
+            36.20798882976564,
+            37.16748742733427
           ],
           "position": {
             "center_x": 969.5,
             "center_y": 615.0
           },
-          "relative_size": 0.0031664687090432503
+          "relative_size": 0.003167748607470511
         },
         "bbox": [
           919,
@@ -2121,7 +2121,7 @@
           101,
           32
         ],
-        "area": 2474,
+        "area": 2475,
         "stability_score": 0.9544193148612976,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
@@ -2252,7 +2252,7 @@
           53
         ],
         "area": 1565,
-        "stability_score": 0.9692597389221191,
+        "stability_score": 0.9686520099639893,
         "semiotic_analysis": {
           "architectural_type": "window_or_opening",
           "semiotic_indicators": [
@@ -2382,7 +2382,7 @@
           102
         ],
         "area": 4194,
-        "stability_score": 0.9724835157394409,
+        "stability_score": 0.972248375415802,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -3032,7 +3032,7 @@
           33
         ],
         "area": 944,
-        "stability_score": 0.9554404020309448,
+        "stability_score": 0.954451322555542,
         "semiotic_analysis": {
           "architectural_type": "window_or_opening",
           "semiotic_indicators": [
@@ -3052,24 +3052,24 @@
             81,
             89
           ],
-          "area": 5173,
+          "area": 5170,
           "aspect_ratio": 0.9101123595505618,
-          "compactness": 0.7360663225127806,
+          "compactness": 0.7439113551732818,
           "mean_color": [
-            42.99961337715059,
-            42.78291127005606,
-            44.33500869901411
+            42.999226305609284,
+            42.78278529980658,
+            44.33771760154739
           ],
           "color_std": [
-            15.895633901077977,
-            14.893560166068838,
-            15.547911956098455
+            15.899576025059266,
+            14.897243574900784,
+            15.55151385509593
           ],
           "position": {
             "center_x": 241.5,
             "center_y": 105.5
           },
-          "relative_size": 0.006620914564220184
+          "relative_size": 0.006617074868938401
         },
         "bbox": [
           201,
@@ -3077,8 +3077,8 @@
           81,
           89
         ],
-        "area": 5173,
-        "stability_score": 0.9563986659049988,
+        "area": 5170,
+        "stability_score": 0.956390380859375,
         "semiotic_analysis": {
           "architectural_type": "window_or_opening",
           "semiotic_indicators": [
@@ -3546,24 +3546,24 @@
             372,
             134
           ],
-          "area": 16847,
+          "area": 16846,
           "aspect_ratio": 2.7761194029850746,
-          "compactness": 0.7701199704957322,
+          "compactness": 0.770074257907705,
           "mean_color": [
-            145.0951504718941,
-            167.67661898260818,
-            196.89458063750223
+            145.09527484269262,
+            167.67677787011755,
+            196.89504926985634
           ],
           "color_std": [
-            26.418501615813568,
-            18.449799409478274,
-            10.339821069890576
+            26.419280790282567,
+            18.450335477428244,
+            10.33994904766296
           ],
           "position": {
             "center_x": 186.0,
             "center_y": 67.0
           },
-          "relative_size": 0.021562448804062908
+          "relative_size": 0.02156116890563565
         },
         "bbox": [
           0,
@@ -3571,7 +3571,7 @@
           372,
           134
         ],
-        "area": 16847,
+        "area": 16846,
         "stability_score": 0.9699168801307678,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
@@ -3868,24 +3868,24 @@
             183,
             198
           ],
-          "area": 25122,
+          "area": 25118,
           "aspect_ratio": 0.9242424242424242,
-          "compactness": 0.6706921490624017,
+          "compactness": 0.6705853596848877,
           "mean_color": [
-            229.28863147838547,
-            228.6572327044025,
-            234.60190271475201
+            229.2944900071662,
+            228.66219444223267,
+            234.60601958754677
           ],
           "color_std": [
-            16.919253263861858,
-            14.651093579066398,
-            12.122138733504567
+            16.91379982819991,
+            14.646731463666665,
+            12.118560554241046
           ],
           "position": {
             "center_x": 931.5,
             "center_y": 165.0
           },
-          "relative_size": 0.032153608289646134
+          "relative_size": 0.03214848869593709
         },
         "bbox": [
           840,
@@ -3893,8 +3893,8 @@
           183,
           198
         ],
-        "area": 25122,
-        "stability_score": 0.9756385087966919,
+        "area": 25118,
+        "stability_score": 0.975752592086792,
         "semiotic_analysis": {
           "architectural_type": "window_or_opening",
           "semiotic_indicators": [
@@ -4476,7 +4476,7 @@
           28
         ],
         "area": 621,
-        "stability_score": 0.9669291377067566,
+        "stability_score": 0.965354323387146,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
           "semiotic_indicators": [
@@ -4488,52 +4488,6 @@
       },
       {
         "segment_id": 102,
-        "architectural_type": "decorative_element",
-        "properties": {
-          "bbox": [
-            640,
-            280,
-            14,
-            29
-          ],
-          "area": 407,
-          "aspect_ratio": 0.4827586206896552,
-          "compactness": 0.7847959042265062,
-          "mean_color": [
-            147.48894348894348,
-            142.7960687960688,
-            133.54791154791155
-          ],
-          "color_std": [
-            9.940325664371358,
-            10.171028097270385,
-            11.30271604470634
-          ],
-          "position": {
-            "center_x": 647.0,
-            "center_y": 294.5
-          },
-          "relative_size": 0.0005209186598951508
-        },
-        "bbox": [
-          640,
-          280,
-          14,
-          29
-        ],
-        "area": 407,
-        "stability_score": 0.9709442853927612,
-        "semiotic_analysis": {
-          "architectural_type": "decorative_element",
-          "semiotic_indicators": [
-            "aesthetic_elaboration",
-            "cultural_ornamentation",
-            "status_and_craftsmanship"
-          ]
-        }
-      },
-      {
-        "segment_id": 103,
         "architectural_type": "decorative_element",
         "properties": {
           "bbox": [
@@ -4569,6 +4523,52 @@
         ],
         "area": 450,
         "stability_score": 0.9544468522071838,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 103,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            640,
+            280,
+            14,
+            29
+          ],
+          "area": 407,
+          "aspect_ratio": 0.4827586206896552,
+          "compactness": 0.7847959042265062,
+          "mean_color": [
+            147.48894348894348,
+            142.7960687960688,
+            133.54791154791155
+          ],
+          "color_std": [
+            9.940325664371358,
+            10.171028097270385,
+            11.30271604470634
+          ],
+          "position": {
+            "center_x": 647.0,
+            "center_y": 294.5
+          },
+          "relative_size": 0.0005209186598951508
+        },
+        "bbox": [
+          640,
+          280,
+          14,
+          29
+        ],
+        "area": 407,
+        "stability_score": 0.9709442853927612,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
           "semiotic_indicators": [
@@ -4798,7 +4798,7 @@
           28
         ],
         "area": 489,
-        "stability_score": 0.9562624096870422,
+        "stability_score": 0.958167314529419,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
           "semiotic_indicators": [
@@ -4844,7 +4844,7 @@
           18
         ],
         "area": 291,
-        "stability_score": 0.9597315192222595,
+        "stability_score": 0.963087260723114,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
           "semiotic_indicators": [
@@ -4932,7 +4932,7 @@
           91
         ],
         "area": 40079,
-        "stability_score": 0.9675728678703308,
+        "stability_score": 0.9674990773200989,
         "semiotic_analysis": {
           "architectural_type": "horizontal_element",
           "semiotic_indicators": []
@@ -5032,24 +5032,24 @@
             184,
             486
           ],
-          "area": 44290,
+          "area": 44285,
           "aspect_ratio": 0.3786008230452675,
-          "compactness": 0.38107023203777285,
+          "compactness": 0.3805053706889341,
           "mean_color": [
-            200.1073154210883,
-            206.04167983743508,
-            218.01898848498533
+            200.11240826464942,
+            206.04554589590154,
+            218.02192616009935
           ],
           "color_std": [
-            36.97938101465139,
-            28.633147703584324,
-            21.361379528273243
+            36.9780610592101,
+            28.63234934501498,
+            21.36050963847299
           ],
           "position": {
             "center_x": 931.0,
             "center_y": 308.0
           },
-          "relative_size": 0.05668670134338139
+          "relative_size": 0.056680301851245084
         },
         "bbox": [
           839,
@@ -5057,8 +5057,8 @@
           184,
           486
         ],
-        "area": 44290,
-        "stability_score": 0.9638406038284302,
+        "area": 44285,
+        "stability_score": 0.9628306031227112,
         "semiotic_analysis": {
           "architectural_type": "vertical_element",
           "semiotic_indicators": [
@@ -5120,24 +5120,24 @@
             183,
             299
           ],
-          "area": 34987,
+          "area": 34979,
           "aspect_ratio": 0.6120401337792643,
-          "compactness": 0.5967572220217232,
+          "compactness": 0.5954707776847302,
           "mean_color": [
-            209.98879583845428,
-            214.03952896790236,
-            224.36296338640065
+            210.0025157951914,
+            214.04937248063123,
+            224.3694216529918
           ],
           "color_std": [
-            34.525173195619566,
-            26.686503027457842,
-            19.429451337365357
+            34.51717912963927,
+            26.681605114924615,
+            19.42695319845188
           ],
           "position": {
             "center_x": 931.5,
             "center_y": 215.5
           },
-          "relative_size": 0.04477980627457405
+          "relative_size": 0.044769567087155966
         },
         "bbox": [
           840,
@@ -5145,8 +5145,8 @@
           183,
           299
         ],
-        "area": 34987,
-        "stability_score": 0.9615438580513,
+        "area": 34979,
+        "stability_score": 0.9615795612335205,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -5208,24 +5208,24 @@
             61,
             17
           ],
-          "area": 1053,
+          "area": 1054,
           "aspect_ratio": 3.588235294117647,
-          "compactness": 0.5805687948042403,
+          "compactness": 0.5811201421877201,
           "mean_color": [
-            172.7255460588794,
-            166.87559354226022,
-            158.3627730294397
+            172.70018975332067,
+            166.84914611005692,
+            158.3292220113852
           ],
           "color_std": [
-            23.980517630806446,
-            23.225242161506564,
-            21.964346070238733
+            23.983257521242123,
+            23.23008041082215,
+            21.980903389442087
           ],
           "position": {
             "center_x": 384.5,
             "center_y": 603.5
           },
-          "relative_size": 0.0013477330439056357
+          "relative_size": 0.0013490129423328965
         },
         "bbox": [
           354,
@@ -5233,7 +5233,7 @@
           61,
           17
         ],
-        "area": 1053,
+        "area": 1054,
         "stability_score": 0.9672897458076477,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
@@ -5364,7 +5364,7 @@
           216
         ],
         "area": 6694,
-        "stability_score": 0.9681397676467896,
+        "stability_score": 0.9682819247245789,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -5380,24 +5380,24 @@
             49,
             62
           ],
-          "area": 2374,
+          "area": 2371,
           "aspect_ratio": 0.7903225806451613,
-          "compactness": 0.7152717723997586,
+          "compactness": 0.7102873653419828,
           "mean_color": [
-            187.66807076663858,
-            188.75400168491996,
-            197.05728727885426
+            187.68367777309152,
+            188.76676507802614,
+            197.06495149725853
           ],
           "color_std": [
-            11.009883737691508,
-            7.212572595637656,
-            4.768269920305148
+            11.007929321253847,
+            7.20794412391807,
+            4.766058007250681
           ],
           "position": {
             "center_x": 998.5,
             "center_y": 467.0
           },
-          "relative_size": 0.003038478866317169
+          "relative_size": 0.003034639171035387
         },
         "bbox": [
           974,
@@ -5405,8 +5405,8 @@
           49,
           62
         ],
-        "area": 2374,
-        "stability_score": 0.9558398723602295,
+        "area": 2371,
+        "stability_score": 0.9533828496932983,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
           "semiotic_indicators": [
@@ -5678,7 +5678,7 @@
           19
         ],
         "area": 391,
-        "stability_score": 0.9796437621116638,
+        "stability_score": 0.9821882843971252,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
           "semiotic_indicators": [
@@ -5698,24 +5698,24 @@
             60,
             135
           ],
-          "area": 4824,
+          "area": 4825,
           "aspect_ratio": 0.4444444444444444,
-          "compactness": 0.4441530272209501,
+          "compactness": 0.44424509874400586,
           "mean_color": [
-            140.37437810945275,
-            137.29519071310116,
-            131.26596185737978
+            140.38155440414508,
+            137.30072538860102,
+            131.26901554404145
           ],
           "color_std": [
-            55.96405924579327,
-            54.54251853779958,
-            53.62628608696549
+            55.960479315783545,
+            54.53822094197119,
+            53.62114813215121
           ],
           "position": {
             "center_x": 384.0,
             "center_y": 543.5
           },
-          "relative_size": 0.0061742300131061596
+          "relative_size": 0.006175509911533421
         },
         "bbox": [
           354,
@@ -5723,7 +5723,7 @@
           60,
           135
         ],
-        "area": 4824,
+        "area": 4825,
         "stability_score": 0.9694734811782837,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
@@ -5861,48 +5861,6 @@
         "architectural_type": "detail_or_texture",
         "properties": {
           "bbox": [
-            238,
-            94,
-            18,
-            50
-          ],
-          "area": 805,
-          "aspect_ratio": 0.36,
-          "compactness": 0.6367628553049836,
-          "mean_color": [
-            39.54906832298137,
-            48.09192546583851,
-            59.320496894409935
-          ],
-          "color_std": [
-            11.688467098261139,
-            13.628851271321851,
-            16.623911230448062
-          ],
-          "position": {
-            "center_x": 247.0,
-            "center_y": 119.0
-          },
-          "relative_size": 0.001030318233944954
-        },
-        "bbox": [
-          238,
-          94,
-          18,
-          50
-        ],
-        "area": 805,
-        "stability_score": 0.9815270900726318,
-        "semiotic_analysis": {
-          "architectural_type": "detail_or_texture",
-          "semiotic_indicators": []
-        }
-      },
-      {
-        "segment_id": 134,
-        "architectural_type": "detail_or_texture",
-        "properties": {
-          "bbox": [
             224,
             0,
             93,
@@ -5935,6 +5893,48 @@
         ],
         "area": 3494,
         "stability_score": 0.9762241840362549,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 134,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            238,
+            94,
+            18,
+            50
+          ],
+          "area": 805,
+          "aspect_ratio": 0.36,
+          "compactness": 0.6367628553049836,
+          "mean_color": [
+            39.54906832298137,
+            48.09192546583851,
+            59.320496894409935
+          ],
+          "color_std": [
+            11.688467098261139,
+            13.628851271321851,
+            16.623911230448062
+          ],
+          "position": {
+            "center_x": 247.0,
+            "center_y": 119.0
+          },
+          "relative_size": 0.001030318233944954
+        },
+        "bbox": [
+          238,
+          94,
+          18,
+          50
+        ],
+        "area": 805,
+        "stability_score": 0.9827160239219666,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -5976,7 +5976,7 @@
           62
         ],
         "area": 894,
-        "stability_score": 0.9693318605422974,
+        "stability_score": 0.9682713150978088,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -6018,7 +6018,7 @@
           534
         ],
         "area": 7082,
-        "stability_score": 0.9608683586120605,
+        "stability_score": 0.9610012173652649,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -6106,7 +6106,7 @@
           16
         ],
         "area": 167,
-        "stability_score": 0.9881656765937805,
+        "stability_score": 0.9823529124259949,
         "semiotic_analysis": {
           "architectural_type": "decorative_element",
           "semiotic_indicators": [
@@ -6240,7 +6240,7 @@
           45
         ],
         "area": 2544,
-        "stability_score": 0.9516374468803406,
+        "stability_score": 0.9509132504463196,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -6324,7 +6324,7 @@
           309
         ],
         "area": 2379,
-        "stability_score": 0.9555738568305969,
+        "stability_score": 0.9563606381416321,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -6806,7 +6806,7 @@
           37
         ],
         "area": 1758,
-        "stability_score": 0.9534109830856323,
+        "stability_score": 0.9539656043052673,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -6914,24 +6914,24 @@
             38,
             40
           ],
-          "area": 1285,
+          "area": 1284,
           "aspect_ratio": 0.95,
-          "compactness": 0.7412286024343836,
+          "compactness": 0.7406517720335511,
           "mean_color": [
-            175.536186770428,
-            172.94941634241246,
-            166.7307392996109
+            175.5981308411215,
+            173.00856697819316,
+            166.78894080996884
           ],
           "color_std": [
-            19.038677963845906,
-            18.728236906767208,
-            17.86636157999534
+            18.916207993547655,
+            18.61515699394086,
+            17.751130957772414
           ],
           "position": {
             "center_x": 915.0,
             "center_y": 579.0
           },
-          "relative_size": 0.0016446694790301442
+          "relative_size": 0.0016433895806028834
         },
         "bbox": [
           896,
@@ -6939,7 +6939,7 @@
           38,
           40
         ],
-        "area": 1285,
+        "area": 1284,
         "stability_score": 0.9512194991111755,
         "semiotic_analysis": {
           "architectural_type": "window_or_opening",
@@ -7186,24 +7186,24 @@
             35,
             54
           ],
-          "area": 1678,
+          "area": 1679,
           "aspect_ratio": 0.6481481481481481,
-          "compactness": 0.6922723957314004,
+          "compactness": 0.6926849537741486,
           "mean_color": [
-            126.70023837902265,
-            119.54112038140643,
-            110.3611442193087
+            126.70220369267422,
+            119.54258487194758,
+            110.3615247170935
           ],
           "color_std": [
-            70.37178731906359,
-            67.41360366199893,
-            62.38212792736055
+            70.35087380279064,
+            67.39355185000927,
+            62.36354994085067
           ],
           "position": {
             "center_x": 561.5,
             "center_y": 516.0
           },
-          "relative_size": 0.0021476695609436436
+          "relative_size": 0.0021489494593709044
         },
         "bbox": [
           544,
@@ -7211,7 +7211,7 @@
           35,
           54
         ],
-        "area": 1678,
+        "area": 1679,
         "stability_score": 0.9584065675735474,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
@@ -7296,7 +7296,7 @@
           140
         ],
         "area": 7383,
-        "stability_score": 0.953941285610199,
+        "stability_score": 0.9538097381591797,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -7442,24 +7442,24 @@
             352,
             222
           ],
-          "area": 53691,
+          "area": 53690,
           "aspect_ratio": 1.5855855855855856,
-          "compactness": 0.5564212566221207,
+          "compactness": 0.5558193798047443,
           "mean_color": [
-            120.84708796632583,
-            151.301540295394,
-            190.00536402749063
+            120.84654498044328,
+            151.3010616502142,
+            190.0048426150121
           ],
           "color_std": [
-            5.392170114315971,
-            4.35087361147399,
-            3.988385419169967
+            5.391515799547482,
+            4.350583589061558,
+            3.988544643881598
           ],
           "position": {
             "center_x": 847.0,
             "center_y": 112.0
           },
-          "relative_size": 0.06871902645806029
+          "relative_size": 0.06871774655963303
         },
         "bbox": [
           671,
@@ -7467,8 +7467,8 @@
           352,
           222
         ],
-        "area": 53691,
-        "stability_score": 0.9760004281997681,
+        "area": 53690,
+        "stability_score": 0.9759825468063354,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -7530,24 +7530,24 @@
             982,
             614
           ],
-          "area": 458073,
+          "area": 458034,
           "aspect_ratio": 1.5993485342019544,
-          "compactness": 0.605943344634278,
+          "compactness": 0.605891755061348,
           "mean_color": [
-            142.1317344615378,
-            138.7185033826486,
-            133.0731040685655
+            142.14043280629824,
+            138.72701371513904,
+            133.08121667823787
           ],
           "color_std": [
-            50.14498317661287,
-            47.73442442743954,
-            44.97498393144023
+            50.13775105307136,
+            47.72704066379924,
+            44.96791973609507
           ],
           "position": {
             "center_x": 491.0,
             "center_y": 307.0
           },
-          "relative_size": 0.5862869122706422
+          "relative_size": 0.586236996231979
         },
         "bbox": [
           0,
@@ -7555,8 +7555,8 @@
           982,
           614
         ],
-        "area": 458073,
-        "stability_score": 0.9500712752342224,
+        "area": 458034,
+        "stability_score": 0.950046181678772,
         "semiotic_analysis": {
           "architectural_type": "facade_or_building",
           "semiotic_indicators": [
@@ -7577,24 +7577,24 @@
             919,
             82
           ],
-          "area": 27760,
+          "area": 27759,
           "aspect_ratio": 11.207317073170731,
-          "compactness": 0.3079939507829306,
+          "compactness": 0.3079828558999773,
           "mean_color": [
-            131.78508645533142,
-            126.41822766570606,
-            72.15662824207493
+            131.78342159299686,
+            126.41719802586549,
+            72.15598544616161
           ],
           "color_std": [
-            15.82137300832665,
-            13.071779192904991,
-            13.227992680689152
+            15.82167404075694,
+            13.07155034789314,
+            13.227911773215258
           ],
           "position": {
             "center_x": 478.5,
             "center_y": 698.0
           },
-          "relative_size": 0.03552998034076016
+          "relative_size": 0.035528700442332896
         },
         "bbox": [
           19,
@@ -7602,8 +7602,8 @@
           919,
           82
         ],
-        "area": 27760,
-        "stability_score": 0.9509758949279785,
+        "area": 27759,
+        "stability_score": 0.950981080532074,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -7619,24 +7619,24 @@
             1023,
             222
           ],
-          "area": 83014,
+          "area": 83013,
           "aspect_ratio": 4.608108108108108,
-          "compactness": 0.8804778787144303,
+          "compactness": 0.8804672723362444,
           "mean_color": [
-            129.72906979545618,
-            157.2401884019563,
-            192.7448984508637
+            129.72906653174803,
+            157.24027561948128,
+            192.7450158408924
           ],
           "color_std": [
-            20.43611338761118,
-            14.210279172359131,
-            7.947860480223581
+            20.436236455461547,
+            14.210342543812128,
+            7.9478363843452495
           ],
           "position": {
             "center_x": 511.5,
             "center_y": 111.0
           },
-          "relative_size": 0.1062494880406291
+          "relative_size": 0.10624820814220183
         },
         "bbox": [
           0,
@@ -7644,8 +7644,8 @@
           1023,
           222
         ],
-        "area": 83014,
-        "stability_score": 0.967207670211792,
+        "area": 83013,
+        "stability_score": 0.9672072529792786,
         "semiotic_analysis": {
           "architectural_type": "horizontal_element",
           "semiotic_indicators": []
@@ -7687,7 +7687,7 @@
           685
         ],
         "area": 16258,
-        "stability_score": 0.9510133266448975,
+        "stability_score": 0.9510162472724915,
         "semiotic_analysis": {
           "architectural_type": "vertical_element",
           "semiotic_indicators": [
@@ -7733,7 +7733,7 @@
           81
         ],
         "area": 24071,
-        "stability_score": 0.9509537816047668,
+        "stability_score": 0.9509943127632141,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -7775,7 +7775,7 @@
           63
         ],
         "area": 936,
-        "stability_score": 0.9519038200378418,
+        "stability_score": 0.9529058337211609,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -7817,7 +7817,7 @@
           154
         ],
         "area": 12780,
-        "stability_score": 0.9591303467750549,
+        "stability_score": 0.9591240882873535,
         "semiotic_analysis": {
           "architectural_type": "detail_or_texture",
           "semiotic_indicators": []
@@ -7858,7 +7858,7 @@
       ],
       "area": 3655,
       "stability_score": 0.9896711111068726,
-      "predicted_iou": 0.9999083876609802
+      "predicted_iou": 0.9999077916145325
     },
     {
       "mask_id": 1,
@@ -7870,7 +7870,7 @@
       ],
       "area": 3340,
       "stability_score": 0.9878012537956238,
-      "predicted_iou": 0.9985489845275879
+      "predicted_iou": 0.9985362887382507
     },
     {
       "mask_id": 2,
@@ -7882,7 +7882,7 @@
       ],
       "area": 10437,
       "stability_score": 0.9824827313423157,
-      "predicted_iou": 0.9921489357948303
+      "predicted_iou": 0.9921491742134094
     },
     {
       "mask_id": 3,
@@ -7894,7 +7894,7 @@
       ],
       "area": 1362,
       "stability_score": 0.9824945330619812,
-      "predicted_iou": 0.9883413314819336
+      "predicted_iou": 0.988344669342041
     },
     {
       "mask_id": 4,
@@ -7905,8 +7905,8 @@
         219
       ],
       "area": 7202,
-      "stability_score": 0.9593874216079712,
-      "predicted_iou": 0.9831554889678955
+      "stability_score": 0.9595186114311218,
+      "predicted_iou": 0.9831467866897583
     },
     {
       "mask_id": 5,
@@ -7917,8 +7917,8 @@
         46
       ],
       "area": 17778,
-      "stability_score": 0.9593799710273743,
-      "predicted_iou": 0.9790579080581665
+      "stability_score": 0.9594305157661438,
+      "predicted_iou": 0.9790581464767456
     },
     {
       "mask_id": 6,
@@ -7930,7 +7930,7 @@
       ],
       "area": 580,
       "stability_score": 0.9914383292198181,
-      "predicted_iou": 0.9789478778839111
+      "predicted_iou": 0.9789460301399231
     },
     {
       "mask_id": 7,
@@ -7942,7 +7942,7 @@
       ],
       "area": 746,
       "stability_score": 0.9853528738021851,
-      "predicted_iou": 0.9757186770439148
+      "predicted_iou": 0.9757049083709717
     },
     {
       "mask_id": 8,
@@ -7953,8 +7953,8 @@
         30
       ],
       "area": 7117,
-      "stability_score": 0.9706939458847046,
-      "predicted_iou": 0.9748589992523193
+      "stability_score": 0.9709703922271729,
+      "predicted_iou": 0.9748625755310059
     },
     {
       "mask_id": 9,
@@ -7964,9 +7964,9 @@
         40,
         222
       ],
-      "area": 7627,
+      "area": 7626,
       "stability_score": 0.966967761516571,
-      "predicted_iou": 0.974754810333252
+      "predicted_iou": 0.9747117757797241
     },
     {
       "mask_id": 10,
@@ -7978,7 +7978,7 @@
       ],
       "area": 1333,
       "stability_score": 0.9748148322105408,
-      "predicted_iou": 0.9653823375701904
+      "predicted_iou": 0.965370774269104
     },
     {
       "mask_id": 11,
@@ -7989,11 +7989,23 @@
         143
       ],
       "area": 1965,
-      "stability_score": 0.952498733997345,
-      "predicted_iou": 0.9630114436149597
+      "stability_score": 0.9529935717582703,
+      "predicted_iou": 0.9630177617073059
     },
     {
       "mask_id": 12,
+      "bbox": [
+        501,
+        309,
+        41,
+        233
+      ],
+      "area": 8651,
+      "stability_score": 0.9573454260826111,
+      "predicted_iou": 0.9616165161132812
+    },
+    {
+      "mask_id": 13,
       "bbox": [
         217,
         469,
@@ -8001,20 +8013,8 @@
         28
       ],
       "area": 925,
-      "stability_score": 0.9828141927719116,
-      "predicted_iou": 0.9616880416870117
-    },
-    {
-      "mask_id": 13,
-      "bbox": [
-        501,
-        309,
-        41,
-        233
-      ],
-      "area": 8652,
-      "stability_score": 0.9573502540588379,
-      "predicted_iou": 0.9616339206695557
+      "stability_score": 0.9817400574684143,
+      "predicted_iou": 0.9613907337188721
     },
     {
       "mask_id": 14,
@@ -8026,7 +8026,7 @@
       ],
       "area": 890,
       "stability_score": 0.9832402467727661,
-      "predicted_iou": 0.9592838287353516
+      "predicted_iou": 0.9592896103858948
     },
     {
       "mask_id": 15,
@@ -8037,8 +8037,8 @@
         65
       ],
       "area": 3374,
-      "stability_score": 0.9655474424362183,
-      "predicted_iou": 0.9553894996643066
+      "stability_score": 0.9652554988861084,
+      "predicted_iou": 0.9554080367088318
     },
     {
       "mask_id": 16,
@@ -8048,9 +8048,9 @@
         68,
         38
       ],
-      "area": 2356,
+      "area": 2357,
       "stability_score": 0.970723569393158,
-      "predicted_iou": 0.9528958797454834
+      "predicted_iou": 0.9529460668563843
     },
     {
       "mask_id": 17,
@@ -8061,8 +8061,8 @@
         208
       ],
       "area": 1688,
-      "stability_score": 0.9650145769119263,
-      "predicted_iou": 0.9513776302337646
+      "stability_score": 0.9644314646720886,
+      "predicted_iou": 0.9513874053955078
     },
     {
       "mask_id": 18,
@@ -8074,7 +8074,7 @@
       ],
       "area": 492,
       "stability_score": 0.9580000042915344,
-      "predicted_iou": 0.9493594169616699
+      "predicted_iou": 0.9493991136550903
     },
     {
       "mask_id": 19,
@@ -8085,8 +8085,8 @@
         41
       ],
       "area": 2653,
-      "stability_score": 0.9783582091331482,
-      "predicted_iou": 0.9489190578460693
+      "stability_score": 0.9779850840568542,
+      "predicted_iou": 0.9489286541938782
     },
     {
       "mask_id": 20,
@@ -8098,7 +8098,7 @@
       ],
       "area": 335,
       "stability_score": 0.9619883298873901,
-      "predicted_iou": 0.9451763033866882
+      "predicted_iou": 0.9451897144317627
     },
     {
       "mask_id": 21,
@@ -8110,7 +8110,7 @@
       ],
       "area": 413,
       "stability_score": 0.9879807829856873,
-      "predicted_iou": 0.9388018250465393
+      "predicted_iou": 0.9388036131858826
     },
     {
       "mask_id": 22,
@@ -8122,7 +8122,7 @@
       ],
       "area": 882,
       "stability_score": 0.9524862170219421,
-      "predicted_iou": 0.9351769089698792
+      "predicted_iou": 0.9351608157157898
     },
     {
       "mask_id": 23,
@@ -8134,7 +8134,7 @@
       ],
       "area": 236,
       "stability_score": 0.9707112908363342,
-      "predicted_iou": 0.9209591746330261
+      "predicted_iou": 0.9209626913070679
     },
     {
       "mask_id": 24,
@@ -8146,7 +8146,7 @@
       ],
       "area": 1023,
       "stability_score": 0.9530201554298401,
-      "predicted_iou": 0.8959823250770569
+      "predicted_iou": 0.8961001038551331
     },
     {
       "mask_id": 25,
@@ -8158,7 +8158,7 @@
       ],
       "area": 1654,
       "stability_score": 0.9969806671142578,
-      "predicted_iou": 1.0021584033966064
+      "predicted_iou": 1.002153992652893
     },
     {
       "mask_id": 26,
@@ -8170,7 +8170,7 @@
       ],
       "area": 4187,
       "stability_score": 0.993579089641571,
-      "predicted_iou": 0.9987388253211975
+      "predicted_iou": 0.9987290501594543
     },
     {
       "mask_id": 27,
@@ -8181,8 +8181,8 @@
         121
       ],
       "area": 4888,
-      "stability_score": 0.9779307842254639,
-      "predicted_iou": 0.992280125617981
+      "stability_score": 0.9781287908554077,
+      "predicted_iou": 0.9923534393310547
     },
     {
       "mask_id": 28,
@@ -8194,7 +8194,7 @@
       ],
       "area": 1364,
       "stability_score": 0.9883297085762024,
-      "predicted_iou": 0.99103844165802
+      "predicted_iou": 0.9910273551940918
     },
     {
       "mask_id": 29,
@@ -8206,7 +8206,7 @@
       ],
       "area": 750,
       "stability_score": 0.9854497313499451,
-      "predicted_iou": 0.9758931994438171
+      "predicted_iou": 0.9758912920951843
     },
     {
       "mask_id": 30,
@@ -8218,7 +8218,7 @@
       ],
       "area": 1365,
       "stability_score": 0.9732078313827515,
-      "predicted_iou": 0.9745180606842041
+      "predicted_iou": 0.974507212638855
     },
     {
       "mask_id": 31,
@@ -8230,7 +8230,7 @@
       ],
       "area": 3130,
       "stability_score": 0.9807084202766418,
-      "predicted_iou": 0.9732415080070496
+      "predicted_iou": 0.9732333421707153
     },
     {
       "mask_id": 32,
@@ -8242,7 +8242,7 @@
       ],
       "area": 6707,
       "stability_score": 0.9514464139938354,
-      "predicted_iou": 0.9676642417907715
+      "predicted_iou": 0.9676576852798462
     },
     {
       "mask_id": 33,
@@ -8254,7 +8254,7 @@
       ],
       "area": 1461,
       "stability_score": 0.9864038228988647,
-      "predicted_iou": 0.9662560224533081
+      "predicted_iou": 0.9662599563598633
     },
     {
       "mask_id": 34,
@@ -8264,9 +8264,9 @@
         35,
         196
       ],
-      "area": 5562,
+      "area": 5563,
       "stability_score": 0.9699221253395081,
-      "predicted_iou": 0.9659642577171326
+      "predicted_iou": 0.9659528136253357
     },
     {
       "mask_id": 35,
@@ -8278,7 +8278,7 @@
       ],
       "area": 725,
       "stability_score": 0.9821673631668091,
-      "predicted_iou": 0.9655765295028687
+      "predicted_iou": 0.9655745625495911
     },
     {
       "mask_id": 36,
@@ -8290,7 +8290,7 @@
       ],
       "area": 189,
       "stability_score": 1.0,
-      "predicted_iou": 0.9612406492233276
+      "predicted_iou": 0.9612295031547546
     },
     {
       "mask_id": 37,
@@ -8302,7 +8302,7 @@
       ],
       "area": 742,
       "stability_score": 0.9654714465141296,
-      "predicted_iou": 0.9595324397087097
+      "predicted_iou": 0.9595206379890442
     },
     {
       "mask_id": 38,
@@ -8314,7 +8314,7 @@
       ],
       "area": 4953,
       "stability_score": 0.9730914831161499,
-      "predicted_iou": 0.9575400352478027
+      "predicted_iou": 0.9574916362762451
     },
     {
       "mask_id": 39,
@@ -8325,8 +8325,8 @@
         58
       ],
       "area": 6105,
-      "stability_score": 0.9721952676773071,
-      "predicted_iou": 0.953148603439331
+      "stability_score": 0.9720381498336792,
+      "predicted_iou": 0.9531751871109009
     },
     {
       "mask_id": 40,
@@ -8338,7 +8338,7 @@
       ],
       "area": 1031,
       "stability_score": 0.9827089309692383,
-      "predicted_iou": 0.9530729055404663
+      "predicted_iou": 0.953072190284729
     },
     {
       "mask_id": 41,
@@ -8350,7 +8350,7 @@
       ],
       "area": 251,
       "stability_score": 0.9723320007324219,
-      "predicted_iou": 0.952602744102478
+      "predicted_iou": 0.9525659084320068
     },
     {
       "mask_id": 42,
@@ -8362,7 +8362,7 @@
       ],
       "area": 459,
       "stability_score": 0.9784017205238342,
-      "predicted_iou": 0.9520527124404907
+      "predicted_iou": 0.952063798904419
     },
     {
       "mask_id": 43,
@@ -8372,9 +8372,9 @@
         122,
         45
       ],
-      "area": 3937,
+      "area": 3938,
       "stability_score": 0.9554283022880554,
-      "predicted_iou": 0.9520422220230103
+      "predicted_iou": 0.952052116394043
     },
     {
       "mask_id": 44,
@@ -8386,7 +8386,7 @@
       ],
       "area": 3447,
       "stability_score": 0.9710767269134521,
-      "predicted_iou": 0.9470251798629761
+      "predicted_iou": 0.9470112323760986
     },
     {
       "mask_id": 45,
@@ -8396,9 +8396,9 @@
         182,
         19
       ],
-      "area": 2413,
+      "area": 2411,
       "stability_score": 0.9615699052810669,
-      "predicted_iou": 0.9434105753898621
+      "predicted_iou": 0.943406879901886
     },
     {
       "mask_id": 46,
@@ -8410,7 +8410,7 @@
       ],
       "area": 1960,
       "stability_score": 0.9531872272491455,
-      "predicted_iou": 0.937920093536377
+      "predicted_iou": 0.9378699064254761
     },
     {
       "mask_id": 47,
@@ -8421,8 +8421,8 @@
         46
       ],
       "area": 488,
-      "stability_score": 0.9676767587661743,
-      "predicted_iou": 0.9280161261558533
+      "stability_score": 0.965656578540802,
+      "predicted_iou": 0.9280124306678772
     },
     {
       "mask_id": 48,
@@ -8432,9 +8432,9 @@
         101,
         32
       ],
-      "area": 2474,
+      "area": 2475,
       "stability_score": 0.9544193148612976,
-      "predicted_iou": 0.9253230690956116
+      "predicted_iou": 0.925338089466095
     },
     {
       "mask_id": 49,
@@ -8446,7 +8446,7 @@
       ],
       "area": 362,
       "stability_score": 0.9594594836235046,
-      "predicted_iou": 0.921926736831665
+      "predicted_iou": 0.921922504901886
     },
     {
       "mask_id": 50,
@@ -8458,7 +8458,7 @@
       ],
       "area": 341,
       "stability_score": 0.9681159257888794,
-      "predicted_iou": 0.9193267226219177
+      "predicted_iou": 0.9192861318588257
     },
     {
       "mask_id": 51,
@@ -8469,8 +8469,8 @@
         53
       ],
       "area": 1565,
-      "stability_score": 0.9692597389221191,
-      "predicted_iou": 0.9172602295875549
+      "stability_score": 0.9686520099639893,
+      "predicted_iou": 0.9173224568367004
     },
     {
       "mask_id": 52,
@@ -8482,7 +8482,7 @@
       ],
       "area": 869,
       "stability_score": 0.9617117047309875,
-      "predicted_iou": 0.9170582294464111
+      "predicted_iou": 0.9170451164245605
     },
     {
       "mask_id": 53,
@@ -8494,7 +8494,7 @@
       ],
       "area": 841,
       "stability_score": 0.9547563791275024,
-      "predicted_iou": 0.9138531684875488
+      "predicted_iou": 0.91380774974823
     },
     {
       "mask_id": 54,
@@ -8505,8 +8505,8 @@
         102
       ],
       "area": 4194,
-      "stability_score": 0.9724835157394409,
-      "predicted_iou": 0.9071070551872253
+      "stability_score": 0.972248375415802,
+      "predicted_iou": 0.9070993661880493
     },
     {
       "mask_id": 55,
@@ -8518,7 +8518,7 @@
       ],
       "area": 348,
       "stability_score": 0.977011501789093,
-      "predicted_iou": 0.9058814644813538
+      "predicted_iou": 0.9060155153274536
     },
     {
       "mask_id": 56,
@@ -8530,7 +8530,7 @@
       ],
       "area": 211,
       "stability_score": 0.971563994884491,
-      "predicted_iou": 0.8995326161384583
+      "predicted_iou": 0.8994914293289185
     },
     {
       "mask_id": 57,
@@ -8542,7 +8542,7 @@
       ],
       "area": 1381,
       "stability_score": 0.9553191661834717,
-      "predicted_iou": 0.8834658861160278
+      "predicted_iou": 0.8835692405700684
     },
     {
       "mask_id": 58,
@@ -8554,7 +8554,7 @@
       ],
       "area": 222,
       "stability_score": 0.9688888788223267,
-      "predicted_iou": 0.8829516768455505
+      "predicted_iou": 0.8830162882804871
     },
     {
       "mask_id": 59,
@@ -8566,7 +8566,7 @@
       ],
       "area": 1095,
       "stability_score": 0.959964394569397,
-      "predicted_iou": 0.8821403384208679
+      "predicted_iou": 0.8819310069084167
     },
     {
       "mask_id": 60,
@@ -8578,7 +8578,7 @@
       ],
       "area": 1632,
       "stability_score": 0.9829890727996826,
-      "predicted_iou": 0.9854637980461121
+      "predicted_iou": 0.9854570627212524
     },
     {
       "mask_id": 61,
@@ -8590,7 +8590,7 @@
       ],
       "area": 408,
       "stability_score": 0.9734299778938293,
-      "predicted_iou": 0.9649556279182434
+      "predicted_iou": 0.9649674296379089
     },
     {
       "mask_id": 62,
@@ -8602,7 +8602,7 @@
       ],
       "area": 545,
       "stability_score": 0.9675675630569458,
-      "predicted_iou": 0.9617049098014832
+      "predicted_iou": 0.961713969707489
     },
     {
       "mask_id": 63,
@@ -8614,7 +8614,7 @@
       ],
       "area": 1319,
       "stability_score": 0.9753178954124451,
-      "predicted_iou": 0.9599181413650513
+      "predicted_iou": 0.9599344730377197
     },
     {
       "mask_id": 64,
@@ -8626,7 +8626,7 @@
       ],
       "area": 851,
       "stability_score": 0.9860302805900574,
-      "predicted_iou": 0.9596794843673706
+      "predicted_iou": 0.9596706628799438
     },
     {
       "mask_id": 65,
@@ -8638,7 +8638,7 @@
       ],
       "area": 550,
       "stability_score": 0.9642218351364136,
-      "predicted_iou": 0.958780825138092
+      "predicted_iou": 0.9587927460670471
     },
     {
       "mask_id": 66,
@@ -8650,7 +8650,7 @@
       ],
       "area": 1608,
       "stability_score": 0.9694376587867737,
-      "predicted_iou": 0.9542276263237
+      "predicted_iou": 0.95428866147995
     },
     {
       "mask_id": 67,
@@ -8662,7 +8662,7 @@
       ],
       "area": 1508,
       "stability_score": 0.9656290411949158,
-      "predicted_iou": 0.9534163475036621
+      "predicted_iou": 0.953410267829895
     },
     {
       "mask_id": 68,
@@ -8674,7 +8674,7 @@
       ],
       "area": 1395,
       "stability_score": 0.9654929637908936,
-      "predicted_iou": 0.9525296688079834
+      "predicted_iou": 0.9525061845779419
     },
     {
       "mask_id": 69,
@@ -8685,8 +8685,8 @@
         33
       ],
       "area": 944,
-      "stability_score": 0.9554404020309448,
-      "predicted_iou": 0.9523810744285583
+      "stability_score": 0.954451322555542,
+      "predicted_iou": 0.952333390712738
     },
     {
       "mask_id": 70,
@@ -8696,9 +8696,9 @@
         81,
         89
       ],
-      "area": 5173,
-      "stability_score": 0.9563986659049988,
-      "predicted_iou": 0.9509553909301758
+      "area": 5170,
+      "stability_score": 0.956390380859375,
+      "predicted_iou": 0.9509662389755249
     },
     {
       "mask_id": 71,
@@ -8710,7 +8710,7 @@
       ],
       "area": 181,
       "stability_score": 0.9781420826911926,
-      "predicted_iou": 0.9501113295555115
+      "predicted_iou": 0.9501129984855652
     },
     {
       "mask_id": 72,
@@ -8722,7 +8722,7 @@
       ],
       "area": 529,
       "stability_score": 0.970370352268219,
-      "predicted_iou": 0.9477532505989075
+      "predicted_iou": 0.9477680325508118
     },
     {
       "mask_id": 73,
@@ -8734,7 +8734,7 @@
       ],
       "area": 1010,
       "stability_score": 0.968780517578125,
-      "predicted_iou": 0.9442083239555359
+      "predicted_iou": 0.9444106221199036
     },
     {
       "mask_id": 74,
@@ -8746,7 +8746,7 @@
       ],
       "area": 140,
       "stability_score": 0.9790209531784058,
-      "predicted_iou": 0.9438629746437073
+      "predicted_iou": 0.9438671469688416
     },
     {
       "mask_id": 75,
@@ -8758,7 +8758,7 @@
       ],
       "area": 1165,
       "stability_score": 0.96875,
-      "predicted_iou": 0.9429727792739868
+      "predicted_iou": 0.9429798126220703
     },
     {
       "mask_id": 76,
@@ -8770,7 +8770,7 @@
       ],
       "area": 571,
       "stability_score": 0.9759036302566528,
-      "predicted_iou": 0.9388949871063232
+      "predicted_iou": 0.9389598369598389
     },
     {
       "mask_id": 77,
@@ -8782,7 +8782,7 @@
       ],
       "area": 813,
       "stability_score": 0.9649758338928223,
-      "predicted_iou": 0.9363626837730408
+      "predicted_iou": 0.9363685846328735
     },
     {
       "mask_id": 78,
@@ -8794,7 +8794,7 @@
       ],
       "area": 606,
       "stability_score": 0.9803921580314636,
-      "predicted_iou": 0.9349315762519836
+      "predicted_iou": 0.9349555373191833
     },
     {
       "mask_id": 79,
@@ -8806,7 +8806,7 @@
       ],
       "area": 234,
       "stability_score": 0.9545454382896423,
-      "predicted_iou": 0.9338510036468506
+      "predicted_iou": 0.9338438510894775
     },
     {
       "mask_id": 80,
@@ -8818,7 +8818,7 @@
       ],
       "area": 2802,
       "stability_score": 0.9614980816841125,
-      "predicted_iou": 0.9311111569404602
+      "predicted_iou": 0.9311173558235168
     },
     {
       "mask_id": 81,
@@ -8828,9 +8828,9 @@
         372,
         134
       ],
-      "area": 16847,
+      "area": 16846,
       "stability_score": 0.9699168801307678,
-      "predicted_iou": 0.9298816919326782
+      "predicted_iou": 0.9297307729721069
     },
     {
       "mask_id": 82,
@@ -8842,7 +8842,7 @@
       ],
       "area": 870,
       "stability_score": 0.9640852808952332,
-      "predicted_iou": 0.9268327355384827
+      "predicted_iou": 0.9268323183059692
     },
     {
       "mask_id": 83,
@@ -8854,7 +8854,7 @@
       ],
       "area": 437,
       "stability_score": 0.9578713774681091,
-      "predicted_iou": 0.9266722202301025
+      "predicted_iou": 0.9266750812530518
     },
     {
       "mask_id": 84,
@@ -8866,7 +8866,7 @@
       ],
       "area": 522,
       "stability_score": 0.9621928334236145,
-      "predicted_iou": 0.9221214652061462
+      "predicted_iou": 0.9224624633789062
     },
     {
       "mask_id": 85,
@@ -8878,7 +8878,7 @@
       ],
       "area": 348,
       "stability_score": 0.9661971926689148,
-      "predicted_iou": 0.9092150330543518
+      "predicted_iou": 0.9092090725898743
     },
     {
       "mask_id": 86,
@@ -8890,7 +8890,7 @@
       ],
       "area": 722,
       "stability_score": 0.9538670182228088,
-      "predicted_iou": 0.9066284894943237
+      "predicted_iou": 0.9066081643104553
     },
     {
       "mask_id": 87,
@@ -8902,7 +8902,7 @@
       ],
       "area": 530,
       "stability_score": 0.9554731249809265,
-      "predicted_iou": 0.9019323587417603
+      "predicted_iou": 0.9019033908843994
     },
     {
       "mask_id": 88,
@@ -8912,9 +8912,9 @@
         183,
         198
       ],
-      "area": 25122,
-      "stability_score": 0.9756385087966919,
-      "predicted_iou": 0.9871317744255066
+      "area": 25118,
+      "stability_score": 0.975752592086792,
+      "predicted_iou": 0.987132728099823
     },
     {
       "mask_id": 89,
@@ -8926,7 +8926,7 @@
       ],
       "area": 691,
       "stability_score": 0.9799426794052124,
-      "predicted_iou": 0.9731441140174866
+      "predicted_iou": 0.973176896572113
     },
     {
       "mask_id": 90,
@@ -8938,7 +8938,7 @@
       ],
       "area": 828,
       "stability_score": 0.9678953886032104,
-      "predicted_iou": 0.9731099605560303
+      "predicted_iou": 0.9731159210205078
     },
     {
       "mask_id": 91,
@@ -8950,7 +8950,7 @@
       ],
       "area": 590,
       "stability_score": 0.9848229289054871,
-      "predicted_iou": 0.9702171087265015
+      "predicted_iou": 0.9704015851020813
     },
     {
       "mask_id": 92,
@@ -8962,7 +8962,7 @@
       ],
       "area": 2232,
       "stability_score": 0.9787704348564148,
-      "predicted_iou": 0.9694432020187378
+      "predicted_iou": 0.9694576263427734
     },
     {
       "mask_id": 93,
@@ -8974,7 +8974,7 @@
       ],
       "area": 473,
       "stability_score": 0.9894958138465881,
-      "predicted_iou": 0.9674232602119446
+      "predicted_iou": 0.9674285054206848
     },
     {
       "mask_id": 94,
@@ -8986,7 +8986,7 @@
       ],
       "area": 455,
       "stability_score": 0.976190447807312,
-      "predicted_iou": 0.9515207409858704
+      "predicted_iou": 0.9515056014060974
     },
     {
       "mask_id": 95,
@@ -8998,7 +8998,7 @@
       ],
       "area": 1141,
       "stability_score": 0.9630266427993774,
-      "predicted_iou": 0.9462918043136597
+      "predicted_iou": 0.9463012218475342
     },
     {
       "mask_id": 96,
@@ -9010,7 +9010,7 @@
       ],
       "area": 405,
       "stability_score": 0.9803439974784851,
-      "predicted_iou": 0.9452722072601318
+      "predicted_iou": 0.9452792406082153
     },
     {
       "mask_id": 97,
@@ -9022,7 +9022,7 @@
       ],
       "area": 140,
       "stability_score": 0.9645389914512634,
-      "predicted_iou": 0.9422515630722046
+      "predicted_iou": 0.9422507286071777
     },
     {
       "mask_id": 98,
@@ -9034,7 +9034,7 @@
       ],
       "area": 484,
       "stability_score": 0.9733059406280518,
-      "predicted_iou": 0.9406380653381348
+      "predicted_iou": 0.9406455159187317
     },
     {
       "mask_id": 99,
@@ -9046,7 +9046,7 @@
       ],
       "area": 145,
       "stability_score": 0.9662162065505981,
-      "predicted_iou": 0.937869668006897
+      "predicted_iou": 0.9378677606582642
     },
     {
       "mask_id": 100,
@@ -9058,7 +9058,7 @@
       ],
       "area": 536,
       "stability_score": 0.9685767292976379,
-      "predicted_iou": 0.9376657605171204
+      "predicted_iou": 0.9376364350318909
     },
     {
       "mask_id": 101,
@@ -9069,23 +9069,11 @@
         28
       ],
       "area": 621,
-      "stability_score": 0.9669291377067566,
-      "predicted_iou": 0.9364012479782104
+      "stability_score": 0.965354323387146,
+      "predicted_iou": 0.936384379863739
     },
     {
       "mask_id": 102,
-      "bbox": [
-        640,
-        280,
-        14,
-        29
-      ],
-      "area": 407,
-      "stability_score": 0.9709442853927612,
-      "predicted_iou": 0.9277743697166443
-    },
-    {
-      "mask_id": 103,
       "bbox": [
         593,
         266,
@@ -9094,7 +9082,19 @@
       ],
       "area": 450,
       "stability_score": 0.9544468522071838,
-      "predicted_iou": 0.9277716279029846
+      "predicted_iou": 0.9278666377067566
+    },
+    {
+      "mask_id": 103,
+      "bbox": [
+        640,
+        280,
+        14,
+        29
+      ],
+      "area": 407,
+      "stability_score": 0.9709442853927612,
+      "predicted_iou": 0.9277712106704712
     },
     {
       "mask_id": 104,
@@ -9106,7 +9106,7 @@
       ],
       "area": 990,
       "stability_score": 0.9730269908905029,
-      "predicted_iou": 0.9263842105865479
+      "predicted_iou": 0.9263856410980225
     },
     {
       "mask_id": 105,
@@ -9118,7 +9118,7 @@
       ],
       "area": 422,
       "stability_score": 0.9720279574394226,
-      "predicted_iou": 0.9250006675720215
+      "predicted_iou": 0.9250150918960571
     },
     {
       "mask_id": 106,
@@ -9130,7 +9130,7 @@
       ],
       "area": 122,
       "stability_score": 0.9516128897666931,
-      "predicted_iou": 0.9140474796295166
+      "predicted_iou": 0.9140888452529907
     },
     {
       "mask_id": 107,
@@ -9142,7 +9142,7 @@
       ],
       "area": 227,
       "stability_score": 0.9741379022598267,
-      "predicted_iou": 0.9121153950691223
+      "predicted_iou": 0.9121192097663879
     },
     {
       "mask_id": 108,
@@ -9153,8 +9153,8 @@
         28
       ],
       "area": 489,
-      "stability_score": 0.9562624096870422,
-      "predicted_iou": 0.911262035369873
+      "stability_score": 0.958167314529419,
+      "predicted_iou": 0.9112765789031982
     },
     {
       "mask_id": 109,
@@ -9165,8 +9165,8 @@
         18
       ],
       "area": 291,
-      "stability_score": 0.9597315192222595,
-      "predicted_iou": 0.9027480483055115
+      "stability_score": 0.963087260723114,
+      "predicted_iou": 0.9027671217918396
     },
     {
       "mask_id": 110,
@@ -9178,7 +9178,7 @@
       ],
       "area": 2036,
       "stability_score": 0.9756927490234375,
-      "predicted_iou": 0.9020493626594543
+      "predicted_iou": 0.9018310308456421
     },
     {
       "mask_id": 111,
@@ -9189,8 +9189,8 @@
         91
       ],
       "area": 40079,
-      "stability_score": 0.9675728678703308,
-      "predicted_iou": 1.0219217538833618
+      "stability_score": 0.9674990773200989,
+      "predicted_iou": 1.0218507051467896
     },
     {
       "mask_id": 112,
@@ -9202,7 +9202,7 @@
       ],
       "area": 3114,
       "stability_score": 0.9847084879875183,
-      "predicted_iou": 0.9950395226478577
+      "predicted_iou": 0.9950339198112488
     },
     {
       "mask_id": 113,
@@ -9214,7 +9214,7 @@
       ],
       "area": 1691,
       "stability_score": 0.9899941086769104,
-      "predicted_iou": 0.9904014468193054
+      "predicted_iou": 0.9903997182846069
     },
     {
       "mask_id": 114,
@@ -9224,9 +9224,9 @@
         184,
         486
       ],
-      "area": 44290,
-      "stability_score": 0.9638406038284302,
-      "predicted_iou": 0.9871179461479187
+      "area": 44285,
+      "stability_score": 0.9628306031227112,
+      "predicted_iou": 0.9871265292167664
     },
     {
       "mask_id": 115,
@@ -9238,7 +9238,7 @@
       ],
       "area": 2523,
       "stability_score": 0.9877952933311462,
-      "predicted_iou": 0.9809148907661438
+      "predicted_iou": 0.9809110164642334
     },
     {
       "mask_id": 116,
@@ -9248,9 +9248,9 @@
         183,
         299
       ],
-      "area": 34987,
-      "stability_score": 0.9615438580513,
-      "predicted_iou": 0.9721147418022156
+      "area": 34979,
+      "stability_score": 0.9615795612335205,
+      "predicted_iou": 0.9720609784126282
     },
     {
       "mask_id": 117,
@@ -9262,7 +9262,7 @@
       ],
       "area": 2464,
       "stability_score": 0.9846278429031372,
-      "predicted_iou": 0.9706054329872131
+      "predicted_iou": 0.9706321954727173
     },
     {
       "mask_id": 118,
@@ -9272,9 +9272,9 @@
         61,
         17
       ],
-      "area": 1053,
+      "area": 1054,
       "stability_score": 0.9672897458076477,
-      "predicted_iou": 0.9656833410263062
+      "predicted_iou": 0.9656701683998108
     },
     {
       "mask_id": 119,
@@ -9286,7 +9286,7 @@
       ],
       "area": 1620,
       "stability_score": 0.9786585569381714,
-      "predicted_iou": 0.9655426740646362
+      "predicted_iou": 0.9655454754829407
     },
     {
       "mask_id": 120,
@@ -9298,7 +9298,7 @@
       ],
       "area": 892,
       "stability_score": 0.9888142943382263,
-      "predicted_iou": 0.9608125686645508
+      "predicted_iou": 0.9608190059661865
     },
     {
       "mask_id": 121,
@@ -9309,8 +9309,8 @@
         216
       ],
       "area": 6694,
-      "stability_score": 0.9681397676467896,
-      "predicted_iou": 0.9603601098060608
+      "stability_score": 0.9682819247245789,
+      "predicted_iou": 0.9603756070137024
     },
     {
       "mask_id": 122,
@@ -9320,9 +9320,9 @@
         49,
         62
       ],
-      "area": 2374,
-      "stability_score": 0.9558398723602295,
-      "predicted_iou": 0.9594231247901917
+      "area": 2371,
+      "stability_score": 0.9533828496932983,
+      "predicted_iou": 0.9593327641487122
     },
     {
       "mask_id": 123,
@@ -9334,7 +9334,7 @@
       ],
       "area": 8585,
       "stability_score": 0.9609633684158325,
-      "predicted_iou": 0.9583965539932251
+      "predicted_iou": 0.9583382606506348
     },
     {
       "mask_id": 124,
@@ -9346,7 +9346,7 @@
       ],
       "area": 1317,
       "stability_score": 0.9694485664367676,
-      "predicted_iou": 0.9579290151596069
+      "predicted_iou": 0.9580763578414917
     },
     {
       "mask_id": 125,
@@ -9358,7 +9358,7 @@
       ],
       "area": 662,
       "stability_score": 0.9805389046669006,
-      "predicted_iou": 0.9573158621788025
+      "predicted_iou": 0.9573241472244263
     },
     {
       "mask_id": 126,
@@ -9370,7 +9370,7 @@
       ],
       "area": 576,
       "stability_score": 0.9810017347335815,
-      "predicted_iou": 0.9569244980812073
+      "predicted_iou": 0.9569350481033325
     },
     {
       "mask_id": 127,
@@ -9382,7 +9382,7 @@
       ],
       "area": 393,
       "stability_score": 0.979899525642395,
-      "predicted_iou": 0.9564532041549683
+      "predicted_iou": 0.9564394354820251
     },
     {
       "mask_id": 128,
@@ -9393,8 +9393,8 @@
         19
       ],
       "area": 391,
-      "stability_score": 0.9796437621116638,
-      "predicted_iou": 0.9561645984649658
+      "stability_score": 0.9821882843971252,
+      "predicted_iou": 0.9561759233474731
     },
     {
       "mask_id": 129,
@@ -9404,9 +9404,9 @@
         60,
         135
       ],
-      "area": 4824,
+      "area": 4825,
       "stability_score": 0.9694734811782837,
-      "predicted_iou": 0.9546605348587036
+      "predicted_iou": 0.9546858072280884
     },
     {
       "mask_id": 130,
@@ -9418,7 +9418,7 @@
       ],
       "area": 2387,
       "stability_score": 0.959770143032074,
-      "predicted_iou": 0.9543811082839966
+      "predicted_iou": 0.9543802738189697
     },
     {
       "mask_id": 131,
@@ -9430,7 +9430,7 @@
       ],
       "area": 1350,
       "stability_score": 0.9722018837928772,
-      "predicted_iou": 0.9496317505836487
+      "predicted_iou": 0.9496343731880188
     },
     {
       "mask_id": 132,
@@ -9442,22 +9442,10 @@
       ],
       "area": 354,
       "stability_score": 0.9915493130683899,
-      "predicted_iou": 0.9475162029266357
+      "predicted_iou": 0.9475113749504089
     },
     {
       "mask_id": 133,
-      "bbox": [
-        238,
-        94,
-        18,
-        50
-      ],
-      "area": 805,
-      "stability_score": 0.9815270900726318,
-      "predicted_iou": 0.9447148442268372
-    },
-    {
-      "mask_id": 134,
       "bbox": [
         224,
         0,
@@ -9466,7 +9454,19 @@
       ],
       "area": 3494,
       "stability_score": 0.9762241840362549,
-      "predicted_iou": 0.9446089267730713
+      "predicted_iou": 0.9446884989738464
+    },
+    {
+      "mask_id": 134,
+      "bbox": [
+        238,
+        94,
+        18,
+        50
+      ],
+      "area": 805,
+      "stability_score": 0.9827160239219666,
+      "predicted_iou": 0.9446829557418823
     },
     {
       "mask_id": 135,
@@ -9477,8 +9477,8 @@
         62
       ],
       "area": 894,
-      "stability_score": 0.9693318605422974,
-      "predicted_iou": 0.9438145160675049
+      "stability_score": 0.9682713150978088,
+      "predicted_iou": 0.9438061118125916
     },
     {
       "mask_id": 136,
@@ -9489,8 +9489,8 @@
         534
       ],
       "area": 7082,
-      "stability_score": 0.9608683586120605,
-      "predicted_iou": 0.9401652216911316
+      "stability_score": 0.9610012173652649,
+      "predicted_iou": 0.9401582479476929
     },
     {
       "mask_id": 137,
@@ -9502,7 +9502,7 @@
       ],
       "area": 921,
       "stability_score": 0.9849137663841248,
-      "predicted_iou": 0.9398432970046997
+      "predicted_iou": 0.9398421049118042
     },
     {
       "mask_id": 138,
@@ -9513,8 +9513,8 @@
         16
       ],
       "area": 167,
-      "stability_score": 0.9881656765937805,
-      "predicted_iou": 0.9373974800109863
+      "stability_score": 0.9823529124259949,
+      "predicted_iou": 0.9373825788497925
     },
     {
       "mask_id": 139,
@@ -9526,7 +9526,7 @@
       ],
       "area": 133,
       "stability_score": 0.9777777791023254,
-      "predicted_iou": 0.9368245005607605
+      "predicted_iou": 0.936829149723053
     },
     {
       "mask_id": 140,
@@ -9538,7 +9538,7 @@
       ],
       "area": 14294,
       "stability_score": 0.9556525945663452,
-      "predicted_iou": 0.9339625835418701
+      "predicted_iou": 0.933968186378479
     },
     {
       "mask_id": 141,
@@ -9549,8 +9549,8 @@
         45
       ],
       "area": 2544,
-      "stability_score": 0.9516374468803406,
-      "predicted_iou": 0.9321250319480896
+      "stability_score": 0.9509132504463196,
+      "predicted_iou": 0.9321169257164001
     },
     {
       "mask_id": 142,
@@ -9562,7 +9562,7 @@
       ],
       "area": 172,
       "stability_score": 0.982758641242981,
-      "predicted_iou": 0.9314538836479187
+      "predicted_iou": 0.931455671787262
     },
     {
       "mask_id": 143,
@@ -9573,8 +9573,8 @@
         309
       ],
       "area": 2379,
-      "stability_score": 0.9555738568305969,
-      "predicted_iou": 0.9311107397079468
+      "stability_score": 0.9563606381416321,
+      "predicted_iou": 0.931064248085022
     },
     {
       "mask_id": 144,
@@ -9586,7 +9586,7 @@
       ],
       "area": 135,
       "stability_score": 0.9852941036224365,
-      "predicted_iou": 0.9306808710098267
+      "predicted_iou": 0.9306749105453491
     },
     {
       "mask_id": 145,
@@ -9598,7 +9598,7 @@
       ],
       "area": 595,
       "stability_score": 0.9684908986091614,
-      "predicted_iou": 0.9301511645317078
+      "predicted_iou": 0.9301621317863464
     },
     {
       "mask_id": 146,
@@ -9610,7 +9610,7 @@
       ],
       "area": 488,
       "stability_score": 0.9757575988769531,
-      "predicted_iou": 0.929401695728302
+      "predicted_iou": 0.9293909072875977
     },
     {
       "mask_id": 147,
@@ -9622,7 +9622,7 @@
       ],
       "area": 1116,
       "stability_score": 0.971781313419342,
-      "predicted_iou": 0.926591157913208
+      "predicted_iou": 0.9265692234039307
     },
     {
       "mask_id": 148,
@@ -9634,7 +9634,7 @@
       ],
       "area": 615,
       "stability_score": 0.9680511355400085,
-      "predicted_iou": 0.9237143397331238
+      "predicted_iou": 0.9237076044082642
     },
     {
       "mask_id": 149,
@@ -9646,7 +9646,7 @@
       ],
       "area": 571,
       "stability_score": 0.9792746305465698,
-      "predicted_iou": 0.9227868318557739
+      "predicted_iou": 0.9227819442749023
     },
     {
       "mask_id": 150,
@@ -9658,7 +9658,7 @@
       ],
       "area": 392,
       "stability_score": 0.9574999809265137,
-      "predicted_iou": 0.9224805235862732
+      "predicted_iou": 0.9225038886070251
     },
     {
       "mask_id": 151,
@@ -9670,7 +9670,7 @@
       ],
       "area": 615,
       "stability_score": 0.9743177890777588,
-      "predicted_iou": 0.922002375125885
+      "predicted_iou": 0.9220008254051208
     },
     {
       "mask_id": 152,
@@ -9682,7 +9682,7 @@
       ],
       "area": 176,
       "stability_score": 0.9886363744735718,
-      "predicted_iou": 0.9211122989654541
+      "predicted_iou": 0.9211006164550781
     },
     {
       "mask_id": 153,
@@ -9694,7 +9694,7 @@
       ],
       "area": 548,
       "stability_score": 0.9749103784561157,
-      "predicted_iou": 0.9155011177062988
+      "predicted_iou": 0.9155062437057495
     },
     {
       "mask_id": 154,
@@ -9705,8 +9705,8 @@
         37
       ],
       "area": 1758,
-      "stability_score": 0.9534109830856323,
-      "predicted_iou": 0.9120262265205383
+      "stability_score": 0.9539656043052673,
+      "predicted_iou": 0.9120432734489441
     },
     {
       "mask_id": 155,
@@ -9718,7 +9718,7 @@
       ],
       "area": 615,
       "stability_score": 0.9603174328804016,
-      "predicted_iou": 0.90589839220047
+      "predicted_iou": 0.9058952927589417
     },
     {
       "mask_id": 156,
@@ -9730,7 +9730,7 @@
       ],
       "area": 397,
       "stability_score": 0.9676616787910461,
-      "predicted_iou": 0.9012259840965271
+      "predicted_iou": 0.9012165665626526
     },
     {
       "mask_id": 157,
@@ -9740,9 +9740,9 @@
         38,
         40
       ],
-      "area": 1285,
+      "area": 1284,
       "stability_score": 0.9512194991111755,
-      "predicted_iou": 0.9000883102416992
+      "predicted_iou": 0.9001044034957886
     },
     {
       "mask_id": 158,
@@ -9754,7 +9754,7 @@
       ],
       "area": 454,
       "stability_score": 0.9613733887672424,
-      "predicted_iou": 0.8990518450737
+      "predicted_iou": 0.8990508317947388
     },
     {
       "mask_id": 159,
@@ -9766,7 +9766,7 @@
       ],
       "area": 128,
       "stability_score": 0.9767441749572754,
-      "predicted_iou": 0.8989791870117188
+      "predicted_iou": 0.898972749710083
     },
     {
       "mask_id": 160,
@@ -9778,7 +9778,7 @@
       ],
       "area": 473,
       "stability_score": 0.9852941036224365,
-      "predicted_iou": 0.8971850275993347
+      "predicted_iou": 0.8971272110939026
     },
     {
       "mask_id": 161,
@@ -9790,7 +9790,7 @@
       ],
       "area": 247,
       "stability_score": 0.9760000109672546,
-      "predicted_iou": 0.8961897492408752
+      "predicted_iou": 0.8961861729621887
     },
     {
       "mask_id": 162,
@@ -9802,7 +9802,7 @@
       ],
       "area": 746,
       "stability_score": 0.9529411792755127,
-      "predicted_iou": 0.8943671584129333
+      "predicted_iou": 0.8945722579956055
     },
     {
       "mask_id": 163,
@@ -9812,9 +9812,9 @@
         35,
         54
       ],
-      "area": 1678,
+      "area": 1679,
       "stability_score": 0.9584065675735474,
-      "predicted_iou": 0.8804229497909546
+      "predicted_iou": 0.880484938621521
     },
     {
       "mask_id": 164,
@@ -9826,7 +9826,7 @@
       ],
       "area": 3997,
       "stability_score": 0.9704506397247314,
-      "predicted_iou": 0.9797278642654419
+      "predicted_iou": 0.979730486869812
     },
     {
       "mask_id": 165,
@@ -9837,8 +9837,8 @@
         140
       ],
       "area": 7383,
-      "stability_score": 0.953941285610199,
-      "predicted_iou": 0.9317646026611328
+      "stability_score": 0.9538097381591797,
+      "predicted_iou": 0.9317559003829956
     },
     {
       "mask_id": 166,
@@ -9850,7 +9850,7 @@
       ],
       "area": 52,
       "stability_score": 1.0,
-      "predicted_iou": 0.9044711589813232
+      "predicted_iou": 0.9044502377510071
     },
     {
       "mask_id": 167,
@@ -9862,7 +9862,7 @@
       ],
       "area": 6699,
       "stability_score": 0.9725146293640137,
-      "predicted_iou": 0.94342041015625
+      "predicted_iou": 0.9434727430343628
     },
     {
       "mask_id": 168,
@@ -9874,7 +9874,7 @@
       ],
       "area": 67390,
       "stability_score": 0.9741626381874084,
-      "predicted_iou": 0.9818211793899536
+      "predicted_iou": 0.9818044900894165
     },
     {
       "mask_id": 169,
@@ -9884,9 +9884,9 @@
         352,
         222
       ],
-      "area": 53691,
-      "stability_score": 0.9760004281997681,
-      "predicted_iou": 0.9724565148353577
+      "area": 53690,
+      "stability_score": 0.9759825468063354,
+      "predicted_iou": 0.9724748134613037
     },
     {
       "mask_id": 170,
@@ -9898,7 +9898,7 @@
       ],
       "area": 965,
       "stability_score": 0.9585439562797546,
-      "predicted_iou": 0.9402949810028076
+      "predicted_iou": 0.9402711391448975
     },
     {
       "mask_id": 171,
@@ -9908,9 +9908,9 @@
         982,
         614
       ],
-      "area": 458073,
-      "stability_score": 0.9500712752342224,
-      "predicted_iou": 1.0221596956253052
+      "area": 458034,
+      "stability_score": 0.950046181678772,
+      "predicted_iou": 1.0221748352050781
     },
     {
       "mask_id": 172,
@@ -9920,9 +9920,9 @@
         919,
         82
       ],
-      "area": 27760,
-      "stability_score": 0.9509758949279785,
-      "predicted_iou": 0.9786263704299927
+      "area": 27759,
+      "stability_score": 0.950981080532074,
+      "predicted_iou": 0.9786301851272583
     },
     {
       "mask_id": 173,
@@ -9932,9 +9932,9 @@
         1023,
         222
       ],
-      "area": 83014,
-      "stability_score": 0.967207670211792,
-      "predicted_iou": 0.965788722038269
+      "area": 83013,
+      "stability_score": 0.9672072529792786,
+      "predicted_iou": 0.9658075571060181
     },
     {
       "mask_id": 174,
@@ -9945,8 +9945,8 @@
         685
       ],
       "area": 16258,
-      "stability_score": 0.9510133266448975,
-      "predicted_iou": 0.9567954540252686
+      "stability_score": 0.9510162472724915,
+      "predicted_iou": 0.9567875862121582
     },
     {
       "mask_id": 175,
@@ -9957,8 +9957,8 @@
         81
       ],
       "area": 24071,
-      "stability_score": 0.9509537816047668,
-      "predicted_iou": 0.9507091045379639
+      "stability_score": 0.9509943127632141,
+      "predicted_iou": 0.9507081508636475
     },
     {
       "mask_id": 176,
@@ -9969,8 +9969,8 @@
         63
       ],
       "area": 936,
-      "stability_score": 0.9519038200378418,
-      "predicted_iou": 0.9236061573028564
+      "stability_score": 0.9529058337211609,
+      "predicted_iou": 0.9235791563987732
     },
     {
       "mask_id": 177,
@@ -9981,9 +9981,9 @@
         154
       ],
       "area": 12780,
-      "stability_score": 0.9591303467750549,
-      "predicted_iou": 0.9018710851669312
+      "stability_score": 0.9591240882873535,
+      "predicted_iou": 0.9020189046859741
     }
   ],
-  "timestamp": "2025-09-14T20:24:03.669913"
+  "timestamp": "2025-09-14T19:29:04.562229"
 }

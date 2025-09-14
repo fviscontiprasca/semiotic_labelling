@@ -1,3 +1,10 @@
+## SEMIOTIC LABELLING PIPELINE - REQUIREMENTS
+## Supports both LoRA and Full Fine-tuning variants
+## 
+## Pipeline Variants:
+## 1. Standard LoRA Pipeline (run_pipeline.py) - Lightweight adapter fine-tuning
+## 2. Full Fine-tuning Pipeline (run_flux_full_pipeline.py) - Complete model adaptation
+##
 ## PIP-ONLY INSTALL (Python 3.13)
 ## Follow PyTorch "Start Locally" guidance: use --index-url for the selected CUDA wheels
 --index-url https://download.pytorch.org/whl/cu129
@@ -7,44 +14,67 @@ torch==2.8.0
 torchvision==0.23.0
 torchaudio==2.8.0
 
-# Hugging Face Ecosystem - Version aligned
-transformers==4.44.1  # Stable on Python 3.13
-diffusers==0.30.3  # Flux.1 support
-datasets==3.3.2  # Latest stable
-accelerate==1.10.1  # PyTorch 2.8 + Python 3.13 support
-huggingface_hub>=0.34.0,<0.35.0  # API stability
-safetensors==0.5.3  # Model compatibility
-peft==0.17.1  # LoRA fine-tuning
+# Hugging Face Ecosystem - Version aligned for both LoRA and Full Fine-tuning
+transformers==4.44.1  # Stable on Python 3.13, supports CLIP and text processing
+diffusers==0.30.3  # Flux.1 support for both training variants
+datasets==3.3.2  # Dataset management for training data preparation
+accelerate==1.10.1  # PyTorch 2.8 + Python 3.13, distributed training support
+huggingface_hub>=0.34.0,<0.35.0  # API stability and model management
+safetensors==0.5.3  # Model serialization compatibility
+peft==0.17.1  # LoRA fine-tuning (standard pipeline)
 
-# Computer Vision & Image Processing
-# ultralytics==8.3.199  # YOLO11 removed - replaced with SAM
+# Full Fine-tuning Memory Optimization
+bitsandbytes==0.47.0  # 8-bit Adam optimizer for full fine-tuning
+# xformers==0.0.32.post2  # Memory-efficient attention (optional, uncomment if needed)
+
+# Computer Vision & Image Processing (both pipelines)
 git+https://github.com/facebookresearch/segment-anything.git  # Segment Anything Model (SAM)
-opencv-python==4.10.0  # CV operations (pip)
-Pillow==11.3.0  # Latest PIL
+opencv-python==4.10.0  # CV operations and image preprocessing
+Pillow==11.3.0  # Image manipulation and format conversion
 
-# Text-Image Alignment & Embeddings
-# clip-by-openai>=1.0  # REMOVED: conflicts with transformers
-sentence-transformers==5.1.0  # Latest with improved embeddings
+# Text-Image Alignment & Embeddings (both pipelines)
+sentence-transformers==5.1.0  # Semiotic feature extraction and embeddings
 
-# Dataset Management
+# Dataset Management (both pipelines)
 # FiftyOne is heavy; prefer pip and allow minor drift across Python 3.13 builds
-fiftyone>=1.4,<1.9  # MongoDB-backed dataset management (pip)
-pymongo>=4.9.0,<5.0.0  # Required by FiftyOne
+fiftyone>=1.4,<1.9  # MongoDB-backed dataset management and visualization
+pymongo>=4.9.0,<5.0.0  # Required by FiftyOne for dataset storage
 
 # Utilities & Performance
 jsonlines==4.0.0  # Data format support
-# Optional/Platform-specific extras (commented by default)
-# xformers==0.0.32.post2
-# bitsandbytes==0.47.0
-wandb==0.21.4  # Experiment tracking
+wandb==0.21.4  # Experiment tracking (both pipelines)
+tqdm==4.67.1  # Progress bars for training monitoring
 
 # Data Processing & Analysis - Compatible versions
 numpy>=2.1.3,<3  # Python 3.13 requires NumPy 2.x
-pandas==2.3.2  # Data manipulation
-scikit-learn==1.7.2  # ML utilities
-matplotlib==3.10.6  # Plotting
-seaborn>=0.12.0,<0.14.0  # Statistical plots
+pandas==2.3.2  # Data manipulation for training data preparation
+scikit-learn==1.7.2  # ML utilities and evaluation metrics
+matplotlib==3.10.6  # Training progress plotting and visualization
+seaborn>=0.12.0,<0.14.0  # Statistical plots for evaluation reports
+
+# Additional utilities for full fine-tuning
+psutil>=5.9.0  # System monitoring for memory usage tracking
 
 # Development & Logging
-tqdm==4.67.1  # Progress bars
-typing_extensions>=4.15.0  # Type hints support
+typing_extensions>=4.15.0  # Type hints support for advanced dataclasses
+
+# ============================================================================
+# INSTALLATION INSTRUCTIONS
+# ============================================================================
+#
+# Standard Installation (both pipelines):
+#   pip install -r requirements.txt
+#
+# GPU Memory Requirements:
+#   - LoRA Pipeline: 8GB+ VRAM recommended
+#   - Full Fine-tuning: 16GB+ VRAM recommended (24GB+ optimal)
+#
+# Optional Performance Optimizations:
+#   Uncomment xformers for memory-efficient attention if compatible with your setup
+#   bitsandbytes is automatically used for 8-bit optimization in full fine-tuning
+#
+# Pipeline Selection:
+#   - Use run_pipeline.py for LoRA-based training (faster, less memory)
+#   - Use run_flux_full_pipeline.py for complete model fine-tuning (slower, more memory, potentially better results)
+#
+# ============================================================================

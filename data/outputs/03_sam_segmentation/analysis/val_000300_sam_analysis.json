@@ -1,0 +1,6779 @@
+{
+  "image_path": "/content/drive/MyDrive/ColabNotebooks/Thesis/semiotic_labelling/data/outputs/01_data_pipeline/images/val/val_000300.jpg",
+  "total_segments": 121,
+  "architectural_segments": 121,
+  "segment_analysis": {
+    "total_segments": 121,
+    "architectural_count": 121,
+    "architectural_segments": [
+      {
+        "segment_id": 0,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            406,
+            247,
+            172,
+            170
+          ],
+          "area": 18470,
+          "aspect_ratio": 1.011764705882353,
+          "compactness": 0.4284540764317202,
+          "mean_color": [
+            88.65592853275582,
+            76.09204114780725,
+            62.355657823497566
+          ],
+          "color_std": [
+            56.48447732770056,
+            53.27220530079069,
+            43.48830078956242
+          ],
+          "position": {
+            "center_x": 492.0,
+            "center_y": 332.0
+          },
+          "relative_size": 0.023485819498697918
+        },
+        "bbox": [
+          406,
+          247,
+          172,
+          170
+        ],
+        "area": 18470,
+        "stability_score": 0.9752994179725647,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 1,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            63,
+            360,
+            64,
+            129
+          ],
+          "area": 5403,
+          "aspect_ratio": 0.49612403100775193,
+          "compactness": 0.5669267215309255,
+          "mean_color": [
+            80.47621691652786,
+            67.07070146215065,
+            44.5552470849528
+          ],
+          "color_std": [
+            29.7333752897543,
+            30.06792542211062,
+            31.967560189203322
+          ],
+          "position": {
+            "center_x": 95.0,
+            "center_y": 424.5
+          },
+          "relative_size": 0.006870269775390625
+        },
+        "bbox": [
+          63,
+          360,
+          64,
+          129
+        ],
+        "area": 5403,
+        "stability_score": 0.9780139327049255,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 2,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            287,
+            293,
+            140,
+            129
+          ],
+          "area": 10250,
+          "aspect_ratio": 1.0852713178294573,
+          "compactness": 0.35655095631118283,
+          "mean_color": [
+            102.35707317073171,
+            104.07541463414634,
+            108.83814634146341
+          ],
+          "color_std": [
+            56.58012329793274,
+            62.09959954663538,
+            68.94853823935959
+          ],
+          "position": {
+            "center_x": 357.0,
+            "center_y": 357.5
+          },
+          "relative_size": 0.013033548990885416
+        },
+        "bbox": [
+          287,
+          293,
+          140,
+          129
+        ],
+        "area": 10250,
+        "stability_score": 0.9629629850387573,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 3,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            120,
+            357,
+            50,
+            134
+          ],
+          "area": 5394,
+          "aspect_ratio": 0.373134328358209,
+          "compactness": 0.5682338888963603,
+          "mean_color": [
+            76.29236188357434,
+            63.28197997775306,
+            44.202817945865775
+          ],
+          "color_std": [
+            30.71042990985874,
+            30.024005067969256,
+            31.18251591350819
+          ],
+          "position": {
+            "center_x": 145.0,
+            "center_y": 424.0
+          },
+          "relative_size": 0.00685882568359375
+        },
+        "bbox": [
+          120,
+          357,
+          50,
+          134
+        ],
+        "area": 5394,
+        "stability_score": 0.9747160077095032,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 4,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            448,
+            402,
+            16,
+            14
+          ],
+          "area": 184,
+          "aspect_ratio": 1.1428571428571428,
+          "compactness": 0.8165614789565983,
+          "mean_color": [
+            29.684782608695652,
+            24.641304347826086,
+            23.76086956521739
+          ],
+          "color_std": [
+            20.755266145699693,
+            20.147058001722325,
+            17.486248985751132
+          ],
+          "position": {
+            "center_x": 456.0,
+            "center_y": 409.0
+          },
+          "relative_size": 0.00023396809895833334
+        },
+        "bbox": [
+          448,
+          402,
+          16,
+          14
+        ],
+        "area": 184,
+        "stability_score": 0.9572192430496216,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 5,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            340,
+            675,
+            18,
+            50
+          ],
+          "area": 852,
+          "aspect_ratio": 0.36,
+          "compactness": 0.649564681880904,
+          "mean_color": [
+            66.75,
+            65.97887323943662,
+            70.4894366197183
+          ],
+          "color_std": [
+            20.503170200310752,
+            20.180628573521417,
+            20.02254905287091
+          ],
+          "position": {
+            "center_x": 349.0,
+            "center_y": 700.0
+          },
+          "relative_size": 0.0010833740234375
+        },
+        "bbox": [
+          340,
+          675,
+          18,
+          50
+        ],
+        "area": 852,
+        "stability_score": 0.9918128848075867,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 6,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            299,
+            492,
+            89,
+            88
+          ],
+          "area": 3832,
+          "aspect_ratio": 1.0113636363636365,
+          "compactness": 0.33434993499570437,
+          "mean_color": [
+            56.99138830897704,
+            46.19702505219207,
+            30.5276617954071
+          ],
+          "color_std": [
+            27.913267453874177,
+            24.929327278966728,
+            20.992139073556398
+          ],
+          "position": {
+            "center_x": 343.5,
+            "center_y": 536.0
+          },
+          "relative_size": 0.004872639973958333
+        },
+        "bbox": [
+          299,
+          492,
+          89,
+          88
+        ],
+        "area": 3832,
+        "stability_score": 0.9511758685112,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 7,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            77,
+            556,
+            29,
+            20
+          ],
+          "area": 569,
+          "aspect_ratio": 1.45,
+          "compactness": 0.8109528779262097,
+          "mean_color": [
+            189.10896309314586,
+            184.97891036906853,
+            143.5957820738137
+          ],
+          "color_std": [
+            32.725444765941546,
+            33.45168713907667,
+            33.561030362766054
+          ],
+          "position": {
+            "center_x": 91.5,
+            "center_y": 566.0
+          },
+          "relative_size": 0.0007235209147135416
+        },
+        "bbox": [
+          77,
+          556,
+          29,
+          20
+        ],
+        "area": 569,
+        "stability_score": 0.9720279574394226,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 8,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            286,
+            682,
+            17,
+            36
+          ],
+          "area": 605,
+          "aspect_ratio": 0.4722222222222222,
+          "compactness": 0.740676925389651,
+          "mean_color": [
+            53.312396694214875,
+            56.09090909090909,
+            67.54876033057852
+          ],
+          "color_std": [
+            21.98541804589012,
+            21.210320269868934,
+            23.724584019387386
+          ],
+          "position": {
+            "center_x": 294.5,
+            "center_y": 700.0
+          },
+          "relative_size": 0.0007692972819010416
+        },
+        "bbox": [
+          286,
+          682,
+          17,
+          36
+        ],
+        "area": 605,
+        "stability_score": 0.9884868264198303,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 9,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            566,
+            521,
+            27,
+            54
+          ],
+          "area": 1283,
+          "aspect_ratio": 0.5,
+          "compactness": 0.7605465979125982,
+          "mean_color": [
+            16.110678098207327,
+            12.818394388152766,
+            13.356196414653157
+          ],
+          "color_std": [
+            10.299652420943529,
+            8.436304184130115,
+            7.157629411929742
+          ],
+          "position": {
+            "center_x": 579.5,
+            "center_y": 548.0
+          },
+          "relative_size": 0.0016314188639322917
+        },
+        "bbox": [
+          566,
+          521,
+          27,
+          54
+        ],
+        "area": 1283,
+        "stability_score": 0.9883720874786377,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 10,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            384,
+            421,
+            127,
+            156
+          ],
+          "area": 14702,
+          "aspect_ratio": 0.8141025641025641,
+          "compactness": 0.5678092035250455,
+          "mean_color": [
+            44.08971568494083,
+            36.53482519385118,
+            26.80642089511631
+          ],
+          "color_std": [
+            21.980273159734438,
+            20.309012036584647,
+            17.699453338287398
+          ],
+          "position": {
+            "center_x": 447.5,
+            "center_y": 499.0
+          },
+          "relative_size": 0.018694559733072918
+        },
+        "bbox": [
+          384,
+          421,
+          127,
+          156
+        ],
+        "area": 14702,
+        "stability_score": 0.9650952816009521,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 11,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            96,
+            673,
+            10,
+            52
+          ],
+          "area": 467,
+          "aspect_ratio": 0.19230769230769232,
+          "compactness": 0.4122361341415308,
+          "mean_color": [
+            176.42612419700214,
+            155.27408993576017,
+            118.09635974304068
+          ],
+          "color_std": [
+            45.95697180590947,
+            46.721575345428036,
+            36.526505110859226
+          ],
+          "position": {
+            "center_x": 101.0,
+            "center_y": 699.0
+          },
+          "relative_size": 0.0005938212076822916
+        },
+        "bbox": [
+          96,
+          673,
+          10,
+          52
+        ],
+        "area": 467,
+        "stability_score": 0.9957355856895447,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 12,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            10,
+            477,
+            270,
+            60
+          ],
+          "area": 8100,
+          "aspect_ratio": 4.5,
+          "compactness": 0.2445130233116616,
+          "mean_color": [
+            113.61148148148148,
+            98.55123456790123,
+            77.07938271604938
+          ],
+          "color_std": [
+            42.600582984798656,
+            42.798315037870104,
+            38.73570776956423
+          ],
+          "position": {
+            "center_x": 145.0,
+            "center_y": 507.0
+          },
+          "relative_size": 0.0102996826171875
+        },
+        "bbox": [
+          10,
+          477,
+          270,
+          60
+        ],
+        "area": 8100,
+        "stability_score": 0.961911678314209,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 13,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            0,
+            393,
+            79,
+            114
+          ],
+          "area": 6033,
+          "aspect_ratio": 0.6929824561403509,
+          "compactness": 0.5170001041759116,
+          "mean_color": [
+            58.15216310293386,
+            50.38803248798276,
+            40.445217967843526
+          ],
+          "color_std": [
+            43.54714806737814,
+            41.394914804198656,
+            38.564267688369064
+          ],
+          "position": {
+            "center_x": 39.5,
+            "center_y": 450.0
+          },
+          "relative_size": 0.007671356201171875
+        },
+        "bbox": [
+          0,
+          393,
+          79,
+          114
+        ],
+        "area": 6033,
+        "stability_score": 0.9783677458763123,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 14,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            358,
+            647,
+            25,
+            13
+          ],
+          "area": 285,
+          "aspect_ratio": 1.9230769230769231,
+          "compactness": 0.8067682040285433,
+          "mean_color": [
+            76.08070175438597,
+            68.39649122807018,
+            58.32280701754386
+          ],
+          "color_std": [
+            28.056655954820958,
+            27.801059962831282,
+            28.593478691820614
+          ],
+          "position": {
+            "center_x": 370.5,
+            "center_y": 653.5
+          },
+          "relative_size": 0.000362396240234375
+        },
+        "bbox": [
+          358,
+          647,
+          25,
+          13
+        ],
+        "area": 285,
+        "stability_score": 0.9826989769935608,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 15,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            211,
+            542,
+            21,
+            18
+          ],
+          "area": 385,
+          "aspect_ratio": 1.1666666666666667,
+          "compactness": 0.9001196010370854,
+          "mean_color": [
+            92.0987012987013,
+            91.0935064935065,
+            53.43636363636364
+          ],
+          "color_std": [
+            26.346159647726736,
+            21.290363271301498,
+            21.287194547706953
+          ],
+          "position": {
+            "center_x": 221.5,
+            "center_y": 551.0
+          },
+          "relative_size": 0.0004895528157552084
+        },
+        "bbox": [
+          211,
+          542,
+          21,
+          18
+        ],
+        "area": 385,
+        "stability_score": 0.971794843673706,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 16,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            335,
+            637,
+            15,
+            23
+          ],
+          "area": 265,
+          "aspect_ratio": 0.6521739130434783,
+          "compactness": 0.7913473957345039,
+          "mean_color": [
+            86.47924528301887,
+            107.04150943396226,
+            71.17735849056604
+          ],
+          "color_std": [
+            45.12942126353213,
+            51.32245613161929,
+            41.92332012592654
+          ],
+          "position": {
+            "center_x": 342.5,
+            "center_y": 648.5
+          },
+          "relative_size": 0.0003369649251302083
+        },
+        "bbox": [
+          335,
+          637,
+          15,
+          23
+        ],
+        "area": 265,
+        "stability_score": 0.9813432693481445,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 17,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            53,
+            639,
+            17,
+            128
+          ],
+          "area": 761,
+          "aspect_ratio": 0.1328125,
+          "compactness": 0.1277523066973446,
+          "mean_color": [
+            107.79500657030223,
+            161.97634691195796,
+            176.2562417871222
+          ],
+          "color_std": [
+            41.17514944358633,
+            46.771167908188346,
+            48.478926871982395
+          ],
+          "position": {
+            "center_x": 61.5,
+            "center_y": 703.0
+          },
+          "relative_size": 0.0009676615397135416
+        },
+        "bbox": [
+          53,
+          639,
+          17,
+          128
+        ],
+        "area": 761,
+        "stability_score": 0.9611399173736572,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 18,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            274,
+            411,
+            37,
+            139
+          ],
+          "area": 3897,
+          "aspect_ratio": 0.26618705035971224,
+          "compactness": 0.4404620803946238,
+          "mean_color": [
+            28.542211957916347,
+            25.34077495509366,
+            26.14139081344624
+          ],
+          "color_std": [
+            28.837129049856653,
+            28.93129132747455,
+            28.10900687143511
+          ],
+          "position": {
+            "center_x": 292.5,
+            "center_y": 480.5
+          },
+          "relative_size": 0.004955291748046875
+        },
+        "bbox": [
+          274,
+          411,
+          37,
+          139
+        ],
+        "area": 3897,
+        "stability_score": 0.9599899053573608,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 19,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            306,
+            422,
+            120,
+            118
+          ],
+          "area": 8473,
+          "aspect_ratio": 1.0169491525423728,
+          "compactness": 0.3729262983789834,
+          "mean_color": [
+            86.43538298123451,
+            81.72182225894016,
+            76.02679098312286
+          ],
+          "color_std": [
+            30.73611404743516,
+            30.188677178643243,
+            27.712631749962107
+          ],
+          "position": {
+            "center_x": 366.0,
+            "center_y": 481.0
+          },
+          "relative_size": 0.010773976643880209
+        },
+        "bbox": [
+          306,
+          422,
+          120,
+          118
+        ],
+        "area": 8473,
+        "stability_score": 0.9662491083145142,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 20,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            389,
+            679,
+            51,
+            25
+          ],
+          "area": 644,
+          "aspect_ratio": 2.04,
+          "compactness": 0.49407493426467064,
+          "mean_color": [
+            196.54037267080744,
+            167.68167701863354,
+            83.39285714285714
+          ],
+          "color_std": [
+            56.72103948587339,
+            55.4762237665722,
+            39.633523186309255
+          ],
+          "position": {
+            "center_x": 414.5,
+            "center_y": 691.5
+          },
+          "relative_size": 0.0008188883463541666
+        },
+        "bbox": [
+          389,
+          679,
+          51,
+          25
+        ],
+        "area": 644,
+        "stability_score": 0.9800613522529602,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 21,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            532,
+            699,
+            55,
+            52
+          ],
+          "area": 2253,
+          "aspect_ratio": 1.0576923076923077,
+          "compactness": 0.7501927707325238,
+          "mean_color": [
+            77.97470039946738,
+            68.94007989347537,
+            57.523746116289395
+          ],
+          "color_std": [
+            52.561124385625654,
+            49.19438381941805,
+            37.81936638614447
+          ],
+          "position": {
+            "center_x": 559.5,
+            "center_y": 725.0
+          },
+          "relative_size": 0.002864837646484375
+        },
+        "bbox": [
+          532,
+          699,
+          55,
+          52
+        ],
+        "area": 2253,
+        "stability_score": 0.9741907119750977,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 22,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            0,
+            581,
+            190,
+            16
+          ],
+          "area": 2580,
+          "aspect_ratio": 11.875,
+          "compactness": 0.19105537883145057,
+          "mean_color": [
+            157.0031007751938,
+            144.7767441860465,
+            117.61666666666666
+          ],
+          "color_std": [
+            31.376100463691735,
+            31.495350983688407,
+            28.78953219631552
+          ],
+          "position": {
+            "center_x": 95.0,
+            "center_y": 589.0
+          },
+          "relative_size": 0.0032806396484375
+        },
+        "bbox": [
+          0,
+          581,
+          190,
+          16
+        ],
+        "area": 2580,
+        "stability_score": 0.9667811989784241,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 23,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            541,
+            539,
+            14,
+            20
+          ],
+          "area": 300,
+          "aspect_ratio": 0.7,
+          "compactness": 0.906587908374832,
+          "mean_color": [
+            76.39,
+            64.20666666666666,
+            41.83
+          ],
+          "color_std": [
+            37.4544777029396,
+            35.23271144200451,
+            27.940313169325783
+          ],
+          "position": {
+            "center_x": 548.0,
+            "center_y": 549.0
+          },
+          "relative_size": 0.0003814697265625
+        },
+        "bbox": [
+          541,
+          539,
+          14,
+          20
+        ],
+        "area": 300,
+        "stability_score": 0.9867109656333923,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 24,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            194,
+            398,
+            117,
+            151
+          ],
+          "area": 11029,
+          "aspect_ratio": 0.7748344370860927,
+          "compactness": 0.4341560879092106,
+          "mean_color": [
+            42.8815849125034,
+            38.580923021126125,
+            36.13228760540394
+          ],
+          "color_std": [
+            39.220366315348905,
+            39.4630257841974,
+            39.113918624853426
+          ],
+          "position": {
+            "center_x": 252.5,
+            "center_y": 473.5
+          },
+          "relative_size": 0.014024098714192709
+        },
+        "bbox": [
+          194,
+          398,
+          117,
+          151
+        ],
+        "area": 11029,
+        "stability_score": 0.9541349411010742,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 25,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            331,
+            424,
+            73,
+            87
+          ],
+          "area": 2012,
+          "aspect_ratio": 0.8390804597701149,
+          "compactness": 0.41125925574127453,
+          "mean_color": [
+            88.7162027833002,
+            81.65059642147118,
+            69.92097415506959
+          ],
+          "color_std": [
+            44.490426918275475,
+            42.4327638500537,
+            34.572355011757296
+          ],
+          "position": {
+            "center_x": 367.5,
+            "center_y": 467.5
+          },
+          "relative_size": 0.0025583902994791665
+        },
+        "bbox": [
+          331,
+          424,
+          73,
+          87
+        ],
+        "area": 2012,
+        "stability_score": 0.966796875,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 26,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            260,
+            639,
+            10,
+            128
+          ],
+          "area": 633,
+          "aspect_ratio": 0.078125,
+          "compactness": 0.11238655876695773,
+          "mean_color": [
+            86.47077409162718,
+            151.9431279620853,
+            168.99842022116903
+          ],
+          "color_std": [
+            39.98016311678455,
+            48.22184045319037,
+            47.320910387539676
+          ],
+          "position": {
+            "center_x": 265.0,
+            "center_y": 703.0
+          },
+          "relative_size": 0.000804901123046875
+        },
+        "bbox": [
+          260,
+          639,
+          10,
+          128
+        ],
+        "area": 633,
+        "stability_score": 0.9642301797866821,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 27,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            133,
+            671,
+            9,
+            42
+          ],
+          "area": 346,
+          "aspect_ratio": 0.21428571428571427,
+          "compactness": 0.4703903840169819,
+          "mean_color": [
+            123.76300578034682,
+            103.85549132947978,
+            76.44797687861272
+          ],
+          "color_std": [
+            61.65863900846082,
+            57.70742367583176,
+            47.52430359640385
+          ],
+          "position": {
+            "center_x": 137.5,
+            "center_y": 692.0
+          },
+          "relative_size": 0.0004399617513020833
+        },
+        "bbox": [
+          133,
+          671,
+          9,
+          42
+        ],
+        "area": 346,
+        "stability_score": 0.9772079586982727,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 28,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            169,
+            555,
+            12,
+            19
+          ],
+          "area": 243,
+          "aspect_ratio": 0.631578947368421,
+          "compactness": 0.8927358442235936,
+          "mean_color": [
+            150.71604938271605,
+            143.0781893004115,
+            106.97119341563786
+          ],
+          "color_std": [
+            31.94332734970484,
+            42.740268037855174,
+            40.91750198307085
+          ],
+          "position": {
+            "center_x": 175.0,
+            "center_y": 564.5
+          },
+          "relative_size": 0.000308990478515625
+        },
+        "bbox": [
+          169,
+          555,
+          12,
+          19
+        ],
+        "area": 243,
+        "stability_score": 0.9756097793579102,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 29,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            252,
+            677,
+            12,
+            37
+          ],
+          "area": 452,
+          "aspect_ratio": 0.32432432432432434,
+          "compactness": 0.6605827753235785,
+          "mean_color": [
+            50.09513274336283,
+            53.54424778761062,
+            71.96238938053098
+          ],
+          "color_std": [
+            17.39779950560549,
+            19.214791675280836,
+            20.89186024219376
+          ],
+          "position": {
+            "center_x": 258.0,
+            "center_y": 695.5
+          },
+          "relative_size": 0.0005747477213541666
+        },
+        "bbox": [
+          252,
+          677,
+          12,
+          37
+        ],
+        "area": 452,
+        "stability_score": 0.9780219793319702,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 30,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            392,
+            606,
+            135,
+            46
+          ],
+          "area": 4617,
+          "aspect_ratio": 2.9347826086956523,
+          "compactness": 0.4577752643845138,
+          "mean_color": [
+            46.72146415421269,
+            43.60233918128655,
+            37.526965562053284
+          ],
+          "color_std": [
+            30.056980768139628,
+            28.24949908506032,
+            23.30039861109447
+          ],
+          "position": {
+            "center_x": 459.5,
+            "center_y": 629.0
+          },
+          "relative_size": 0.005870819091796875
+        },
+        "bbox": [
+          392,
+          606,
+          135,
+          46
+        ],
+        "area": 4617,
+        "stability_score": 0.957176148891449,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 31,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            0,
+            357,
+            311,
+            186
+          ],
+          "area": 29788,
+          "aspect_ratio": 1.6720430107526882,
+          "compactness": 0.2666208188831609,
+          "mean_color": [
+            59.63901571102458,
+            51.36716127299584,
+            40.5540486101786
+          ],
+          "color_std": [
+            40.817354683983204,
+            39.275145325300564,
+            37.6006540407694
+          ],
+          "position": {
+            "center_x": 155.5,
+            "center_y": 450.0
+          },
+          "relative_size": 0.037877400716145836
+        },
+        "bbox": [
+          0,
+          357,
+          311,
+          186
+        ],
+        "area": 29788,
+        "stability_score": 0.9507981538772583,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 32,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            100,
+            743,
+            69,
+            16
+          ],
+          "area": 598,
+          "aspect_ratio": 4.3125,
+          "compactness": 0.6579592003772425,
+          "mean_color": [
+            141.27257525083613,
+            163.18227424749165,
+            167.6103678929766
+          ],
+          "color_std": [
+            39.809718192909266,
+            41.28761854351763,
+            38.13157593310625
+          ],
+          "position": {
+            "center_x": 134.5,
+            "center_y": 751.0
+          },
+          "relative_size": 0.0007603963216145834
+        },
+        "bbox": [
+          100,
+          743,
+          69,
+          16
+        ],
+        "area": 598,
+        "stability_score": 0.9605262875556946,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 33,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            210,
+            542,
+            22,
+            36
+          ],
+          "area": 811,
+          "aspect_ratio": 0.6111111111111112,
+          "compactness": 0.7903289254314815,
+          "mean_color": [
+            121.3723797780518,
+            115.95191122071516,
+            80.21824907521578
+          ],
+          "color_std": [
+            50.17755823636238,
+            47.6764569069784,
+            45.22204936037576
+          ],
+          "position": {
+            "center_x": 221.0,
+            "center_y": 560.0
+          },
+          "relative_size": 0.0010312398274739583
+        },
+        "bbox": [
+          210,
+          542,
+          22,
+          36
+        ],
+        "area": 811,
+        "stability_score": 0.9673518538475037,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 34,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            207,
+            665,
+            17,
+            26
+          ],
+          "area": 400,
+          "aspect_ratio": 0.6538461538461539,
+          "compactness": 0.7893599200475002,
+          "mean_color": [
+            22.185,
+            18.2125,
+            19.5525
+          ],
+          "color_std": [
+            7.094418580828171,
+            5.564381704196792,
+            5.00721916336802
+          ],
+          "position": {
+            "center_x": 215.5,
+            "center_y": 678.0
+          },
+          "relative_size": 0.0005086263020833334
+        },
+        "bbox": [
+          207,
+          665,
+          17,
+          26
+        ],
+        "area": 400,
+        "stability_score": 0.9655172228813171,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 35,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            789,
+            265,
+            168,
+            90
+          ],
+          "area": 8424,
+          "aspect_ratio": 1.8666666666666667,
+          "compactness": 0.34542604911321695,
+          "mean_color": [
+            96.53288224121557,
+            93.52659069325736,
+            94.95631528964863
+          ],
+          "color_std": [
+            57.543609223291774,
+            63.17796586475202,
+            68.26522552971137
+          ],
+          "position": {
+            "center_x": 873.0,
+            "center_y": 310.0
+          },
+          "relative_size": 0.010711669921875
+        },
+        "bbox": [
+          789,
+          265,
+          168,
+          90
+        ],
+        "area": 8424,
+        "stability_score": 0.9654729962348938,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 36,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            629,
+            280,
+            48,
+            63
+          ],
+          "area": 1943,
+          "aspect_ratio": 0.7619047619047619,
+          "compactness": 0.5777205817790516,
+          "mean_color": [
+            114.57642820380855,
+            107.96294390118373,
+            103.83685023160062
+          ],
+          "color_std": [
+            38.83908765678188,
+            42.51355832268387,
+            48.78271844516646
+          ],
+          "position": {
+            "center_x": 653.0,
+            "center_y": 311.5
+          },
+          "relative_size": 0.0024706522623697915
+        },
+        "bbox": [
+          629,
+          280,
+          48,
+          63
+        ],
+        "area": 1943,
+        "stability_score": 0.9689725041389465,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 37,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            948,
+            333,
+            30,
+            34
+          ],
+          "area": 645,
+          "aspect_ratio": 0.8823529411764706,
+          "compactness": 0.724919912434803,
+          "mean_color": [
+            104.10542635658915,
+            99.34418604651162,
+            102.7984496124031
+          ],
+          "color_std": [
+            52.69342119488279,
+            54.76865496771974,
+            59.752769692863545
+          ],
+          "position": {
+            "center_x": 963.0,
+            "center_y": 350.0
+          },
+          "relative_size": 0.000820159912109375
+        },
+        "bbox": [
+          948,
+          333,
+          30,
+          34
+        ],
+        "area": 645,
+        "stability_score": 0.9665144681930542,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 38,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            423,
+            247,
+            132,
+            84
+          ],
+          "area": 5903,
+          "aspect_ratio": 1.5714285714285714,
+          "compactness": 0.4693206478711177,
+          "mean_color": [
+            74.5419278333051,
+            63.64238522785025,
+            55.45959681517872
+          ],
+          "color_std": [
+            55.143681193913764,
+            51.90804571643267,
+            44.03925780474296
+          ],
+          "position": {
+            "center_x": 489.0,
+            "center_y": 289.0
+          },
+          "relative_size": 0.007506052652994792
+        },
+        "bbox": [
+          423,
+          247,
+          132,
+          84
+        ],
+        "area": 5903,
+        "stability_score": 0.9691151976585388,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 39,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            559,
+            383,
+            4,
+            42
+          ],
+          "area": 191,
+          "aspect_ratio": 0.09523809523809523,
+          "compactness": 0.28785333871991853,
+          "mean_color": [
+            111.48167539267016,
+            87.21465968586388,
+            79.54450261780104
+          ],
+          "color_std": [
+            45.88853361801733,
+            47.65804234075606,
+            48.52318341182421
+          ],
+          "position": {
+            "center_x": 561.0,
+            "center_y": 404.0
+          },
+          "relative_size": 0.00024286905924479166
+        },
+        "bbox": [
+          559,
+          383,
+          4,
+          42
+        ],
+        "area": 191,
+        "stability_score": 0.96875,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 40,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            629,
+            280,
+            30,
+            26
+          ],
+          "area": 538,
+          "aspect_ratio": 1.1538461538461537,
+          "compactness": 0.8394965293124489,
+          "mean_color": [
+            121.70446096654275,
+            119.38847583643123,
+            123.92379182156134
+          ],
+          "color_std": [
+            38.62497240272062,
+            41.634268139965315,
+            44.07196454078877
+          ],
+          "position": {
+            "center_x": 644.0,
+            "center_y": 293.0
+          },
+          "relative_size": 0.0006841023763020834
+        },
+        "bbox": [
+          629,
+          280,
+          30,
+          26
+        ],
+        "area": 538,
+        "stability_score": 0.9778597950935364,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 41,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            477,
+            368,
+            13,
+            8
+          ],
+          "area": 105,
+          "aspect_ratio": 1.625,
+          "compactness": 0.9476813604305954,
+          "mean_color": [
+            35.2,
+            24.16190476190476,
+            19.504761904761907
+          ],
+          "color_std": [
+            11.167469765008589,
+            10.803106968895841,
+            10.44087554212614
+          ],
+          "position": {
+            "center_x": 483.5,
+            "center_y": 372.0
+          },
+          "relative_size": 0.000133514404296875
+        },
+        "bbox": [
+          477,
+          368,
+          13,
+          8
+        ],
+        "area": 105,
+        "stability_score": 0.9811320900917053,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 42,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            559,
+            363,
+            4,
+            62
+          ],
+          "area": 265,
+          "aspect_ratio": 0.06451612903225806,
+          "compactness": 0.20172000909945467,
+          "mean_color": [
+            128.62641509433962,
+            107.21509433962264,
+            95.30566037735849
+          ],
+          "color_std": [
+            52.73307705274118,
+            56.82262171176765,
+            54.41032926039206
+          ],
+          "position": {
+            "center_x": 561.0,
+            "center_y": 394.0
+          },
+          "relative_size": 0.0003369649251302083
+        },
+        "bbox": [
+          559,
+          363,
+          4,
+          62
+        ],
+        "area": 265,
+        "stability_score": 0.9814126491546631,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 43,
+        "architectural_type": "vertical_element",
+        "properties": {
+          "bbox": [
+            933,
+            306,
+            90,
+            253
+          ],
+          "area": 17973,
+          "aspect_ratio": 0.3557312252964427,
+          "compactness": 0.46209065626165086,
+          "mean_color": [
+            26.722027485672953,
+            21.842541590163023,
+            21.323151393757303
+          ],
+          "color_std": [
+            27.407426770713265,
+            25.62879993301911,
+            26.514491456615385
+          ],
+          "position": {
+            "center_x": 978.0,
+            "center_y": 432.5
+          },
+          "relative_size": 0.022853851318359375
+        },
+        "bbox": [
+          933,
+          306,
+          90,
+          253
+        ],
+        "area": 17973,
+        "stability_score": 0.9645002484321594,
+        "semiotic_analysis": {
+          "architectural_type": "vertical_element",
+          "semiotic_indicators": [
+            "structural_support_symbolism",
+            "vertical_aspiration",
+            "classical_architectural_reference"
+          ]
+        }
+      },
+      {
+        "segment_id": 44,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            708,
+            582,
+            36,
+            184
+          ],
+          "area": 4707,
+          "aspect_ratio": 0.1956521739130435,
+          "compactness": 0.28786535572444605,
+          "mean_color": [
+            76.07180794561292,
+            38.89802421924793,
+            30.789250053112386
+          ],
+          "color_std": [
+            42.885898408769215,
+            27.881967111360566,
+            19.288419159477662
+          ],
+          "position": {
+            "center_x": 726.0,
+            "center_y": 674.0
+          },
+          "relative_size": 0.005985260009765625
+        },
+        "bbox": [
+          708,
+          582,
+          36,
+          184
+        ],
+        "area": 4707,
+        "stability_score": 0.9781283140182495,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 45,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            663,
+            712,
+            51,
+            55
+          ],
+          "area": 2058,
+          "aspect_ratio": 0.9272727272727272,
+          "compactness": 0.7165176160006567,
+          "mean_color": [
+            127.8396501457726,
+            118.28328474246841,
+            104.33138969873664
+          ],
+          "color_std": [
+            37.84365749127414,
+            34.719519250767874,
+            25.742595831586744
+          ],
+          "position": {
+            "center_x": 688.5,
+            "center_y": 739.5
+          },
+          "relative_size": 0.00261688232421875
+        },
+        "bbox": [
+          663,
+          712,
+          51,
+          55
+        ],
+        "area": 2058,
+        "stability_score": 0.9778845906257629,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 46,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            981,
+            750,
+            25,
+            17
+          ],
+          "area": 358,
+          "aspect_ratio": 1.4705882352941178,
+          "compactness": 0.7952519126477292,
+          "mean_color": [
+            112.53631284916202,
+            118.65921787709497,
+            85.94413407821229
+          ],
+          "color_std": [
+            29.185930065345204,
+            32.05330862487822,
+            29.662858040910493
+          ],
+          "position": {
+            "center_x": 993.5,
+            "center_y": 758.5
+          },
+          "relative_size": 0.0004552205403645833
+        },
+        "bbox": [
+          981,
+          750,
+          25,
+          17
+        ],
+        "area": 358,
+        "stability_score": 0.9780219793319702,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 47,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            707,
+            582,
+            37,
+            40
+          ],
+          "area": 1389,
+          "aspect_ratio": 0.925,
+          "compactness": 0.8481557717354891,
+          "mean_color": [
+            109.42836573074155,
+            56.67386609071274,
+            40.552195824334056
+          ],
+          "color_std": [
+            34.18471530582212,
+            29.288334258579102,
+            23.08277691723327
+          ],
+          "position": {
+            "center_x": 725.5,
+            "center_y": 602.0
+          },
+          "relative_size": 0.001766204833984375
+        },
+        "bbox": [
+          707,
+          582,
+          37,
+          40
+        ],
+        "area": 1389,
+        "stability_score": 0.9771917462348938,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 48,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            815,
+            513,
+            32,
+            22
+          ],
+          "area": 429,
+          "aspect_ratio": 1.4545454545454546,
+          "compactness": 0.6425329051795785,
+          "mean_color": [
+            42.578088578088575,
+            30.35198135198135,
+            23.31002331002331
+          ],
+          "color_std": [
+            25.563333026310666,
+            19.213913641583417,
+            13.885795168396518
+          ],
+          "position": {
+            "center_x": 831.0,
+            "center_y": 524.0
+          },
+          "relative_size": 0.000545501708984375
+        },
+        "bbox": [
+          815,
+          513,
+          32,
+          22
+        ],
+        "area": 429,
+        "stability_score": 0.9770641922950745,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 49,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            981,
+            729,
+            25,
+            38
+          ],
+          "area": 585,
+          "aspect_ratio": 0.6578947368421053,
+          "compactness": 0.5991353323782496,
+          "mean_color": [
+            83.16752136752137,
+            86.42393162393162,
+            63.07692307692308
+          ],
+          "color_std": [
+            48.31827498240374,
+            52.24270881049886,
+            40.70123664014173
+          ],
+          "position": {
+            "center_x": 993.5,
+            "center_y": 748.0
+          },
+          "relative_size": 0.000743865966796875
+        },
+        "bbox": [
+          981,
+          729,
+          25,
+          38
+        ],
+        "area": 585,
+        "stability_score": 0.9746192693710327,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 50,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            666,
+            583,
+            23,
+            37
+          ],
+          "area": 804,
+          "aspect_ratio": 0.6216216216216216,
+          "compactness": 0.7397064393750966,
+          "mean_color": [
+            89.46019900497512,
+            42.40422885572139,
+            33.767412935323385
+          ],
+          "color_std": [
+            33.42039115920142,
+            29.11752702629,
+            26.26760263201545
+          ],
+          "position": {
+            "center_x": 677.5,
+            "center_y": 601.5
+          },
+          "relative_size": 0.0010223388671875
+        },
+        "bbox": [
+          666,
+          583,
+          23,
+          37
+        ],
+        "area": 804,
+        "stability_score": 0.970588207244873,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 51,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            832,
+            678,
+            47,
+            89
+          ],
+          "area": 2123,
+          "aspect_ratio": 0.5280898876404494,
+          "compactness": 1.1975759096393774,
+          "mean_color": [
+            61.687235044748,
+            68.36033914272257,
+            73.60527555346208
+          ],
+          "color_std": [
+            48.65023312651355,
+            51.00429609123647,
+            47.89069052302758
+          ],
+          "position": {
+            "center_x": 855.5,
+            "center_y": 722.5
+          },
+          "relative_size": 0.0026995340983072915
+        },
+        "bbox": [
+          832,
+          678,
+          47,
+          89
+        ],
+        "area": 2123,
+        "stability_score": 0.9605934023857117,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 52,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            510,
+            557,
+            19,
+            21
+          ],
+          "area": 290,
+          "aspect_ratio": 0.9047619047619048,
+          "compactness": 0.7951516677885013,
+          "mean_color": [
+            49.324137931034485,
+            36.713793103448275,
+            33.50689655172414
+          ],
+          "color_std": [
+            36.82875240307744,
+            35.99986804705637,
+            32.94051515450952
+          ],
+          "position": {
+            "center_x": 519.5,
+            "center_y": 567.5
+          },
+          "relative_size": 0.0003687540690104167
+        },
+        "bbox": [
+          510,
+          557,
+          19,
+          21
+        ],
+        "area": 290,
+        "stability_score": 0.9863481521606445,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 53,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            867,
+            542,
+            25,
+            63
+          ],
+          "area": 1254,
+          "aspect_ratio": 0.3968253968253968,
+          "compactness": 0.45390079243653875,
+          "mean_color": [
+            11.200956937799043,
+            7.333333333333333,
+            10.177830940988835
+          ],
+          "color_std": [
+            9.192056711111102,
+            6.905875885342378,
+            7.347239806569991
+          ],
+          "position": {
+            "center_x": 879.5,
+            "center_y": 573.5
+          },
+          "relative_size": 0.00159454345703125
+        },
+        "bbox": [
+          867,
+          542,
+          25,
+          63
+        ],
+        "area": 1254,
+        "stability_score": 0.9693877696990967,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 54,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            566,
+            497,
+            46,
+            79
+          ],
+          "area": 2592,
+          "aspect_ratio": 0.5822784810126582,
+          "compactness": 0.6566936031476625,
+          "mean_color": [
+            34.014274691358025,
+            29.02777777777778,
+            25.190586419753085
+          ],
+          "color_std": [
+            30.074268100632953,
+            27.114142020924547,
+            20.7522296354223
+          ],
+          "position": {
+            "center_x": 589.0,
+            "center_y": 536.5
+          },
+          "relative_size": 0.0032958984375
+        },
+        "bbox": [
+          566,
+          497,
+          46,
+          79
+        ],
+        "area": 2592,
+        "stability_score": 0.96409672498703,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 55,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            798,
+            540,
+            20,
+            35
+          ],
+          "area": 549,
+          "aspect_ratio": 0.5714285714285714,
+          "compactness": 0.7192039000784635,
+          "mean_color": [
+            20.39344262295082,
+            14.830601092896174,
+            16.845173041894352
+          ],
+          "color_std": [
+            15.451847549794214,
+            11.103359893011346,
+            9.378097152870197
+          ],
+          "position": {
+            "center_x": 808.0,
+            "center_y": 557.5
+          },
+          "relative_size": 0.000698089599609375
+        },
+        "bbox": [
+          798,
+          540,
+          20,
+          35
+        ],
+        "area": 549,
+        "stability_score": 0.9677996635437012,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 56,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            666,
+            583,
+            23,
+            130
+          ],
+          "area": 1703,
+          "aspect_ratio": 0.17692307692307693,
+          "compactness": 0.221732085924509,
+          "mean_color": [
+            65.68291250733999,
+            32.24838520258368,
+            28.08984145625367
+          ],
+          "color_std": [
+            34.47489468195294,
+            24.03349508744426,
+            20.95549704223814
+          ],
+          "position": {
+            "center_x": 677.5,
+            "center_y": 648.0
+          },
+          "relative_size": 0.0021654764811197915
+        },
+        "bbox": [
+          666,
+          583,
+          23,
+          130
+        ],
+        "area": 1703,
+        "stability_score": 0.9652978777885437,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 57,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            673,
+            620,
+            36,
+            23
+          ],
+          "area": 423,
+          "aspect_ratio": 1.565217391304348,
+          "compactness": 0.5332559323942304,
+          "mean_color": [
+            94.92434988179669,
+            65.84633569739952,
+            57.01418439716312
+          ],
+          "color_std": [
+            42.778819221506424,
+            42.09308079853382,
+            33.84277075146493
+          ],
+          "position": {
+            "center_x": 691.0,
+            "center_y": 631.5
+          },
+          "relative_size": 0.000537872314453125
+        },
+        "bbox": [
+          673,
+          620,
+          36,
+          23
+        ],
+        "area": 423,
+        "stability_score": 0.9696261882781982,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 58,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            951,
+            572,
+            72,
+            65
+          ],
+          "area": 4412,
+          "aspect_ratio": 1.1076923076923078,
+          "compactness": 0.8264278640762568,
+          "mean_color": [
+            62.05711695376247,
+            33.40367180417044,
+            28.44718948322756
+          ],
+          "color_std": [
+            50.85144400880398,
+            44.3071576658376,
+            31.86790183761145
+          ],
+          "position": {
+            "center_x": 987.0,
+            "center_y": 604.5
+          },
+          "relative_size": 0.005610148111979167
+        },
+        "bbox": [
+          951,
+          572,
+          72,
+          65
+        ],
+        "area": 4412,
+        "stability_score": 0.9702660441398621,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 59,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            899,
+            574,
+            64,
+            81
+          ],
+          "area": 3512,
+          "aspect_ratio": 0.7901234567901234,
+          "compactness": 0.5802743105719194,
+          "mean_color": [
+            61.420842824601365,
+            43.01964692482916,
+            36.10051252847381
+          ],
+          "color_std": [
+            38.74557802054503,
+            32.11582843897708,
+            25.928813968532456
+          ],
+          "position": {
+            "center_x": 931.0,
+            "center_y": 614.5
+          },
+          "relative_size": 0.004465738932291667
+        },
+        "bbox": [
+          899,
+          574,
+          64,
+          81
+        ],
+        "area": 3512,
+        "stability_score": 0.9659693241119385,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 60,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            877,
+            545,
+            15,
+            55
+          ],
+          "area": 717,
+          "aspect_ratio": 0.2727272727272727,
+          "compactness": 0.4084310207149445,
+          "mean_color": [
+            8.98465829846583,
+            6.95258019525802,
+            9.808926080892608
+          ],
+          "color_std": [
+            7.486932478501017,
+            7.439049193027856,
+            7.716094038754235
+          ],
+          "position": {
+            "center_x": 884.5,
+            "center_y": 572.5
+          },
+          "relative_size": 0.000911712646484375
+        },
+        "bbox": [
+          877,
+          545,
+          15,
+          55
+        ],
+        "area": 717,
+        "stability_score": 0.9522510170936584,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 61,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            634,
+            518,
+            17,
+            56
+          ],
+          "area": 858,
+          "aspect_ratio": 0.30357142857142855,
+          "compactness": 0.5658183049171064,
+          "mean_color": [
+            42.05011655011655,
+            31.16083916083916,
+            22.9009324009324
+          ],
+          "color_std": [
+            18.65103548586622,
+            15.453207970898687,
+            12.037556771347015
+          ],
+          "position": {
+            "center_x": 642.5,
+            "center_y": 546.0
+          },
+          "relative_size": 0.00109100341796875
+        },
+        "bbox": [
+          634,
+          518,
+          17,
+          56
+        ],
+        "area": 858,
+        "stability_score": 0.957274854183197,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 62,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            437,
+            714,
+            54,
+            32
+          ],
+          "area": 879,
+          "aspect_ratio": 1.6875,
+          "compactness": 0.43288322577207206,
+          "mean_color": [
+            184.94311717861206,
+            154.77133105802048,
+            79.93970420932878
+          ],
+          "color_std": [
+            60.99112335737623,
+            58.72442960145874,
+            40.93522456456561
+          ],
+          "position": {
+            "center_x": 464.0,
+            "center_y": 730.0
+          },
+          "relative_size": 0.001117706298828125
+        },
+        "bbox": [
+          437,
+          714,
+          54,
+          32
+        ],
+        "area": 879,
+        "stability_score": 0.9511111378669739,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 63,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            873,
+            642,
+            46,
+            13
+          ],
+          "area": 597,
+          "aspect_ratio": 3.5384615384615383,
+          "compactness": 0.596549591905666,
+          "mean_color": [
+            108.10552763819095,
+            98.25460636515913,
+            83.71189279731993
+          ],
+          "color_std": [
+            43.7323278834838,
+            41.790401866476884,
+            34.572150311404414
+          ],
+          "position": {
+            "center_x": 896.0,
+            "center_y": 648.5
+          },
+          "relative_size": 0.000759124755859375
+        },
+        "bbox": [
+          873,
+          642,
+          46,
+          13
+        ],
+        "area": 597,
+        "stability_score": 0.9671592712402344,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 64,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            503,
+            650,
+            20,
+            12
+          ],
+          "area": 220,
+          "aspect_ratio": 1.6666666666666667,
+          "compactness": 0.8015733664812897,
+          "mean_color": [
+            50.65909090909091,
+            49.17272727272727,
+            49.29090909090909
+          ],
+          "color_std": [
+            18.337670098136766,
+            17.736382274814304,
+            16.197556187471033
+          ],
+          "position": {
+            "center_x": 513.0,
+            "center_y": 656.0
+          },
+          "relative_size": 0.0002797444661458333
+        },
+        "bbox": [
+          503,
+          650,
+          20,
+          12
+        ],
+        "area": 220,
+        "stability_score": 0.9732142686843872,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 65,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            314,
+            679,
+            23,
+            55
+          ],
+          "area": 1221,
+          "aspect_ratio": 0.41818181818181815,
+          "compactness": 0.7023969194055184,
+          "mean_color": [
+            60.138411138411136,
+            60.615888615888615,
+            69.60278460278461
+          ],
+          "color_std": [
+            26.688662230629255,
+            26.033665153870697,
+            23.61460892616571
+          ],
+          "position": {
+            "center_x": 325.5,
+            "center_y": 706.5
+          },
+          "relative_size": 0.001552581787109375
+        },
+        "bbox": [
+          314,
+          679,
+          23,
+          55
+        ],
+        "area": 1221,
+        "stability_score": 0.9926650524139404,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 66,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            232,
+            675,
+            17,
+            35
+          ],
+          "area": 583,
+          "aspect_ratio": 0.4857142857142857,
+          "compactness": 0.742779692852219,
+          "mean_color": [
+            62.54030874785592,
+            61.23499142367067,
+            73.3327615780446
+          ],
+          "color_std": [
+            17.044126101183522,
+            17.51131984660439,
+            16.41378767443307
+          ],
+          "position": {
+            "center_x": 240.5,
+            "center_y": 692.5
+          },
+          "relative_size": 0.0007413228352864584
+        },
+        "bbox": [
+          232,
+          675,
+          17,
+          35
+        ],
+        "area": 583,
+        "stability_score": 0.9914529919624329,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 67,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            367,
+            671,
+            15,
+            49
+          ],
+          "area": 562,
+          "aspect_ratio": 0.30612244897959184,
+          "compactness": 0.5068457190507595,
+          "mean_color": [
+            100.51245551601423,
+            91.68861209964413,
+            76.48042704626334
+          ],
+          "color_std": [
+            46.766026480346554,
+            45.3090712150742,
+            39.21294825500449
+          ],
+          "position": {
+            "center_x": 374.5,
+            "center_y": 695.5
+          },
+          "relative_size": 0.0007146199544270834
+        },
+        "bbox": [
+          367,
+          671,
+          15,
+          49
+        ],
+        "area": 562,
+        "stability_score": 0.9894179701805115,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 68,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            940,
+            561,
+            83,
+            22
+          ],
+          "area": 935,
+          "aspect_ratio": 3.772727272727273,
+          "compactness": 0.2878324451657507,
+          "mean_color": [
+            71.06417112299465,
+            65.91229946524064,
+            66.27914438502674
+          ],
+          "color_std": [
+            20.77735680647961,
+            19.125893318933336,
+            17.598922649193845
+          ],
+          "position": {
+            "center_x": 981.5,
+            "center_y": 572.0
+          },
+          "relative_size": 0.0011889139811197917
+        },
+        "bbox": [
+          940,
+          561,
+          83,
+          22
+        ],
+        "area": 935,
+        "stability_score": 0.9674711227416992,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 69,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            316,
+            399,
+            25,
+            27
+          ],
+          "area": 465,
+          "aspect_ratio": 0.9259259259259259,
+          "compactness": 0.6876285984102305,
+          "mean_color": [
+            95.1010752688172,
+            90.76774193548387,
+            83.58709677419355
+          ],
+          "color_std": [
+            46.58580358454697,
+            49.62757896397804,
+            55.87387337548634
+          ],
+          "position": {
+            "center_x": 328.5,
+            "center_y": 412.5
+          },
+          "relative_size": 0.000591278076171875
+        },
+        "bbox": [
+          316,
+          399,
+          25,
+          27
+        ],
+        "area": 465,
+        "stability_score": 0.9786324501037598,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 70,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            109,
+            558,
+            28,
+            19
+          ],
+          "area": 555,
+          "aspect_ratio": 1.4736842105263157,
+          "compactness": 0.8408954273165818,
+          "mean_color": [
+            164.05585585585587,
+            159.45585585585584,
+            121.76396396396396
+          ],
+          "color_std": [
+            36.528682262998686,
+            36.78002955160667,
+            35.57588208447953
+          ],
+          "position": {
+            "center_x": 123.0,
+            "center_y": 567.5
+          },
+          "relative_size": 0.000705718994140625
+        },
+        "bbox": [
+          109,
+          558,
+          28,
+          19
+        ],
+        "area": 555,
+        "stability_score": 0.9946042895317078,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 71,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            0,
+            392,
+            52,
+            115
+          ],
+          "area": 4580,
+          "aspect_ratio": 0.45217391304347826,
+          "compactness": 0.5809483174405771,
+          "mean_color": [
+            56.02205240174673,
+            48.1764192139738,
+            37.53624454148471
+          ],
+          "color_std": [
+            42.010221184817084,
+            39.12035357756717,
+            34.89156935561111
+          ],
+          "position": {
+            "center_x": 26.0,
+            "center_y": 449.5
+          },
+          "relative_size": 0.005823771158854167
+        },
+        "bbox": [
+          0,
+          392,
+          52,
+          115
+        ],
+        "area": 4580,
+        "stability_score": 0.9683598875999451,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 72,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            236,
+            562,
+            21,
+            17
+          ],
+          "area": 386,
+          "aspect_ratio": 1.2352941176470589,
+          "compactness": 0.9084609466102613,
+          "mean_color": [
+            104.23834196891191,
+            96.32642487046633,
+            72.37564766839378
+          ],
+          "color_std": [
+            35.9100081500107,
+            37.266957070453,
+            32.82622368424502
+          ],
+          "position": {
+            "center_x": 246.5,
+            "center_y": 570.5
+          },
+          "relative_size": 0.0004908243815104166
+        },
+        "bbox": [
+          236,
+          562,
+          21,
+          17
+        ],
+        "area": 386,
+        "stability_score": 0.9744898080825806,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 73,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            78,
+            725,
+            226,
+            41
+          ],
+          "area": 6071,
+          "aspect_ratio": 5.512195121951219,
+          "compactness": 0.9170648751981686,
+          "mean_color": [
+            128.7857025201779,
+            170.85027178389063,
+            179.9410311316093
+          ],
+          "color_std": [
+            36.50921951642296,
+            37.96598555907006,
+            37.54430510541256
+          ],
+          "position": {
+            "center_x": 191.0,
+            "center_y": 745.5
+          },
+          "relative_size": 0.007719675699869792
+        },
+        "bbox": [
+          78,
+          725,
+          226,
+          41
+        ],
+        "area": 6071,
+        "stability_score": 0.9714332222938538,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 74,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            464,
+            678,
+            12,
+            33
+          ],
+          "area": 333,
+          "aspect_ratio": 0.36363636363636365,
+          "compactness": 0.6254004938186933,
+          "mean_color": [
+            55.0990990990991,
+            43.234234234234236,
+            33.25525525525526
+          ],
+          "color_std": [
+            20.834232753898867,
+            19.773623476099772,
+            18.937966006579913
+          ],
+          "position": {
+            "center_x": 470.0,
+            "center_y": 694.5
+          },
+          "relative_size": 0.000423431396484375
+        },
+        "bbox": [
+          464,
+          678,
+          12,
+          33
+        ],
+        "area": 333,
+        "stability_score": 0.9762611389160156,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 75,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            726,
+            638,
+            235,
+            56
+          ],
+          "area": 4073,
+          "aspect_ratio": 4.196428571428571,
+          "compactness": 0.18196952403321287,
+          "mean_color": [
+            70.01006629020378,
+            46.96513626319666,
+            42.22096734593666
+          ],
+          "color_std": [
+            33.431177816587585,
+            36.127264512909285,
+            28.64175093690705
+          ],
+          "position": {
+            "center_x": 843.5,
+            "center_y": 666.0
+          },
+          "relative_size": 0.005179087320963542
+        },
+        "bbox": [
+          726,
+          638,
+          235,
+          56
+        ],
+        "area": 4073,
+        "stability_score": 0.9653012156486511,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 76,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            303,
+            723,
+            133,
+            44
+          ],
+          "area": 1715,
+          "aspect_ratio": 3.022727272727273,
+          "compactness": 0.2267266401962198,
+          "mean_color": [
+            167.61049562682217,
+            210.80758017492712,
+            214.16384839650146
+          ],
+          "color_std": [
+            58.175094162398416,
+            33.440888202400316,
+            35.17505542234954
+          ],
+          "position": {
+            "center_x": 369.5,
+            "center_y": 745.0
+          },
+          "relative_size": 0.0021807352701822915
+        },
+        "bbox": [
+          303,
+          723,
+          133,
+          44
+        ],
+        "area": 1715,
+        "stability_score": 0.9583333134651184,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 77,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            871,
+            593,
+            32,
+            50
+          ],
+          "area": 1305,
+          "aspect_ratio": 0.64,
+          "compactness": 0.6973046779805162,
+          "mean_color": [
+            50.067432950191574,
+            45.733333333333334,
+            49.301149425287356
+          ],
+          "color_std": [
+            14.726577373908667,
+            14.13067639307017,
+            14.02287808511266
+          ],
+          "position": {
+            "center_x": 887.0,
+            "center_y": 618.0
+          },
+          "relative_size": 0.001659393310546875
+        },
+        "bbox": [
+          871,
+          593,
+          32,
+          50
+        ],
+        "area": 1305,
+        "stability_score": 0.9691265225410461,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 78,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            113,
+            595,
+            35,
+            17
+          ],
+          "area": 589,
+          "aspect_ratio": 2.0588235294117645,
+          "compactness": 0.7871279438472769,
+          "mean_color": [
+            145.0848896434635,
+            137.44142614601017,
+            120.97283531409168
+          ],
+          "color_std": [
+            72.64065748411603,
+            76.3934862111118,
+            70.95900877208511
+          ],
+          "position": {
+            "center_x": 130.5,
+            "center_y": 603.5
+          },
+          "relative_size": 0.0007489522298177084
+        },
+        "bbox": [
+          113,
+          595,
+          35,
+          17
+        ],
+        "area": 589,
+        "stability_score": 0.9681742191314697,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 79,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            707,
+            551,
+            15,
+            21
+          ],
+          "area": 285,
+          "aspect_ratio": 0.7142857142857143,
+          "compactness": 0.8798874502132613,
+          "mean_color": [
+            19.431578947368422,
+            14.666666666666666,
+            16.410526315789475
+          ],
+          "color_std": [
+            13.959580221592102,
+            11.099760284013932,
+            10.40765042852083
+          ],
+          "position": {
+            "center_x": 714.5,
+            "center_y": 561.5
+          },
+          "relative_size": 0.000362396240234375
+        },
+        "bbox": [
+          707,
+          551,
+          15,
+          21
+        ],
+        "area": 285,
+        "stability_score": 0.9755244851112366,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 80,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            199,
+            667,
+            7,
+            38
+          ],
+          "area": 288,
+          "aspect_ratio": 0.18421052631578946,
+          "compactness": 0.47471995157116403,
+          "mean_color": [
+            110.91666666666667,
+            94.94097222222223,
+            65.13194444444444
+          ],
+          "color_std": [
+            66.53638311313426,
+            61.29845012676643,
+            47.197979377620015
+          ],
+          "position": {
+            "center_x": 202.5,
+            "center_y": 686.0
+          },
+          "relative_size": 0.0003662109375
+        },
+        "bbox": [
+          199,
+          667,
+          7,
+          38
+        ],
+        "area": 288,
+        "stability_score": 0.982758641242981,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 81,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            743,
+            603,
+            67,
+            43
+          ],
+          "area": 2306,
+          "aspect_ratio": 1.558139534883721,
+          "compactness": 0.7455152591093467,
+          "mean_color": [
+            94.10234171725932,
+            83.13963573287077,
+            63.62705984388552
+          ],
+          "color_std": [
+            56.09237613619895,
+            47.88840850614599,
+            40.41769806905268
+          ],
+          "position": {
+            "center_x": 776.5,
+            "center_y": 624.5
+          },
+          "relative_size": 0.0029322306315104165
+        },
+        "bbox": [
+          743,
+          603,
+          67,
+          43
+        ],
+        "area": 2306,
+        "stability_score": 0.9710021615028381,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 82,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            79,
+            535,
+            28,
+            20
+          ],
+          "area": 571,
+          "aspect_ratio": 1.4,
+          "compactness": 0.8716939778281125,
+          "mean_color": [
+            102.14711033274956,
+            101.09807355516638,
+            62.938704028021014
+          ],
+          "color_std": [
+            32.49695237582093,
+            26.35353430508649,
+            26.374470708444182
+          ],
+          "position": {
+            "center_x": 93.0,
+            "center_y": 545.0
+          },
+          "relative_size": 0.0007260640462239584
+        },
+        "bbox": [
+          79,
+          535,
+          28,
+          20
+        ],
+        "area": 571,
+        "stability_score": 0.9741824269294739,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 83,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            0,
+            580,
+            191,
+            37
+          ],
+          "area": 5963,
+          "aspect_ratio": 5.162162162162162,
+          "compactness": 0.30258318699732667,
+          "mean_color": [
+            147.7846721448935,
+            135.5820895522388,
+            106.4977360389066
+          ],
+          "color_std": [
+            30.071175891416953,
+            29.546135136198977,
+            27.351730764682248
+          ],
+          "position": {
+            "center_x": 95.5,
+            "center_y": 598.5
+          },
+          "relative_size": 0.007582346598307292
+        },
+        "bbox": [
+          0,
+          580,
+          191,
+          37
+        ],
+        "area": 5963,
+        "stability_score": 0.9609259366989136,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 84,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            143,
+            650,
+            11,
+            116
+          ],
+          "area": 714,
+          "aspect_ratio": 0.09482758620689655,
+          "compactness": 0.1489228448065471,
+          "mean_color": [
+            95.90336134453781,
+            161.2422969187675,
+            177.30532212885154
+          ],
+          "color_std": [
+            41.05575105370398,
+            44.741634315509394,
+            45.791750014975904
+          ],
+          "position": {
+            "center_x": 148.5,
+            "center_y": 708.0
+          },
+          "relative_size": 0.00090789794921875
+        },
+        "bbox": [
+          143,
+          650,
+          11,
+          116
+        ],
+        "area": 714,
+        "stability_score": 0.9614325165748596,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 85,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            899,
+            558,
+            20,
+            16
+          ],
+          "area": 217,
+          "aspect_ratio": 1.25,
+          "compactness": 0.7503460074603432,
+          "mean_color": [
+            80.72350230414746,
+            29.24884792626728,
+            35.53917050691244
+          ],
+          "color_std": [
+            22.6576820004272,
+            11.713272280650372,
+            12.59249960558068
+          ],
+          "position": {
+            "center_x": 909.0,
+            "center_y": 566.0
+          },
+          "relative_size": 0.0002759297688802083
+        },
+        "bbox": [
+          899,
+          558,
+          20,
+          16
+        ],
+        "area": 217,
+        "stability_score": 0.9636363387107849,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 86,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            0,
+            360,
+            128,
+            145
+          ],
+          "area": 11534,
+          "aspect_ratio": 0.8827586206896552,
+          "compactness": 0.47635774931447417,
+          "mean_color": [
+            69.76616958557308,
+            59.42890584359286,
+            43.60612103346627
+          ],
+          "color_std": [
+            40.34960833710206,
+            39.06767547609204,
+            38.08376684392276
+          ],
+          "position": {
+            "center_x": 64.0,
+            "center_y": 432.5
+          },
+          "relative_size": 0.014666239420572916
+        },
+        "bbox": [
+          0,
+          360,
+          128,
+          145
+        ],
+        "area": 11534,
+        "stability_score": 0.9815164804458618,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 87,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            68,
+            671,
+            10,
+            50
+          ],
+          "area": 436,
+          "aspect_ratio": 0.2,
+          "compactness": 0.42930482663153857,
+          "mean_color": [
+            137.21330275229357,
+            119.36238532110092,
+            90.64220183486239
+          ],
+          "color_std": [
+            55.06116621423528,
+            51.64399889467486,
+            42.85226872175457
+          ],
+          "position": {
+            "center_x": 73.0,
+            "center_y": 696.0
+          },
+          "relative_size": 0.0005544026692708334
+        },
+        "bbox": [
+          68,
+          671,
+          10,
+          50
+        ],
+        "area": 436,
+        "stability_score": 0.9751130938529968,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 88,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            873,
+            643,
+            88,
+            31
+          ],
+          "area": 1581,
+          "aspect_ratio": 2.838709677419355,
+          "compactness": 0.4249407043419455,
+          "mean_color": [
+            126.56609740670461,
+            114.13282732447819,
+            94.29285262492094
+          ],
+          "color_std": [
+            37.402154389212164,
+            35.64321856810423,
+            31.110862642202225
+          ],
+          "position": {
+            "center_x": 917.0,
+            "center_y": 658.5
+          },
+          "relative_size": 0.002010345458984375
+        },
+        "bbox": [
+          873,
+          643,
+          88,
+          31
+        ],
+        "area": 1581,
+        "stability_score": 0.9500616788864136,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 89,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            527,
+            371,
+            8,
+            45
+          ],
+          "area": 345,
+          "aspect_ratio": 0.17777777777777778,
+          "compactness": 0.4374123459658763,
+          "mean_color": [
+            147.72753623188405,
+            106.41739130434783,
+            76.23768115942029
+          ],
+          "color_std": [
+            40.19605534059704,
+            41.89600291031798,
+            38.948740380552415
+          ],
+          "position": {
+            "center_x": 531.0,
+            "center_y": 393.5
+          },
+          "relative_size": 0.000438690185546875
+        },
+        "bbox": [
+          527,
+          371,
+          8,
+          45
+        ],
+        "area": 345,
+        "stability_score": 0.9686609506607056,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 90,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            270,
+            551,
+            42,
+            29
+          ],
+          "area": 981,
+          "aspect_ratio": 1.4482758620689655,
+          "compactness": 0.666093532356427,
+          "mean_color": [
+            52.46992864424057,
+            47.29561671763506,
+            41.18246687054027
+          ],
+          "color_std": [
+            18.117027063448976,
+            17.16473731481289,
+            16.363117648995747
+          ],
+          "position": {
+            "center_x": 291.0,
+            "center_y": 565.5
+          },
+          "relative_size": 0.001247406005859375
+        },
+        "bbox": [
+          270,
+          551,
+          42,
+          29
+        ],
+        "area": 981,
+        "stability_score": 0.962037980556488,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 91,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            1000,
+            588,
+            18,
+            25
+          ],
+          "area": 383,
+          "aspect_ratio": 0.72,
+          "compactness": 0.8323496546525158,
+          "mean_color": [
+            126.22454308093995,
+            104.12271540469973,
+            74.65274151436032
+          ],
+          "color_std": [
+            75.00897577787298,
+            68.23269264530884,
+            54.591978451811535
+          ],
+          "position": {
+            "center_x": 1009.0,
+            "center_y": 600.5
+          },
+          "relative_size": 0.0004870096842447917
+        },
+        "bbox": [
+          1000,
+          588,
+          18,
+          25
+        ],
+        "area": 383,
+        "stability_score": 0.9662337899208069,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 92,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            393,
+            605,
+            45,
+            46
+          ],
+          "area": 1649,
+          "aspect_ratio": 0.9782608695652174,
+          "compactness": 0.7530619183887763,
+          "mean_color": [
+            38.69981807155852,
+            37.25469981807156,
+            34.0582171012735
+          ],
+          "color_std": [
+            26.25903534985296,
+            24.94052386763845,
+            21.133673307260658
+          ],
+          "position": {
+            "center_x": 415.5,
+            "center_y": 628.0
+          },
+          "relative_size": 0.0020968119303385415
+        },
+        "bbox": [
+          393,
+          605,
+          45,
+          46
+        ],
+        "area": 1649,
+        "stability_score": 0.9526907205581665,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 93,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            872,
+            601,
+            88,
+            72
+          ],
+          "area": 2737,
+          "aspect_ratio": 1.2222222222222223,
+          "compactness": 0.4007631869026754,
+          "mean_color": [
+            92.89331384727804,
+            84.18377785896968,
+            74.49251004749726
+          ],
+          "color_std": [
+            47.88354695810225,
+            43.89281194398031,
+            33.61254928830506
+          ],
+          "position": {
+            "center_x": 916.0,
+            "center_y": 637.0
+          },
+          "relative_size": 0.0034802754720052085
+        },
+        "bbox": [
+          872,
+          601,
+          88,
+          72
+        ],
+        "area": 2737,
+        "stability_score": 0.9528571367263794,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 94,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            349,
+            420,
+            77,
+            73
+          ],
+          "area": 2849,
+          "aspect_ratio": 1.0547945205479452,
+          "compactness": 0.4988102538594553,
+          "mean_color": [
+            86.45208845208845,
+            82.01509301509302,
+            76.37697437697437
+          ],
+          "color_std": [
+            29.249916885241017,
+            28.676053137019196,
+            27.219291529190155
+          ],
+          "position": {
+            "center_x": 387.5,
+            "center_y": 456.5
+          },
+          "relative_size": 0.0036226908365885415
+        },
+        "bbox": [
+          349,
+          420,
+          77,
+          73
+        ],
+        "area": 2849,
+        "stability_score": 0.9531303644180298,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 95,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            458,
+            369,
+            9,
+            8
+          ],
+          "area": 79,
+          "aspect_ratio": 1.125,
+          "compactness": 1.0682097734103044,
+          "mean_color": [
+            29.11392405063291,
+            22.658227848101266,
+            20.620253164556964
+          ],
+          "color_std": [
+            7.579097407555798,
+            6.188773167209625,
+            6.236486753334387
+          ],
+          "position": {
+            "center_x": 462.5,
+            "center_y": 373.0
+          },
+          "relative_size": 0.00010045369466145833
+        },
+        "bbox": [
+          458,
+          369,
+          9,
+          8
+        ],
+        "area": 79,
+        "stability_score": 0.9629629850387573,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 96,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            8,
+            477,
+            272,
+            107
+          ],
+          "area": 22337,
+          "aspect_ratio": 2.542056074766355,
+          "compactness": 0.5531826230235906,
+          "mean_color": [
+            112.85772485114384,
+            95.87540851501993,
+            71.80319649012849
+          ],
+          "color_std": [
+            49.81379926123162,
+            49.51503460212482,
+            42.456346782209216
+          ],
+          "position": {
+            "center_x": 144.0,
+            "center_y": 530.5
+          },
+          "relative_size": 0.028402964274088543
+        },
+        "bbox": [
+          8,
+          477,
+          272,
+          107
+        ],
+        "area": 22337,
+        "stability_score": 0.9672996997833252,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 97,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            0,
+            580,
+            190,
+            60
+          ],
+          "area": 9707,
+          "aspect_ratio": 3.1666666666666665,
+          "compactness": 0.502266006951462,
+          "mean_color": [
+            161.25600082414752,
+            146.9124343257443,
+            114.86947563613887
+          ],
+          "color_std": [
+            39.73827380060039,
+            37.43346085896618,
+            32.6452087674184
+          ],
+          "position": {
+            "center_x": 95.0,
+            "center_y": 610.0
+          },
+          "relative_size": 0.012343088785807291
+        },
+        "bbox": [
+          0,
+          580,
+          190,
+          60
+        ],
+        "area": 9707,
+        "stability_score": 0.9513958692550659,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 98,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            8,
+            491,
+            75,
+            89
+          ],
+          "area": 4969,
+          "aspect_ratio": 0.8426966292134831,
+          "compactness": 0.7494286909920269,
+          "mean_color": [
+            101.91748842825518,
+            87.59247333467499,
+            71.31354397263031
+          ],
+          "color_std": [
+            41.73575021123283,
+            39.964679914553585,
+            29.999200024521073
+          ],
+          "position": {
+            "center_x": 45.5,
+            "center_y": 535.5
+          },
+          "relative_size": 0.006318410237630208
+        },
+        "bbox": [
+          8,
+          491,
+          75,
+          89
+        ],
+        "area": 4969,
+        "stability_score": 0.9580861926078796,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 99,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            348,
+            735,
+            96,
+            32
+          ],
+          "area": 1858,
+          "aspect_ratio": 3.0,
+          "compactness": 0.42950538232194,
+          "mean_color": [
+            156.70344456404737,
+            180.41011840688913,
+            171.44510226049516
+          ],
+          "color_std": [
+            34.518505652529946,
+            24.11474063102904,
+            24.21962770598814
+          ],
+          "position": {
+            "center_x": 396.0,
+            "center_y": 751.0
+          },
+          "relative_size": 0.0023625691731770835
+        },
+        "bbox": [
+          348,
+          735,
+          96,
+          32
+        ],
+        "area": 1858,
+        "stability_score": 0.9817302823066711,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 100,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            314,
+            675,
+            44,
+            59
+          ],
+          "area": 2204,
+          "aspect_ratio": 0.7457627118644068,
+          "compactness": 0.6871091855954731,
+          "mean_color": [
+            70.77903811252268,
+            70.52676950998185,
+            75.96188747731398
+          ],
+          "color_std": [
+            41.04350858414649,
+            40.100075698832946,
+            33.924537255743964
+          ],
+          "position": {
+            "center_x": 336.0,
+            "center_y": 704.5
+          },
+          "relative_size": 0.0028025309244791665
+        },
+        "bbox": [
+          314,
+          675,
+          44,
+          59
+        ],
+        "area": 2204,
+        "stability_score": 0.9770683646202087,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 101,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            177,
+            652,
+            9,
+            81
+          ],
+          "area": 369,
+          "aspect_ratio": 0.1111111111111111,
+          "compactness": 0.15710681340871288,
+          "mean_color": [
+            95.11382113821138,
+            156.47967479674796,
+            171.53658536585365
+          ],
+          "color_std": [
+            45.57655995252627,
+            45.503032971993605,
+            44.21742768223294
+          ],
+          "position": {
+            "center_x": 181.5,
+            "center_y": 692.5
+          },
+          "relative_size": 0.000469207763671875
+        },
+        "bbox": [
+          177,
+          652,
+          9,
+          81
+        ],
+        "area": 369,
+        "stability_score": 0.9710467457771301,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 102,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            69,
+            646,
+            195,
+            27
+          ],
+          "area": 3196,
+          "aspect_ratio": 7.222222222222222,
+          "compactness": 1.0347380650054345,
+          "mean_color": [
+            190.12765957446808,
+            180.78754693366707,
+            158.06758448060074
+          ],
+          "color_std": [
+            54.395528909653606,
+            56.67930872604265,
+            48.76876232046908
+          ],
+          "position": {
+            "center_x": 166.5,
+            "center_y": 659.5
+          },
+          "relative_size": 0.004063924153645833
+        },
+        "bbox": [
+          69,
+          646,
+          195,
+          27
+        ],
+        "area": 3196,
+        "stability_score": 0.9624850153923035,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 103,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            532,
+            698,
+            30,
+            29
+          ],
+          "area": 442,
+          "aspect_ratio": 1.0344827586206897,
+          "compactness": 0.557208330512512,
+          "mean_color": [
+            81.46380090497738,
+            72.88914027149322,
+            60.717194570135746
+          ],
+          "color_std": [
+            49.97406387983918,
+            48.41318132916063,
+            37.69866379406664
+          ],
+          "position": {
+            "center_x": 547.0,
+            "center_y": 712.5
+          },
+          "relative_size": 0.0005620320638020834
+        },
+        "bbox": [
+          532,
+          698,
+          30,
+          29
+        ],
+        "area": 442,
+        "stability_score": 0.9594095945358276,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 104,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            230,
+            659,
+            152,
+            85
+          ],
+          "area": 9990,
+          "aspect_ratio": 1.7882352941176471,
+          "compactness": 0.8911074299888238,
+          "mean_color": [
+            119.06186186186186,
+            115.96446446446447,
+            108.3006006006006
+          ],
+          "color_std": [
+            68.99109325039603,
+            65.43343773073326,
+            49.64727667980764
+          ],
+          "position": {
+            "center_x": 306.0,
+            "center_y": 701.5
+          },
+          "relative_size": 0.01270294189453125
+        },
+        "bbox": [
+          230,
+          659,
+          152,
+          85
+        ],
+        "area": 9990,
+        "stability_score": 0.9567430019378662,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 105,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            312,
+            614,
+            39,
+            16
+          ],
+          "area": 474,
+          "aspect_ratio": 2.4375,
+          "compactness": 0.6240401785215516,
+          "mean_color": [
+            104.91983122362869,
+            102.33122362869199,
+            79.03586497890295
+          ],
+          "color_std": [
+            41.0873042282879,
+            37.549039605507645,
+            32.09829281234441
+          ],
+          "position": {
+            "center_x": 331.5,
+            "center_y": 622.0
+          },
+          "relative_size": 0.00060272216796875
+        },
+        "bbox": [
+          312,
+          614,
+          39,
+          16
+        ],
+        "area": 474,
+        "stability_score": 0.9551166892051697,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 106,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            903,
+            685,
+            107,
+            82
+          ],
+          "area": 4828,
+          "aspect_ratio": 1.3048780487804879,
+          "compactness": 0.6124728902006962,
+          "mean_color": [
+            155.85874067937033,
+            127.89685169842585,
+            98.20256835128417
+          ],
+          "color_std": [
+            28.309976625594448,
+            29.45492333599692,
+            24.375471393706075
+          ],
+          "position": {
+            "center_x": 956.5,
+            "center_y": 726.0
+          },
+          "relative_size": 0.006139119466145833
+        },
+        "bbox": [
+          903,
+          685,
+          107,
+          82
+        ],
+        "area": 4828,
+        "stability_score": 0.9739593863487244,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 107,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            799,
+            541,
+            73,
+            116
+          ],
+          "area": 6220,
+          "aspect_ratio": 0.6293103448275862,
+          "compactness": 0.6136499153642774,
+          "mean_color": [
+            60.71736334405145,
+            46.595498392282956,
+            38.22845659163987
+          ],
+          "color_std": [
+            50.15966648856562,
+            42.462819511058996,
+            31.513015641995096
+          ],
+          "position": {
+            "center_x": 835.5,
+            "center_y": 599.0
+          },
+          "relative_size": 0.007909138997395834
+        },
+        "bbox": [
+          799,
+          541,
+          73,
+          116
+        ],
+        "area": 6220,
+        "stability_score": 0.9744841456413269,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 108,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            522,
+            622,
+            147,
+            81
+          ],
+          "area": 10686,
+          "aspect_ratio": 1.8148148148148149,
+          "compactness": 0.6949406795531157,
+          "mean_color": [
+            57.12521055586749,
+            49.99139060452929,
+            45.95957327344188
+          ],
+          "color_std": [
+            19.82847670688463,
+            17.37260307048988,
+            14.563421857198508
+          ],
+          "position": {
+            "center_x": 595.5,
+            "center_y": 662.5
+          },
+          "relative_size": 0.01358795166015625
+        },
+        "bbox": [
+          522,
+          622,
+          147,
+          81
+        ],
+        "area": 10686,
+        "stability_score": 0.970242440700531,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 109,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            951,
+            572,
+            72,
+            194
+          ],
+          "area": 8911,
+          "aspect_ratio": 0.3711340206185567,
+          "compactness": 0.381093856319006,
+          "mean_color": [
+            55.61497026147458,
+            27.659634160026933,
+            24.262372348782403
+          ],
+          "color_std": [
+            44.830738122084114,
+            37.7891941264813,
+            27.446675682093648
+          ],
+          "position": {
+            "center_x": 987.0,
+            "center_y": 669.0
+          },
+          "relative_size": 0.011330922444661459
+        },
+        "bbox": [
+          951,
+          572,
+          72,
+          194
+        ],
+        "area": 8911,
+        "stability_score": 0.9782098531723022,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 110,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            555,
+            281,
+            152,
+            293
+          ],
+          "area": 27335,
+          "aspect_ratio": 0.5187713310580204,
+          "compactness": 0.4665042757158087,
+          "mean_color": [
+            80.12661423083958,
+            68.457801353576,
+            53.905652094384486
+          ],
+          "color_std": [
+            42.426784884778776,
+            44.6553409151316,
+            47.96975362383111
+          ],
+          "position": {
+            "center_x": 631.0,
+            "center_y": 427.5
+          },
+          "relative_size": 0.03475824991861979
+        },
+        "bbox": [
+          555,
+          281,
+          152,
+          293
+        ],
+        "area": 27335,
+        "stability_score": 0.9508243203163147,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 111,
+        "architectural_type": "decorative_element",
+        "properties": {
+          "bbox": [
+            663,
+            685,
+            347,
+            82
+          ],
+          "area": 6862,
+          "aspect_ratio": 4.2317073170731705,
+          "compactness": 0.8803062361466132,
+          "mean_color": [
+            147.20300204022152,
+            124.60477994753717,
+            99.67837365199651
+          ],
+          "color_std": [
+            34.3011807720186,
+            32.08150543304855,
+            25.230725379089886
+          ],
+          "position": {
+            "center_x": 836.5,
+            "center_y": 726.0
+          },
+          "relative_size": 0.008725484212239584
+        },
+        "bbox": [
+          663,
+          685,
+          347,
+          82
+        ],
+        "area": 6862,
+        "stability_score": 0.9649850130081177,
+        "semiotic_analysis": {
+          "architectural_type": "decorative_element",
+          "semiotic_indicators": [
+            "aesthetic_elaboration",
+            "cultural_ornamentation",
+            "status_and_craftsmanship"
+          ]
+        }
+      },
+      {
+        "segment_id": 112,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            789,
+            514,
+            89,
+            252
+          ],
+          "area": 9982,
+          "aspect_ratio": 0.3531746031746032,
+          "compactness": 0.6613136936045745,
+          "mean_color": [
+            65.05900621118012,
+            53.55429773592466,
+            47.03065517932278
+          ],
+          "color_std": [
+            52.35060725031978,
+            46.41361880182725,
+            38.84121798215543
+          ],
+          "position": {
+            "center_x": 833.5,
+            "center_y": 640.0
+          },
+          "relative_size": 0.012692769368489584
+        },
+        "bbox": [
+          789,
+          514,
+          89,
+          252
+        ],
+        "area": 9982,
+        "stability_score": 0.9591836929321289,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 113,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            678,
+            633,
+            35,
+            102
+          ],
+          "area": 2630,
+          "aspect_ratio": 0.3431372549019608,
+          "compactness": 0.5492664078120945,
+          "mean_color": [
+            78.82395437262358,
+            77.7809885931559,
+            59.15627376425856
+          ],
+          "color_std": [
+            41.21039170358533,
+            38.48928471413767,
+            35.24691163820624
+          ],
+          "position": {
+            "center_x": 695.5,
+            "center_y": 684.0
+          },
+          "relative_size": 0.0033442179361979165
+        },
+        "bbox": [
+          678,
+          633,
+          35,
+          102
+        ],
+        "area": 2630,
+        "stability_score": 0.9601786136627197,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 114,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            446,
+            698,
+            228,
+            69
+          ],
+          "area": 8298,
+          "aspect_ratio": 3.3043478260869565,
+          "compactness": 0.28651447306617533,
+          "mean_color": [
+            87.8762352374066,
+            88.7002892263196,
+            96.90865268739455
+          ],
+          "color_std": [
+            36.231749660879586,
+            39.98138518913582,
+            45.98208328749704
+          ],
+          "position": {
+            "center_x": 560.0,
+            "center_y": 732.5
+          },
+          "relative_size": 0.01055145263671875
+        },
+        "bbox": [
+          446,
+          698,
+          228,
+          69
+        ],
+        "area": 8298,
+        "stability_score": 0.9642391800880432,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 115,
+        "architectural_type": "facade_or_building",
+        "properties": {
+          "bbox": [
+            0,
+            3,
+            1023,
+            424
+          ],
+          "area": 321416,
+          "aspect_ratio": 2.4127358490566038,
+          "compactness": 0.3614595345293166,
+          "mean_color": [
+            177.7079796898723,
+            194.08028225103916,
+            224.0291740299176
+          ],
+          "color_std": [
+            14.411188228626122,
+            13.343280765548974,
+            7.870922401713185
+          ],
+          "position": {
+            "center_x": 511.5,
+            "center_y": 215.0
+          },
+          "relative_size": 0.4087015787760417
+        },
+        "bbox": [
+          0,
+          3,
+          1023,
+          424
+        ],
+        "area": 321416,
+        "stability_score": 0.9862515330314636,
+        "semiotic_analysis": {
+          "architectural_type": "facade_or_building",
+          "semiotic_indicators": [
+            "primary_architectural_identity",
+            "cultural_architectural_style",
+            "power_and_authority_symbolism",
+            "dominant_visual_element"
+          ]
+        }
+      },
+      {
+        "segment_id": 116,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            906,
+            572,
+            117,
+            194
+          ],
+          "area": 13809,
+          "aspect_ratio": 0.6030927835051546,
+          "compactness": 0.3985516404320195,
+          "mean_color": [
+            89.55203128394525,
+            61.66203200811065,
+            49.36150336736911
+          ],
+          "color_std": [
+            61.9188969992151,
+            59.15610318182335,
+            43.9235978908353
+          ],
+          "position": {
+            "center_x": 964.5,
+            "center_y": 669.0
+          },
+          "relative_size": 0.017559051513671875
+        },
+        "bbox": [
+          906,
+          572,
+          117,
+          194
+        ],
+        "area": 13809,
+        "stability_score": 0.9741578102111816,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 117,
+        "architectural_type": "window_or_opening",
+        "properties": {
+          "bbox": [
+            788,
+            524,
+            56,
+            64
+          ],
+          "area": 888,
+          "aspect_ratio": 0.875,
+          "compactness": 1.0026254189805164,
+          "mean_color": [
+            120.86373873873873,
+            86.71846846846847,
+            65.33108108108108
+          ],
+          "color_std": [
+            53.84954131220941,
+            50.33412702729985,
+            37.03125448511263
+          ],
+          "position": {
+            "center_x": 816.0,
+            "center_y": 556.0
+          },
+          "relative_size": 0.001129150390625
+        },
+        "bbox": [
+          788,
+          524,
+          56,
+          64
+        ],
+        "area": 888,
+        "stability_score": 0.954692542552948,
+        "semiotic_analysis": {
+          "architectural_type": "window_or_opening",
+          "semiotic_indicators": [
+            "transparency_and_openness",
+            "interior_exterior_relationship",
+            "privacy_and_accessibility"
+          ]
+        }
+      },
+      {
+        "segment_id": 118,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            120,
+            357,
+            75,
+            137
+          ],
+          "area": 7589,
+          "aspect_ratio": 0.5474452554744526,
+          "compactness": 0.6236768883547196,
+          "mean_color": [
+            67.19620503360126,
+            56.34536829621821,
+            41.55527737514824
+          ],
+          "color_std": [
+            36.27428208447181,
+            34.16588050849184,
+            33.31358938923592
+          ],
+          "position": {
+            "center_x": 157.5,
+            "center_y": 425.5
+          },
+          "relative_size": 0.009649912516276041
+        },
+        "bbox": [
+          120,
+          357,
+          75,
+          137
+        ],
+        "area": 7589,
+        "stability_score": 0.9534823894500732,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 119,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            200,
+            398,
+            77,
+            114
+          ],
+          "area": 6567,
+          "aspect_ratio": 0.6754385964912281,
+          "compactness": 0.6000868615949202,
+          "mean_color": [
+            51.3720115730166,
+            46.208771128369115,
+            41.60910613674433
+          ],
+          "color_std": [
+            41.43096759972017,
+            41.71566683229971,
+            42.193928881452116
+          ],
+          "position": {
+            "center_x": 238.5,
+            "center_y": 455.0
+          },
+          "relative_size": 0.008350372314453125
+        },
+        "bbox": [
+          200,
+          398,
+          77,
+          114
+        ],
+        "area": 6567,
+        "stability_score": 0.950066864490509,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      },
+      {
+        "segment_id": 120,
+        "architectural_type": "detail_or_texture",
+        "properties": {
+          "bbox": [
+            530,
+            673,
+            139,
+            31
+          ],
+          "area": 3336,
+          "aspect_ratio": 4.483870967741935,
+          "compactness": 0.3899420708668502,
+          "mean_color": [
+            37.77038369304557,
+            34.099220623501196,
+            33.91996402877698
+          ],
+          "color_std": [
+            5.7054528671023945,
+            5.916945090224008,
+            6.234900955650026
+          ],
+          "position": {
+            "center_x": 599.5,
+            "center_y": 688.5
+          },
+          "relative_size": 0.004241943359375
+        },
+        "bbox": [
+          530,
+          673,
+          139,
+          31
+        ],
+        "area": 3336,
+        "stability_score": 0.9591176509857178,
+        "semiotic_analysis": {
+          "architectural_type": "detail_or_texture",
+          "semiotic_indicators": []
+        }
+      }
+    ],
+    "coverage_ratio": 1.0,
+    "dominant_elements": [
+      "detail_or_texture",
+      "decorative_element",
+      "window_or_opening"
+    ],
+    "density_analysis": {
+      "total_coverage": 1.0,
+      "density_type": "high_density"
+    },
+    "architectural_hierarchy": {
+      "hierarchy_type": "strong_hierarchy",
+      "dominant_elements": [
+        "detail_or_texture",
+        "decorative_element",
+        "window_or_opening"
+      ]
+    },
+    "functional_composition": {
+      "architectural_elements": 121,
+      "dominant_function": "architectural"
+    }
+  },
+  "masks_data": [
+    {
+      "mask_id": 0,
+      "bbox": [
+        406,
+        247,
+        172,
+        170
+      ],
+      "area": 18470,
+      "stability_score": 0.9752994179725647,
+      "predicted_iou": 1.0013591051101685
+    },
+    {
+      "mask_id": 1,
+      "bbox": [
+        63,
+        360,
+        64,
+        129
+      ],
+      "area": 5403,
+      "stability_score": 0.9780139327049255,
+      "predicted_iou": 0.9805811047554016
+    },
+    {
+      "mask_id": 2,
+      "bbox": [
+        287,
+        293,
+        140,
+        129
+      ],
+      "area": 10250,
+      "stability_score": 0.9629629850387573,
+      "predicted_iou": 0.9753050804138184
+    },
+    {
+      "mask_id": 3,
+      "bbox": [
+        120,
+        357,
+        50,
+        134
+      ],
+      "area": 5394,
+      "stability_score": 0.9747160077095032,
+      "predicted_iou": 0.9668324589729309
+    },
+    {
+      "mask_id": 4,
+      "bbox": [
+        448,
+        402,
+        16,
+        14
+      ],
+      "area": 184,
+      "stability_score": 0.9572192430496216,
+      "predicted_iou": 0.91990727186203
+    },
+    {
+      "mask_id": 5,
+      "bbox": [
+        340,
+        675,
+        18,
+        50
+      ],
+      "area": 852,
+      "stability_score": 0.9918128848075867,
+      "predicted_iou": 0.999049723148346
+    },
+    {
+      "mask_id": 6,
+      "bbox": [
+        299,
+        492,
+        89,
+        88
+      ],
+      "area": 3832,
+      "stability_score": 0.9511758685112,
+      "predicted_iou": 0.9874523878097534
+    },
+    {
+      "mask_id": 7,
+      "bbox": [
+        77,
+        556,
+        29,
+        20
+      ],
+      "area": 569,
+      "stability_score": 0.9720279574394226,
+      "predicted_iou": 0.984718382358551
+    },
+    {
+      "mask_id": 8,
+      "bbox": [
+        286,
+        682,
+        17,
+        36
+      ],
+      "area": 605,
+      "stability_score": 0.9884868264198303,
+      "predicted_iou": 0.9837271571159363
+    },
+    {
+      "mask_id": 9,
+      "bbox": [
+        566,
+        521,
+        27,
+        54
+      ],
+      "area": 1283,
+      "stability_score": 0.9883720874786377,
+      "predicted_iou": 0.9821901917457581
+    },
+    {
+      "mask_id": 10,
+      "bbox": [
+        384,
+        421,
+        127,
+        156
+      ],
+      "area": 14702,
+      "stability_score": 0.9650952816009521,
+      "predicted_iou": 0.9813332557678223
+    },
+    {
+      "mask_id": 11,
+      "bbox": [
+        96,
+        673,
+        10,
+        52
+      ],
+      "area": 467,
+      "stability_score": 0.9957355856895447,
+      "predicted_iou": 0.978688657283783
+    },
+    {
+      "mask_id": 12,
+      "bbox": [
+        10,
+        477,
+        270,
+        60
+      ],
+      "area": 8100,
+      "stability_score": 0.961911678314209,
+      "predicted_iou": 0.9759536981582642
+    },
+    {
+      "mask_id": 13,
+      "bbox": [
+        0,
+        393,
+        79,
+        114
+      ],
+      "area": 6033,
+      "stability_score": 0.9783677458763123,
+      "predicted_iou": 0.970304012298584
+    },
+    {
+      "mask_id": 14,
+      "bbox": [
+        358,
+        647,
+        25,
+        13
+      ],
+      "area": 285,
+      "stability_score": 0.9826989769935608,
+      "predicted_iou": 0.9642164707183838
+    },
+    {
+      "mask_id": 15,
+      "bbox": [
+        211,
+        542,
+        21,
+        18
+      ],
+      "area": 385,
+      "stability_score": 0.971794843673706,
+      "predicted_iou": 0.9610995650291443
+    },
+    {
+      "mask_id": 16,
+      "bbox": [
+        335,
+        637,
+        15,
+        23
+      ],
+      "area": 265,
+      "stability_score": 0.9813432693481445,
+      "predicted_iou": 0.9610557556152344
+    },
+    {
+      "mask_id": 17,
+      "bbox": [
+        53,
+        639,
+        17,
+        128
+      ],
+      "area": 761,
+      "stability_score": 0.9611399173736572,
+      "predicted_iou": 0.9579728245735168
+    },
+    {
+      "mask_id": 18,
+      "bbox": [
+        274,
+        411,
+        37,
+        139
+      ],
+      "area": 3897,
+      "stability_score": 0.9599899053573608,
+      "predicted_iou": 0.9575457572937012
+    },
+    {
+      "mask_id": 19,
+      "bbox": [
+        306,
+        422,
+        120,
+        118
+      ],
+      "area": 8473,
+      "stability_score": 0.9662491083145142,
+      "predicted_iou": 0.9558045864105225
+    },
+    {
+      "mask_id": 20,
+      "bbox": [
+        389,
+        679,
+        51,
+        25
+      ],
+      "area": 644,
+      "stability_score": 0.9800613522529602,
+      "predicted_iou": 0.9551199078559875
+    },
+    {
+      "mask_id": 21,
+      "bbox": [
+        532,
+        699,
+        55,
+        52
+      ],
+      "area": 2253,
+      "stability_score": 0.9741907119750977,
+      "predicted_iou": 0.9539510011672974
+    },
+    {
+      "mask_id": 22,
+      "bbox": [
+        0,
+        581,
+        190,
+        16
+      ],
+      "area": 2580,
+      "stability_score": 0.9667811989784241,
+      "predicted_iou": 0.9447470307350159
+    },
+    {
+      "mask_id": 23,
+      "bbox": [
+        541,
+        539,
+        14,
+        20
+      ],
+      "area": 300,
+      "stability_score": 0.9867109656333923,
+      "predicted_iou": 0.9442806243896484
+    },
+    {
+      "mask_id": 24,
+      "bbox": [
+        194,
+        398,
+        117,
+        151
+      ],
+      "area": 11029,
+      "stability_score": 0.9541349411010742,
+      "predicted_iou": 0.9422564506530762
+    },
+    {
+      "mask_id": 25,
+      "bbox": [
+        331,
+        424,
+        73,
+        87
+      ],
+      "area": 2012,
+      "stability_score": 0.966796875,
+      "predicted_iou": 0.9400415420532227
+    },
+    {
+      "mask_id": 26,
+      "bbox": [
+        260,
+        639,
+        10,
+        128
+      ],
+      "area": 633,
+      "stability_score": 0.9642301797866821,
+      "predicted_iou": 0.9374362826347351
+    },
+    {
+      "mask_id": 27,
+      "bbox": [
+        133,
+        671,
+        9,
+        42
+      ],
+      "area": 346,
+      "stability_score": 0.9772079586982727,
+      "predicted_iou": 0.9365745782852173
+    },
+    {
+      "mask_id": 28,
+      "bbox": [
+        169,
+        555,
+        12,
+        19
+      ],
+      "area": 243,
+      "stability_score": 0.9756097793579102,
+      "predicted_iou": 0.9365518689155579
+    },
+    {
+      "mask_id": 29,
+      "bbox": [
+        252,
+        677,
+        12,
+        37
+      ],
+      "area": 452,
+      "stability_score": 0.9780219793319702,
+      "predicted_iou": 0.9364966750144958
+    },
+    {
+      "mask_id": 30,
+      "bbox": [
+        392,
+        606,
+        135,
+        46
+      ],
+      "area": 4617,
+      "stability_score": 0.957176148891449,
+      "predicted_iou": 0.9293447732925415
+    },
+    {
+      "mask_id": 31,
+      "bbox": [
+        0,
+        357,
+        311,
+        186
+      ],
+      "area": 29788,
+      "stability_score": 0.9507981538772583,
+      "predicted_iou": 0.9029405117034912
+    },
+    {
+      "mask_id": 32,
+      "bbox": [
+        100,
+        743,
+        69,
+        16
+      ],
+      "area": 598,
+      "stability_score": 0.9605262875556946,
+      "predicted_iou": 0.8937511444091797
+    },
+    {
+      "mask_id": 33,
+      "bbox": [
+        210,
+        542,
+        22,
+        36
+      ],
+      "area": 811,
+      "stability_score": 0.9673518538475037,
+      "predicted_iou": 0.8872576951980591
+    },
+    {
+      "mask_id": 34,
+      "bbox": [
+        207,
+        665,
+        17,
+        26
+      ],
+      "area": 400,
+      "stability_score": 0.9655172228813171,
+      "predicted_iou": 0.883324146270752
+    },
+    {
+      "mask_id": 35,
+      "bbox": [
+        789,
+        265,
+        168,
+        90
+      ],
+      "area": 8424,
+      "stability_score": 0.9654729962348938,
+      "predicted_iou": 0.9741648435592651
+    },
+    {
+      "mask_id": 36,
+      "bbox": [
+        629,
+        280,
+        48,
+        63
+      ],
+      "area": 1943,
+      "stability_score": 0.9689725041389465,
+      "predicted_iou": 0.9672504663467407
+    },
+    {
+      "mask_id": 37,
+      "bbox": [
+        948,
+        333,
+        30,
+        34
+      ],
+      "area": 645,
+      "stability_score": 0.9665144681930542,
+      "predicted_iou": 0.9395644068717957
+    },
+    {
+      "mask_id": 38,
+      "bbox": [
+        423,
+        247,
+        132,
+        84
+      ],
+      "area": 5903,
+      "stability_score": 0.9691151976585388,
+      "predicted_iou": 0.9333333969116211
+    },
+    {
+      "mask_id": 39,
+      "bbox": [
+        559,
+        383,
+        4,
+        42
+      ],
+      "area": 191,
+      "stability_score": 0.96875,
+      "predicted_iou": 0.9301391243934631
+    },
+    {
+      "mask_id": 40,
+      "bbox": [
+        629,
+        280,
+        30,
+        26
+      ],
+      "area": 538,
+      "stability_score": 0.9778597950935364,
+      "predicted_iou": 0.921576976776123
+    },
+    {
+      "mask_id": 41,
+      "bbox": [
+        477,
+        368,
+        13,
+        8
+      ],
+      "area": 105,
+      "stability_score": 0.9811320900917053,
+      "predicted_iou": 0.9023287892341614
+    },
+    {
+      "mask_id": 42,
+      "bbox": [
+        559,
+        363,
+        4,
+        62
+      ],
+      "area": 265,
+      "stability_score": 0.9814126491546631,
+      "predicted_iou": 0.898485541343689
+    },
+    {
+      "mask_id": 43,
+      "bbox": [
+        933,
+        306,
+        90,
+        253
+      ],
+      "area": 17973,
+      "stability_score": 0.9645002484321594,
+      "predicted_iou": 0.9814274311065674
+    },
+    {
+      "mask_id": 44,
+      "bbox": [
+        708,
+        582,
+        36,
+        184
+      ],
+      "area": 4707,
+      "stability_score": 0.9781283140182495,
+      "predicted_iou": 0.9798469543457031
+    },
+    {
+      "mask_id": 45,
+      "bbox": [
+        663,
+        712,
+        51,
+        55
+      ],
+      "area": 2058,
+      "stability_score": 0.9778845906257629,
+      "predicted_iou": 0.9735751152038574
+    },
+    {
+      "mask_id": 46,
+      "bbox": [
+        981,
+        750,
+        25,
+        17
+      ],
+      "area": 358,
+      "stability_score": 0.9780219793319702,
+      "predicted_iou": 0.9642329812049866
+    },
+    {
+      "mask_id": 47,
+      "bbox": [
+        707,
+        582,
+        37,
+        40
+      ],
+      "area": 1389,
+      "stability_score": 0.9771917462348938,
+      "predicted_iou": 0.9630146026611328
+    },
+    {
+      "mask_id": 48,
+      "bbox": [
+        815,
+        513,
+        32,
+        22
+      ],
+      "area": 429,
+      "stability_score": 0.9770641922950745,
+      "predicted_iou": 0.9630076289176941
+    },
+    {
+      "mask_id": 49,
+      "bbox": [
+        981,
+        729,
+        25,
+        38
+      ],
+      "area": 585,
+      "stability_score": 0.9746192693710327,
+      "predicted_iou": 0.9598069190979004
+    },
+    {
+      "mask_id": 50,
+      "bbox": [
+        666,
+        583,
+        23,
+        37
+      ],
+      "area": 804,
+      "stability_score": 0.970588207244873,
+      "predicted_iou": 0.957743227481842
+    },
+    {
+      "mask_id": 51,
+      "bbox": [
+        832,
+        678,
+        47,
+        89
+      ],
+      "area": 2123,
+      "stability_score": 0.9605934023857117,
+      "predicted_iou": 0.9527347087860107
+    },
+    {
+      "mask_id": 52,
+      "bbox": [
+        510,
+        557,
+        19,
+        21
+      ],
+      "area": 290,
+      "stability_score": 0.9863481521606445,
+      "predicted_iou": 0.951587438583374
+    },
+    {
+      "mask_id": 53,
+      "bbox": [
+        867,
+        542,
+        25,
+        63
+      ],
+      "area": 1254,
+      "stability_score": 0.9693877696990967,
+      "predicted_iou": 0.9477812051773071
+    },
+    {
+      "mask_id": 54,
+      "bbox": [
+        566,
+        497,
+        46,
+        79
+      ],
+      "area": 2592,
+      "stability_score": 0.96409672498703,
+      "predicted_iou": 0.9420455694198608
+    },
+    {
+      "mask_id": 55,
+      "bbox": [
+        798,
+        540,
+        20,
+        35
+      ],
+      "area": 549,
+      "stability_score": 0.9677996635437012,
+      "predicted_iou": 0.9411958456039429
+    },
+    {
+      "mask_id": 56,
+      "bbox": [
+        666,
+        583,
+        23,
+        130
+      ],
+      "area": 1703,
+      "stability_score": 0.9652978777885437,
+      "predicted_iou": 0.9396061897277832
+    },
+    {
+      "mask_id": 57,
+      "bbox": [
+        673,
+        620,
+        36,
+        23
+      ],
+      "area": 423,
+      "stability_score": 0.9696261882781982,
+      "predicted_iou": 0.93878173828125
+    },
+    {
+      "mask_id": 58,
+      "bbox": [
+        951,
+        572,
+        72,
+        65
+      ],
+      "area": 4412,
+      "stability_score": 0.9702660441398621,
+      "predicted_iou": 0.9378758072853088
+    },
+    {
+      "mask_id": 59,
+      "bbox": [
+        899,
+        574,
+        64,
+        81
+      ],
+      "area": 3512,
+      "stability_score": 0.9659693241119385,
+      "predicted_iou": 0.9307188987731934
+    },
+    {
+      "mask_id": 60,
+      "bbox": [
+        877,
+        545,
+        15,
+        55
+      ],
+      "area": 717,
+      "stability_score": 0.9522510170936584,
+      "predicted_iou": 0.9248602986335754
+    },
+    {
+      "mask_id": 61,
+      "bbox": [
+        634,
+        518,
+        17,
+        56
+      ],
+      "area": 858,
+      "stability_score": 0.957274854183197,
+      "predicted_iou": 0.9237024784088135
+    },
+    {
+      "mask_id": 62,
+      "bbox": [
+        437,
+        714,
+        54,
+        32
+      ],
+      "area": 879,
+      "stability_score": 0.9511111378669739,
+      "predicted_iou": 0.9110342264175415
+    },
+    {
+      "mask_id": 63,
+      "bbox": [
+        873,
+        642,
+        46,
+        13
+      ],
+      "area": 597,
+      "stability_score": 0.9671592712402344,
+      "predicted_iou": 0.9041494131088257
+    },
+    {
+      "mask_id": 64,
+      "bbox": [
+        503,
+        650,
+        20,
+        12
+      ],
+      "area": 220,
+      "stability_score": 0.9732142686843872,
+      "predicted_iou": 0.8933463096618652
+    },
+    {
+      "mask_id": 65,
+      "bbox": [
+        314,
+        679,
+        23,
+        55
+      ],
+      "area": 1221,
+      "stability_score": 0.9926650524139404,
+      "predicted_iou": 0.9957872629165649
+    },
+    {
+      "mask_id": 66,
+      "bbox": [
+        232,
+        675,
+        17,
+        35
+      ],
+      "area": 583,
+      "stability_score": 0.9914529919624329,
+      "predicted_iou": 0.972658097743988
+    },
+    {
+      "mask_id": 67,
+      "bbox": [
+        367,
+        671,
+        15,
+        49
+      ],
+      "area": 562,
+      "stability_score": 0.9894179701805115,
+      "predicted_iou": 0.9698514342308044
+    },
+    {
+      "mask_id": 68,
+      "bbox": [
+        940,
+        561,
+        83,
+        22
+      ],
+      "area": 935,
+      "stability_score": 0.9674711227416992,
+      "predicted_iou": 0.9614659547805786
+    },
+    {
+      "mask_id": 69,
+      "bbox": [
+        316,
+        399,
+        25,
+        27
+      ],
+      "area": 465,
+      "stability_score": 0.9786324501037598,
+      "predicted_iou": 0.9576307535171509
+    },
+    {
+      "mask_id": 70,
+      "bbox": [
+        109,
+        558,
+        28,
+        19
+      ],
+      "area": 555,
+      "stability_score": 0.9946042895317078,
+      "predicted_iou": 0.9522092938423157
+    },
+    {
+      "mask_id": 71,
+      "bbox": [
+        0,
+        392,
+        52,
+        115
+      ],
+      "area": 4580,
+      "stability_score": 0.9683598875999451,
+      "predicted_iou": 0.944084644317627
+    },
+    {
+      "mask_id": 72,
+      "bbox": [
+        236,
+        562,
+        21,
+        17
+      ],
+      "area": 386,
+      "stability_score": 0.9744898080825806,
+      "predicted_iou": 0.9438864588737488
+    },
+    {
+      "mask_id": 73,
+      "bbox": [
+        78,
+        725,
+        226,
+        41
+      ],
+      "area": 6071,
+      "stability_score": 0.9714332222938538,
+      "predicted_iou": 0.9406346082687378
+    },
+    {
+      "mask_id": 74,
+      "bbox": [
+        464,
+        678,
+        12,
+        33
+      ],
+      "area": 333,
+      "stability_score": 0.9762611389160156,
+      "predicted_iou": 0.9398081302642822
+    },
+    {
+      "mask_id": 75,
+      "bbox": [
+        726,
+        638,
+        235,
+        56
+      ],
+      "area": 4073,
+      "stability_score": 0.9653012156486511,
+      "predicted_iou": 0.939319372177124
+    },
+    {
+      "mask_id": 76,
+      "bbox": [
+        303,
+        723,
+        133,
+        44
+      ],
+      "area": 1715,
+      "stability_score": 0.9583333134651184,
+      "predicted_iou": 0.9374222159385681
+    },
+    {
+      "mask_id": 77,
+      "bbox": [
+        871,
+        593,
+        32,
+        50
+      ],
+      "area": 1305,
+      "stability_score": 0.9691265225410461,
+      "predicted_iou": 0.9347191452980042
+    },
+    {
+      "mask_id": 78,
+      "bbox": [
+        113,
+        595,
+        35,
+        17
+      ],
+      "area": 589,
+      "stability_score": 0.9681742191314697,
+      "predicted_iou": 0.9314334392547607
+    },
+    {
+      "mask_id": 79,
+      "bbox": [
+        707,
+        551,
+        15,
+        21
+      ],
+      "area": 285,
+      "stability_score": 0.9755244851112366,
+      "predicted_iou": 0.9303638935089111
+    },
+    {
+      "mask_id": 80,
+      "bbox": [
+        199,
+        667,
+        7,
+        38
+      ],
+      "area": 288,
+      "stability_score": 0.982758641242981,
+      "predicted_iou": 0.9290772080421448
+    },
+    {
+      "mask_id": 81,
+      "bbox": [
+        743,
+        603,
+        67,
+        43
+      ],
+      "area": 2306,
+      "stability_score": 0.9710021615028381,
+      "predicted_iou": 0.9252403974533081
+    },
+    {
+      "mask_id": 82,
+      "bbox": [
+        79,
+        535,
+        28,
+        20
+      ],
+      "area": 571,
+      "stability_score": 0.9741824269294739,
+      "predicted_iou": 0.9240273833274841
+    },
+    {
+      "mask_id": 83,
+      "bbox": [
+        0,
+        580,
+        191,
+        37
+      ],
+      "area": 5963,
+      "stability_score": 0.9609259366989136,
+      "predicted_iou": 0.9236540794372559
+    },
+    {
+      "mask_id": 84,
+      "bbox": [
+        143,
+        650,
+        11,
+        116
+      ],
+      "area": 714,
+      "stability_score": 0.9614325165748596,
+      "predicted_iou": 0.9195403456687927
+    },
+    {
+      "mask_id": 85,
+      "bbox": [
+        899,
+        558,
+        20,
+        16
+      ],
+      "area": 217,
+      "stability_score": 0.9636363387107849,
+      "predicted_iou": 0.9194816946983337
+    },
+    {
+      "mask_id": 86,
+      "bbox": [
+        0,
+        360,
+        128,
+        145
+      ],
+      "area": 11534,
+      "stability_score": 0.9815164804458618,
+      "predicted_iou": 0.9136853218078613
+    },
+    {
+      "mask_id": 87,
+      "bbox": [
+        68,
+        671,
+        10,
+        50
+      ],
+      "area": 436,
+      "stability_score": 0.9751130938529968,
+      "predicted_iou": 0.9119381904602051
+    },
+    {
+      "mask_id": 88,
+      "bbox": [
+        873,
+        643,
+        88,
+        31
+      ],
+      "area": 1581,
+      "stability_score": 0.9500616788864136,
+      "predicted_iou": 0.9052512049674988
+    },
+    {
+      "mask_id": 89,
+      "bbox": [
+        527,
+        371,
+        8,
+        45
+      ],
+      "area": 345,
+      "stability_score": 0.9686609506607056,
+      "predicted_iou": 0.904862105846405
+    },
+    {
+      "mask_id": 90,
+      "bbox": [
+        270,
+        551,
+        42,
+        29
+      ],
+      "area": 981,
+      "stability_score": 0.962037980556488,
+      "predicted_iou": 0.9023933410644531
+    },
+    {
+      "mask_id": 91,
+      "bbox": [
+        1000,
+        588,
+        18,
+        25
+      ],
+      "area": 383,
+      "stability_score": 0.9662337899208069,
+      "predicted_iou": 0.8901431560516357
+    },
+    {
+      "mask_id": 92,
+      "bbox": [
+        393,
+        605,
+        45,
+        46
+      ],
+      "area": 1649,
+      "stability_score": 0.9526907205581665,
+      "predicted_iou": 0.8847699761390686
+    },
+    {
+      "mask_id": 93,
+      "bbox": [
+        872,
+        601,
+        88,
+        72
+      ],
+      "area": 2737,
+      "stability_score": 0.9528571367263794,
+      "predicted_iou": 0.8811581134796143
+    },
+    {
+      "mask_id": 94,
+      "bbox": [
+        349,
+        420,
+        77,
+        73
+      ],
+      "area": 2849,
+      "stability_score": 0.9531303644180298,
+      "predicted_iou": 0.946074903011322
+    },
+    {
+      "mask_id": 95,
+      "bbox": [
+        458,
+        369,
+        9,
+        8
+      ],
+      "area": 79,
+      "stability_score": 0.9629629850387573,
+      "predicted_iou": 0.9184056520462036
+    },
+    {
+      "mask_id": 96,
+      "bbox": [
+        8,
+        477,
+        272,
+        107
+      ],
+      "area": 22337,
+      "stability_score": 0.9672996997833252,
+      "predicted_iou": 1.0070849657058716
+    },
+    {
+      "mask_id": 97,
+      "bbox": [
+        0,
+        580,
+        190,
+        60
+      ],
+      "area": 9707,
+      "stability_score": 0.9513958692550659,
+      "predicted_iou": 0.973741888999939
+    },
+    {
+      "mask_id": 98,
+      "bbox": [
+        8,
+        491,
+        75,
+        89
+      ],
+      "area": 4969,
+      "stability_score": 0.9580861926078796,
+      "predicted_iou": 0.9643175005912781
+    },
+    {
+      "mask_id": 99,
+      "bbox": [
+        348,
+        735,
+        96,
+        32
+      ],
+      "area": 1858,
+      "stability_score": 0.9817302823066711,
+      "predicted_iou": 0.9610195755958557
+    },
+    {
+      "mask_id": 100,
+      "bbox": [
+        314,
+        675,
+        44,
+        59
+      ],
+      "area": 2204,
+      "stability_score": 0.9770683646202087,
+      "predicted_iou": 0.9500100612640381
+    },
+    {
+      "mask_id": 101,
+      "bbox": [
+        177,
+        652,
+        9,
+        81
+      ],
+      "area": 369,
+      "stability_score": 0.9710467457771301,
+      "predicted_iou": 0.9356338381767273
+    },
+    {
+      "mask_id": 102,
+      "bbox": [
+        69,
+        646,
+        195,
+        27
+      ],
+      "area": 3196,
+      "stability_score": 0.9624850153923035,
+      "predicted_iou": 0.9344220161437988
+    },
+    {
+      "mask_id": 103,
+      "bbox": [
+        532,
+        698,
+        30,
+        29
+      ],
+      "area": 442,
+      "stability_score": 0.9594095945358276,
+      "predicted_iou": 0.9313514232635498
+    },
+    {
+      "mask_id": 104,
+      "bbox": [
+        230,
+        659,
+        152,
+        85
+      ],
+      "area": 9990,
+      "stability_score": 0.9567430019378662,
+      "predicted_iou": 0.9216957092285156
+    },
+    {
+      "mask_id": 105,
+      "bbox": [
+        312,
+        614,
+        39,
+        16
+      ],
+      "area": 474,
+      "stability_score": 0.9551166892051697,
+      "predicted_iou": 0.9174569845199585
+    },
+    {
+      "mask_id": 106,
+      "bbox": [
+        903,
+        685,
+        107,
+        82
+      ],
+      "area": 4828,
+      "stability_score": 0.9739593863487244,
+      "predicted_iou": 0.989881694316864
+    },
+    {
+      "mask_id": 107,
+      "bbox": [
+        799,
+        541,
+        73,
+        116
+      ],
+      "area": 6220,
+      "stability_score": 0.9744841456413269,
+      "predicted_iou": 0.9883686900138855
+    },
+    {
+      "mask_id": 108,
+      "bbox": [
+        522,
+        622,
+        147,
+        81
+      ],
+      "area": 10686,
+      "stability_score": 0.970242440700531,
+      "predicted_iou": 0.9873895645141602
+    },
+    {
+      "mask_id": 109,
+      "bbox": [
+        951,
+        572,
+        72,
+        194
+      ],
+      "area": 8911,
+      "stability_score": 0.9782098531723022,
+      "predicted_iou": 0.9762418270111084
+    },
+    {
+      "mask_id": 110,
+      "bbox": [
+        555,
+        281,
+        152,
+        293
+      ],
+      "area": 27335,
+      "stability_score": 0.9508243203163147,
+      "predicted_iou": 0.9677985906600952
+    },
+    {
+      "mask_id": 111,
+      "bbox": [
+        663,
+        685,
+        347,
+        82
+      ],
+      "area": 6862,
+      "stability_score": 0.9649850130081177,
+      "predicted_iou": 0.9677860736846924
+    },
+    {
+      "mask_id": 112,
+      "bbox": [
+        789,
+        514,
+        89,
+        252
+      ],
+      "area": 9982,
+      "stability_score": 0.9591836929321289,
+      "predicted_iou": 0.965123176574707
+    },
+    {
+      "mask_id": 113,
+      "bbox": [
+        678,
+        633,
+        35,
+        102
+      ],
+      "area": 2630,
+      "stability_score": 0.9601786136627197,
+      "predicted_iou": 0.9543697237968445
+    },
+    {
+      "mask_id": 114,
+      "bbox": [
+        446,
+        698,
+        228,
+        69
+      ],
+      "area": 8298,
+      "stability_score": 0.9642391800880432,
+      "predicted_iou": 0.9495978355407715
+    },
+    {
+      "mask_id": 115,
+      "bbox": [
+        0,
+        3,
+        1023,
+        424
+      ],
+      "area": 321416,
+      "stability_score": 0.9862515330314636,
+      "predicted_iou": 1.0362001657485962
+    },
+    {
+      "mask_id": 116,
+      "bbox": [
+        906,
+        572,
+        117,
+        194
+      ],
+      "area": 13809,
+      "stability_score": 0.9741578102111816,
+      "predicted_iou": 0.9502228498458862
+    },
+    {
+      "mask_id": 117,
+      "bbox": [
+        788,
+        524,
+        56,
+        64
+      ],
+      "area": 888,
+      "stability_score": 0.954692542552948,
+      "predicted_iou": 0.9241257905960083
+    },
+    {
+      "mask_id": 118,
+      "bbox": [
+        120,
+        357,
+        75,
+        137
+      ],
+      "area": 7589,
+      "stability_score": 0.9534823894500732,
+      "predicted_iou": 0.9200050830841064
+    },
+    {
+      "mask_id": 119,
+      "bbox": [
+        200,
+        398,
+        77,
+        114
+      ],
+      "area": 6567,
+      "stability_score": 0.950066864490509,
+      "predicted_iou": 0.8913081288337708
+    },
+    {
+      "mask_id": 120,
+      "bbox": [
+        530,
+        673,
+        139,
+        31
+      ],
+      "area": 3336,
+      "stability_score": 0.9591176509857178,
+      "predicted_iou": 0.8881450891494751
+    }
+  ],
+  "timestamp": "2025-09-14T20:54:53.482562"
+}
