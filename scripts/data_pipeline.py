@@ -23,7 +23,7 @@ class SemioticDataPipeline:
         self.base_path = Path(base_path)
         self.imaginary_path = self.base_path / "data" / "imaginary_synthetic"
         self.oid_path = self.base_path / "data" / "oid_urban"
-        self.export_path = self.base_path / "data" / "export"
+        self.export_path = self.base_path / "data" / "outputs" / "01_data_pipeline"
         
         # Load urban classes for OID
         with open(self.base_path / "my_classes_final.txt", "r") as f:
