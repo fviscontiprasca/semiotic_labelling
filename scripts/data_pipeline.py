@@ -32,7 +32,7 @@ class SemioticDataPipeline:
         logger.info(f"Initialized pipeline with {len(self.urban_classes)} urban classes")
         
     def create_unified_dataset(self, dataset_name: str = "semiotic_urban_combined", 
-                             max_oid_samples: int = 1) -> fo.Dataset:
+                             max_oid_samples: int = 1000) -> fo.Dataset:
         """Create a unified FiftyOne dataset combining OID and synthetic data."""
         
         # Check if dataset exists
@@ -43,41 +43,47 @@ class SemioticDataPipeline:
         logger.info(f"Creating new dataset: {dataset_name}")
         dataset = fo.Dataset(dataset_name)
         
-        # Add OID urban images
-        oid_samples = self._load_oid_data(max_samples=max_oid_samples)
-        if oid_samples:
-            dataset.add_samples(oid_samples)
-            logger.info(f"Added {len(oid_samples)} OID samples")
-        
-        # Add imaginary synthetic images
+        # Add imaginary synthetic images first (faster)
         synthetic_samples = self._load_synthetic_data()
         if synthetic_samples:
             dataset.add_samples(synthetic_samples)
             logger.info(f"Added {len(synthetic_samples)} synthetic samples")
         
+        # Add OID urban images (optional, can be skipped if fails)
+        try:
+            oid_samples = self._load_oid_data(max_samples=max_oid_samples)
+            if oid_samples:
+                dataset.add_samples(oid_samples)
+                logger.info(f"Added {len(oid_samples)} OID samples")
+        except Exception as e:
+            logger.warning(f"Skipping OID data due to error: {e}")
+            logger.info("Continuing with synthetic data only")
+        
         # Add metadata and tags
         dataset.compute_metadata()
         
-        logger.info(f"Created unified dataset with {len(dataset)} total samples")
+        logger.info(f"Created unified dataset with {dataset.count()} total samples")
         return dataset
     
-    def _load_oid_data(self, max_samples: int = 1) -> List[fo.Sample]:
+    def _load_oid_data(self, max_samples: int = 1000) -> List[fo.Sample]:
         """Load OpenImages v7 data for urban classes."""
         try:
             # Ensure destination directory exists
             oid_images_dir = self.oid_path / "images"
             oid_images_dir.mkdir(parents=True, exist_ok=True)
             
-            # Load OID dataset through FiftyOne zoo with specific destination
+            logger.info(f"Loading {max_samples} samples for classes: {self.urban_classes}")
+            
+            # Load OID dataset through FiftyOne zoo with detections only for speed
             oid_dataset = foz.load_zoo_dataset(
                 "open-images-v7",
                 split="train",
-                label_types=["segmentations", "detections"],
+                label_types=["detections"],  # Only detections for speed
                 classes=self.urban_classes,
                 max_samples=max_samples,
                 shuffle=True,
-                dataset_name="temp_oid_urban",
-                dataset_dir=str(oid_images_dir)
+                dataset_name="temp_oid_urban"
+                # Removed dataset_dir parameter to avoid duplicate parameter error
             )
             
             samples = []
@@ -101,7 +107,7 @@ class SemioticDataPipeline:
             return []
     
     def _load_synthetic_data(self) -> List[fo.Sample]:
-        """Load imaginary synthetic dataset."""
+        """Load imaginary synthetic dataset - use all available samples."""
         samples = []
         
         try:
@@ -112,6 +118,7 @@ class SemioticDataPipeline:
                 return samples
             
             df = pd.read_csv(csv_path)
+            logger.info(f"Loading all {len(df)} synthetic samples from CSV")
             
             for _, row in df.iterrows():
                 filename = row['filename']
@@ -225,14 +232,19 @@ class SemioticDataPipeline:
         for dir_path in [train_dir, val_dir, train_labels, val_labels]:
             dir_path.mkdir(parents=True, exist_ok=True)
         
-        # Split dataset
-        train_samples, val_samples = dataset.random_split([split_ratio[0], split_ratio[1]])
+        # Split dataset using FiftyOne's take/skip method
+        total_samples = dataset.count()
+        train_count = int(total_samples * split_ratio[0])
+        
+        # Create train and validation views
+        train_samples = dataset.take(train_count)
+        val_samples = dataset.skip(train_count)
         
         # Export training samples
         self._export_samples(train_samples, train_dir, train_labels, "train")
         self._export_samples(val_samples, val_dir, val_labels, "val")
         
-        logger.info(f"Exported {len(train_samples)} training and {len(val_samples)} validation samples")
+        logger.info(f"Exported {train_samples.count()} training and {val_samples.count()} validation samples")
     
     def _export_samples(self, samples, image_dir: Path, label_dir: Path, split: str):
         """Export samples to training format."""
@@ -259,13 +271,13 @@ class SemioticDataPipeline:
             metadata.append({
                 "filename": dst_path.name,
                 "caption": caption,
-                "source": sample.get("source", "unknown"),
-                "semiotic_type": sample.get("semiotic_type", "unknown"),
-                "architectural_style": sample.get("architectural_style"),
-                "urban_mood": sample.get("urban_mood"),
-                "time_period": sample.get("time_period"),
-                "season": sample.get("season"),
-                "primary_material": sample.get("primary_material")
+                "source": getattr(sample, "source", "unknown"),
+                "semiotic_type": getattr(sample, "semiotic_type", "unknown"),
+                "architectural_style": getattr(sample, "architectural_style", None),
+                "urban_mood": getattr(sample, "urban_mood", None),
+                "time_period": getattr(sample, "time_period", None),
+                "season": getattr(sample, "season", None),
+                "primary_material": getattr(sample, "primary_material", None)
             })
         
         # Save metadata
@@ -276,9 +288,10 @@ class SemioticDataPipeline:
     def _create_enhanced_caption(self, sample) -> str:
         """Create enhanced caption for semiotic-aware training."""
         
-        if sample.get("source") == "imaginary_synthetic":
+        # Check if sample has source field
+        if hasattr(sample, 'source') and sample.source == "imaginary_synthetic":
             # Use original prompt as base
-            base_caption = sample.get("original_prompt", "")
+            base_caption = getattr(sample, 'original_prompt', "")
         else:
             # For OID images, create caption from detected objects
             base_caption = f"Urban scene with {', '.join(self.urban_classes)}"
@@ -286,17 +299,21 @@ class SemioticDataPipeline:
         # Add semiotic descriptors
         semiotic_parts = []
         
-        if sample.get("architectural_style"):
-            semiotic_parts.append(f"{sample['architectural_style']} architecture")
+        arch_style = getattr(sample, "architectural_style", None)
+        if arch_style:
+            semiotic_parts.append(f"{arch_style} architecture")
         
-        if sample.get("urban_mood"):
-            semiotic_parts.append(f"{sample['urban_mood']} atmosphere")
+        mood = getattr(sample, "urban_mood", None)
+        if mood:
+            semiotic_parts.append(f"{mood} atmosphere")
         
-        if sample.get("time_period"):
-            semiotic_parts.append(f"photographed at {sample['time_period']}")
+        time_period = getattr(sample, "time_period", None)
+        if time_period:
+            semiotic_parts.append(f"photographed at {time_period}")
         
-        if sample.get("primary_material"):
-            semiotic_parts.append(f"featuring {sample['primary_material']} materials")
+        material = getattr(sample, "primary_material", None)
+        if material:
+            semiotic_parts.append(f"featuring {material} materials")
         
         # Combine base caption with semiotic features
         if semiotic_parts:
@@ -311,22 +328,20 @@ def main():
     base_path = Path(__file__).parent.parent
     pipeline = SemioticDataPipeline(str(base_path))
     
-    # Create unified dataset
-    dataset = pipeline.create_unified_dataset(max_oid_samples=500)
+    # Create unified dataset with full synthetic data and more OID samples
+    dataset = pipeline.create_unified_dataset(max_oid_samples=751)
     
     # Export for training
     pipeline.export_for_training(dataset)
     
-    # Launch FiftyOne app for inspection
-    session = fo.launch_app(dataset, port=5151)
-    print(f"Dataset ready with {len(dataset)} samples")
-    print("FiftyOne app launched at http://localhost:5151")
-    print("Press Ctrl+C to stop")
+    print(f"Dataset ready with {dataset.count()} samples")
+    print("Data pipeline completed successfully!")
+    print(f"Training data exported to: {pipeline.export_path}")
     
-    try:
-        session.wait()
-    except KeyboardInterrupt:
-        print("Shutting down...")
+    # Optional: Launch FiftyOne app for inspection (uncomment if needed)
+    # session = fo.launch_app(dataset, port=5151)
+    # print("FiftyOne app launched at http://localhost:5151")
+    # session.wait()
 
 if __name__ == "__main__":
     main()

@@ -36,7 +36,7 @@ def main():
     script_dir = Path(__file__).resolve().parent
     repo_root = script_dir.parent
 
-    classes_file = repo_root / 'my_classes.txt'
+    classes_file = repo_root / 'my_classes_final.txt'
     actual_classes_file = repo_root / 'data' / 'oid_urban' / 'actual_classes.txt'
 
     if not classes_file.exists():
