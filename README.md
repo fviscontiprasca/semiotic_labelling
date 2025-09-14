@@ -12,9 +12,9 @@
 
 ## Abstract
 
-This repository implements a modular, reproducible pipeline for producing semiotic‑aware architectural images from textual prompts and for preparing semiotic conditioning information for downstream 3D generation. The approach combines multi‑modal feature extraction (captioning, segmentation, semantic embeddings), curated real and synthetic datasets, and LoRA fine‑tuning of a diffusion backbone (Flux.1d) to produce images conditioned on architectural style, materials, mood and other semiotic tokens.
+This repository implements a modular, reproducible pipeline for producing semiotic‑aware architectural images from textual prompts and for preparing semiotic conditioning information for downstream 3D generation. The approach combines multi‑modal feature extraction (captioning, segmentation, semantic embeddings), curated real and synthetic datasets, and fine‑tuning of diffusion models (Flux.1d) through both LoRA adapters and full model fine-tuning approaches.
 
-The codebase supports: dataset preparation and unification, BLIP‑2 captioning, segmentation with SAM (and optional YOLO variants), multi‑modal semiotic feature extraction, Flux.1d data preparation and LoRA fine‑tuning, evaluation, and inference (CLI and optional Gradio UI).
+The codebase supports: dataset preparation and unification, BLIP‑2 captioning, segmentation with SAM (and optional YOLO variants), multi‑modal semiotic feature extraction, Flux.1d data preparation with both LoRA and full fine‑tuning variants, evaluation, and inference (CLI and optional Gradio UI).
 
 ---
 
@@ -24,9 +24,12 @@ The codebase supports: dataset preparation and unification, BLIP‑2 captioning,
 ├── data/                      # raw and processed datasets
 ├── models/                    # downloaded and trained checkpoints
 ├── scripts/                   # processing, training, evaluation, inference scripts
+│   └── flux_full_finetune/    # full fine-tuning variant scripts
 ├── notebooks/                 # experiments and visualizations
 ├── docs/                      # supplementary documentation / diagrams
 ├── requirements.txt
+├── run_pipeline.py            # LoRA-based pipeline orchestrator
+├── run_flux_full_pipeline.py  # Full fine-tuning pipeline orchestrator
 ├── LICENSE
 └── README.md                  # this document
 ```
@@ -65,6 +68,7 @@ Model weights (Flux.1d, BLIP‑2, SAM/YOLO variants) are not included in the rep
 
 ## Pipeline overview (phases)
 
+### Standard LoRA Pipeline
 1. **Data ingestion & unification** — combine OpenImages urban classes and the synthetic Imaginary Cities set into a standardized FiftyOne dataset, deduplicate and normalize metadata.
 2. **Captioning** — generate descriptive, semiotic‑oriented captions using BLIP‑2 with structured prompts.
 3. **Segmentation** — extract masks and regions of architectural relevance using SAM (or YOLO as an alternative).
@@ -74,7 +78,14 @@ Model weights (Flux.1d, BLIP‑2, SAM/YOLO variants) are not included in the rep
 7. **Evaluation** — quantitative (CLIP, style/mood accuracy) and qualitative reporting.
 8. **Inference** — conditioned image generation via CLI or optional Gradio UI.
 
-Each phase is implemented as a discrete script under `scripts/` and can be executed independently or via the master orchestrator `run_pipeline.py`.
+### Full Fine-tuning Pipeline Alternative
+For users requiring more comprehensive model adaptation, a full fine-tuning variant is available:
+1. **Phases 01-04** — Same as LoRA pipeline (data preparation, captioning, segmentation, semiotic extraction)
+2. **Enhanced data preparation** — Stricter quality filtering and enhanced semiotic conditioning optimized for full model training
+3. **Full model fine-tuning** — Complete Flux.1d parameter adaptation with advanced memory optimization techniques
+4. **Full model inference** — Enhanced inference pipeline optimized for fully fine-tuned models
+
+Each phase is implemented as a discrete script under `scripts/` and can be executed independently or via the master orchestrators (`run_pipeline.py` for LoRA, `run_flux_full_pipeline.py` for full fine-tuning).
 
 ---
 
@@ -88,10 +99,15 @@ flowchart LR
 	C --> D[02 BLIP-2 Captioning\nsemiotic captions]
 	D --> E[03 SAM Segmentation\narchitectural masks]
 	E --> F[04 Semiotic Feature Extraction\nembeddings + tokens]
-	F --> G[05 Flux Data Prep\nimages + prompts + metadata]
-	G --> H[06 Flux Training (LoRA)]
-	H --> I[07 Evaluation]
-	H --> J[08 Inference (CLI/Gradio)]
+	
+	F --> G1[05 Flux Data Prep\nLoRA training data]
+	G1 --> H1[06 Flux Training LoRA]
+	H1 --> I[07 Evaluation]
+	H1 --> J1[08 Inference CLI/Gradio]
+	
+	F --> G2[05 Full Data Prep\nEnhanced training data]
+	G2 --> H2[06 Full Fine-tuning\nComplete model adaptation]
+	H2 --> J2[08 Full Model Inference\nEnhanced generation]
 ```
 
 ---
@@ -215,7 +231,47 @@ python scripts/99_fiftyone_setup.py
 
 ---
 
+## Full Fine-tuning Pipeline Alternative
+
+For users requiring more comprehensive model adaptation than LoRA provides, a complete full fine-tuning variant is available in the `scripts/flux_full_finetune/` subdirectory:
+
+### flux_full_finetune/05_flux_full_data_prep.py — Enhanced data preparation
+- Scope: Specialized data preparation optimized for full model fine-tuning with stricter quality filtering and enhanced semiotic conditioning.
+- Key features: Multiple caption generation templates, WebP compression, semiotic token augmentation, quality score filtering (min_semiotic_score=0.5)
+- Example:
+```powershell
+python scripts/flux_full_finetune/05_flux_full_data_prep.py --dataset-path data/export --output-dir models/flux_full_finetuned/training_data --min-semiotic-score 0.5
+```
+
+### flux_full_finetune/06_flux_full_trainer.py — Complete model fine-tuning
+- Scope: Full parameter fine-tuning of Flux.1d with advanced memory optimization techniques including gradient checkpointing, EMA, layer-wise learning rates.
+- Key features: Enhanced semiotic conditioning, 8-bit Adam optimization, model component freezing options, comprehensive logging
+- Example:
+```powershell
+python scripts/flux_full_finetune/06_flux_full_trainer.py --training-data models/flux_full_finetuned/training_data --output-dir models/flux_full_finetuned --epochs 3 --learning-rate 1e-5
+```
+
+### flux_full_finetune/08_flux_full_inference.py — Enhanced inference
+- Scope: Optimized inference pipeline for fully fine-tuned models with enhanced prompt engineering and semiotic conditioning.
+- Key features: Advanced prompt templates, semiotic feature analysis, memory-efficient generation, comprehensive metadata tracking
+- Example:
+```powershell
+python scripts/flux_full_finetune/08_flux_full_inference.py --model-path models/flux_full_finetuned --prompt "A brutalist residential complex showcasing hierarchy and monumentality" --num-samples 4
+```
+
+### run_flux_full_pipeline.py — Full fine-tuning orchestrator
+- Scope: Complete pipeline orchestrator that integrates standard phases (01-04) with full fine-tuning phases (05-08).
+- Key features: Phase control, comprehensive logging, memory optimization, pipeline reporting
+- Example:
+```powershell
+python run_flux_full_pipeline.py --phases 01 02 03 04 05 06 08 --epochs 3 --learning-rate 1e-5 --min-semiotic-score 0.5
+```
+
+---
+
 ## Quick start (example)
+
+### Standard LoRA Pipeline
 
 1. Prepare data
 
@@ -247,6 +303,18 @@ python scripts/06_flux_trainer.py --base_model black-forest-labs/FLUX.1-dev --tr
 
 ```bash
 python scripts/08_inference_pipeline.py --model_path models/semiotic_flux/ --prompt "Modern glass office building in contemplative urban setting" --output_dir generated_samples/
+```
+
+### Full Fine-tuning Pipeline
+
+For comprehensive model adaptation, use the full fine-tuning orchestrator:
+
+```bash
+# Run complete full fine-tuning pipeline
+python run_flux_full_pipeline.py --epochs 3 --learning-rate 1e-5 --min-semiotic-score 0.5
+
+# Or run specific phases
+python run_flux_full_pipeline.py --phases 05 06 08 --start-from 05
 ```
 
 ---
