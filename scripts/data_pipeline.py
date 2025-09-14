@@ -35,10 +35,11 @@ class SemioticDataPipeline:
                              max_oid_samples: int = 1000) -> fo.Dataset:
         """Create a unified FiftyOne dataset combining OID and synthetic data."""
         
-        # Check if dataset exists
+        # Check if dataset exists and delete it to ensure fresh creation
         if fo.dataset_exists(dataset_name):
-            logger.info(f"Loading existing dataset: {dataset_name}")
-            return fo.load_dataset(dataset_name)
+            logger.info(f"Deleting existing dataset: {dataset_name}")
+            existing_dataset = fo.load_dataset(dataset_name)
+            existing_dataset.delete()
         
         logger.info(f"Creating new dataset: {dataset_name}")
         dataset = fo.Dataset(dataset_name)
@@ -49,15 +50,23 @@ class SemioticDataPipeline:
             dataset.add_samples(synthetic_samples)
             logger.info(f"Added {len(synthetic_samples)} synthetic samples")
         
-        # Add OID urban images (optional, can be skipped if fails)
+        # Add OID urban images - be patient and persistent
+        logger.info("Starting OID data loading - this process requires patience...")
         try:
             oid_samples = self._load_oid_data(max_samples=max_oid_samples)
             if oid_samples:
                 dataset.add_samples(oid_samples)
-                logger.info(f"Added {len(oid_samples)} OID samples")
-        except Exception as e:
-            logger.warning(f"Skipping OID data due to error: {e}")
+                logger.info(f"✅ Successfully added {len(oid_samples)} OID samples")
+            else:
+                logger.warning("No OID samples were loaded")
+        except KeyboardInterrupt:
+            logger.warning("OID loading interrupted by user (Ctrl+C)")
             logger.info("Continuing with synthetic data only")
+        except Exception as e:
+            logger.error(f"OID loading failed with error: {e}")
+            logger.info("Continuing with synthetic data only")
+            import traceback
+            logger.debug(f"Full error traceback: {traceback.format_exc()}")
         
         # Add metadata and tags
         dataset.compute_metadata()
@@ -66,33 +75,60 @@ class SemioticDataPipeline:
         return dataset
     
     def _load_oid_data(self, max_samples: int = 1000) -> List[fo.Sample]:
-        """Load OpenImages v7 data for urban classes."""
+        """Load OpenImages v7 data for urban classes - be patient and use existing data if available."""
+        import time
+        
         try:
-            # Ensure destination directory exists
-            oid_images_dir = self.oid_path / "images"
-            oid_images_dir.mkdir(parents=True, exist_ok=True)
+            # Check for existing FiftyOne OID data
+            fiftyone_oid_path = self.oid_path / "fiftyone"
             
             logger.info(f"Loading {max_samples} samples for classes: {self.urban_classes}")
             
-            # Load OID dataset through FiftyOne zoo with detections only for speed
-            oid_dataset = foz.load_zoo_dataset(
-                "open-images-v7",
-                split="train",
-                label_types=["detections"],  # Only detections for speed
-                classes=self.urban_classes,
-                max_samples=max_samples,
-                shuffle=True,
-                dataset_name="temp_oid_urban"
-                # Removed dataset_dir parameter to avoid duplicate parameter error
-            )
+            if fiftyone_oid_path.exists():
+                logger.info(f"Found existing FiftyOne OID data at: {fiftyone_oid_path}")
+                logger.info("Using existing data to avoid long download times...")
+                
+                # Load without dataset_dir to avoid parameter conflict
+                oid_dataset = foz.load_zoo_dataset(
+                    "open-images-v7",
+                    split="train",
+                    label_types=["detections"],
+                    classes=self.urban_classes,
+                    max_samples=max_samples,
+                    shuffle=True,
+                    dataset_name="temp_oid_urban"
+                )
+            else:
+                logger.info("No existing FiftyOne data found. Starting fresh download...")
+                logger.info("This may take 10-30 minutes depending on network speed. Please be patient...")
+                
+                # Ensure destination directory exists
+                oid_images_dir = self.oid_path / "images"
+                oid_images_dir.mkdir(parents=True, exist_ok=True)
+                
+                start_time = time.time()
+                
+                # Load OID dataset through FiftyOne zoo - be patient
+                oid_dataset = foz.load_zoo_dataset(
+                    "open-images-v7",
+                    split="train",
+                    label_types=["detections"],
+                    classes=self.urban_classes,
+                    max_samples=max_samples,
+                    shuffle=True,
+                    dataset_name="temp_oid_urban"
+                )
+                
+                elapsed_time = time.time() - start_time
+                logger.info(f"OID dataset loaded successfully in {elapsed_time:.1f} seconds")
             
             samples = []
             for sample in oid_dataset:
-                # Add metadata for semiotic analysis
+                # Add metadata for semiotic analysis - avoid None values
                 sample["source"] = "openimages_v7"
                 sample["semiotic_type"] = "real_urban"
-                sample["architectural_style"] = None  # To be filled by analysis
-                sample["urban_mood"] = None  # To be filled by analysis
+                sample["architectural_style"] = "unknown"  # To be filled by analysis
+                sample["urban_mood"] = "neutral"  # To be filled by analysis
                 
                 # Convert to list for return
                 samples.append(sample)
