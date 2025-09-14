@@ -335,7 +335,7 @@ def main():
         Path(args.input) if args.input else base_path / "data" / "outputs" / "01_data_pipeline"
     )
     output_path = (
-        Path(args.output) if args.output else base_path / "data" / "outputs" / "02_blip2_captions"
+        Path(args.output) if args.output else base_path / "data" / "outputs" / "blip2_captioner_export"
     )
 
     # Process exported data
