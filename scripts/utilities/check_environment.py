@@ -52,9 +52,9 @@ def check_gpu_availability() -> Tuple[bool, str, Dict[str, Any]]:
         import torch
         gpu_info['cuda_available'] = torch.cuda.is_available()
         gpu_info['gpu_count'] = torch.cuda.device_count()
-        gpu_info['cuda_version'] = getattr(torch, 'version', {}).get('cuda', 'unknown')
         
         if gpu_info['cuda_available']:
+            gpu_info['cuda_version'] = 'CUDA Available'
             for i in range(gpu_info['gpu_count']):
                 props = torch.cuda.get_device_properties(i)
                 memory_gb = props.total_memory / (1024**3)

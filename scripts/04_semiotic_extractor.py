@@ -823,20 +823,20 @@ def main():
         # Original FiftyOne mode
         # Initialize feature extractor
         extractor = SemioticFeatureExtractor()
-        
+
         # Load dataset
-        dataset_name = "semiotic_urban_combined"
+        dataset_name = "semiocity_urban"
         if fo.dataset_exists(dataset_name):
             dataset = fo.load_dataset(dataset_name)
-            
+
             # Process subset for testing
             test_view = dataset.take(3)
             extractor.process_dataset(test_view)
-            
+
             # Launch FiftyOne to view results
             session = fo.launch_app(dataset, port=5151)
             print("Semiotic features extracted. View results at http://localhost:5151")
-            
+
             try:
                 session.wait()
             except KeyboardInterrupt:
