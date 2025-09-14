@@ -32,7 +32,7 @@ class SemioticDataPipeline:
         logger.info(f"Initialized pipeline with {len(self.urban_classes)} urban classes")
         
     def create_unified_dataset(self, dataset_name: str = "semiotic_urban_combined", 
-                             max_oid_samples: int = 1000) -> fo.Dataset:
+                             max_oid_samples: int = 1) -> fo.Dataset:
         """Create a unified FiftyOne dataset combining OID and synthetic data."""
         
         # Check if dataset exists
@@ -61,7 +61,7 @@ class SemioticDataPipeline:
         logger.info(f"Created unified dataset with {len(dataset)} total samples")
         return dataset
     
-    def _load_oid_data(self, max_samples: int = 1000) -> List[fo.Sample]:
+    def _load_oid_data(self, max_samples: int = 1) -> List[fo.Sample]:
         """Load OpenImages v7 data for urban classes."""
         try:
             # Ensure destination directory exists
