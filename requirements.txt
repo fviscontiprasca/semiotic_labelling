@@ -17,7 +17,8 @@ safetensors==0.5.3  # Model compatibility
 peft==0.17.1  # LoRA fine-tuning
 
 # Computer Vision & Image Processing
-ultralytics==8.3.199  # YOLO11 with segmentation
+# ultralytics==8.3.199  # YOLO11 removed - replaced with SAM
+git+https://github.com/facebookresearch/segment-anything.git  # Segment Anything Model (SAM)
 opencv-python==4.10.0  # CV operations (pip)
 Pillow==11.3.0  # Latest PIL
 

@@ -147,13 +147,31 @@ class SAMArchitecturalSegmenter:
                     "semiotic_analysis": self.perform_semiotic_analysis(segment_analysis, architectural_type)
                 })
         
-        return {
+        # Create pipeline-compatible analysis format
+        analysis_result = {
             "total_segments": len(masks),
             "architectural_count": len(architectural_segments),
             "architectural_segments": architectural_segments,
             "coverage_ratio": len(architectural_segments) / len(masks) if masks else 0,
-            "dominant_elements": self.identify_dominant_elements(architectural_segments)
+            "dominant_elements": self.identify_dominant_elements(architectural_segments),
+            
+            # Add fields expected by Phase 04 semiotic extractor
+            "density_analysis": {
+                "total_coverage": len(architectural_segments) / len(masks) if masks else 0,
+                "density_type": "high_density" if len(architectural_segments) > 10 else 
+                               "medium_density" if len(architectural_segments) > 5 else "low_density"
+            },
+            "architectural_hierarchy": {
+                "hierarchy_type": "strong_hierarchy" if len(architectural_segments) > 0 else "uniform_scale",
+                "dominant_elements": self.identify_dominant_elements(architectural_segments)
+            },
+            "functional_composition": {
+                "architectural_elements": len(architectural_segments),
+                "dominant_function": "architectural" if len(architectural_segments) > 0 else "undefined"
+            }
         }
+        
+        return analysis_result
     
     def analyze_segment_properties(self, mask: np.ndarray, bbox: List[float], 
                                  area: int, image: np.ndarray) -> Dict[str, Any]:
@@ -187,8 +205,8 @@ class SAMArchitecturalSegmenter:
             "area": area,
             "aspect_ratio": aspect_ratio,
             "compactness": compactness,
-            "mean_color": mean_color.tolist(),
-            "color_std": color_std.tolist(),
+            "mean_color": mean_color.tolist() if hasattr(mean_color, 'tolist') else list(mean_color),
+            "color_std": color_std.tolist() if hasattr(color_std, 'tolist') else list(color_std),
             "position": {"center_x": x + w/2, "center_y": y + h/2},
             "relative_size": area / (image.shape[0] * image.shape[1])
         }
@@ -287,6 +305,7 @@ class SAMArchitecturalSegmenter:
         return processed
     
     def segment_directory(self, input_dir: str, output_dir: str, max_images: Optional[int] = None):
+        """Segment all images in a directory - main pipeline integration method."""
         """
         Segment all images in a directory using SAM.
         
@@ -370,9 +389,35 @@ class SAMArchitecturalSegmenter:
                     "success": False
                 })
         
-        # Save summary
-        summary_file = output_path / "sam_segmentation_summary.json"
+        # Save summary in format compatible with pipeline expectations
+        summary_file = output_path / "segmentation_summary.json"
+        
+        # Create pipeline-compatible summary format
+        pipeline_compatible_summary = {}
+        for result in results_summary["image_results"]:
+            if result["success"]:
+                image_name = result["image_name"]
+                # Read the detailed analysis for this image
+                analysis_file = analysis_dir / f"{Path(image_name).stem}_sam_analysis.json"
+                if analysis_file.exists():
+                    with open(analysis_file, 'r') as f:
+                        detailed_analysis = json.load(f)
+                    
+                    # Format compatible with Phase 04 expectations
+                    pipeline_compatible_summary[image_name] = {
+                        "total_segments": result["total_segments"],
+                        "architectural_segments": result["architectural_segments"],
+                        "semiotic_segmentation_analysis": detailed_analysis["segment_analysis"],
+                        "model_type": "SAM",
+                        "timestamp": detailed_analysis["timestamp"]
+                    }
+        
         with open(summary_file, 'w') as f:
+            json.dump(pipeline_compatible_summary, f, indent=2)
+        
+        # Also save the detailed summary
+        detailed_summary_file = output_path / "sam_segmentation_summary.json"
+        with open(detailed_summary_file, 'w') as f:
             json.dump(results_summary, f, indent=2)
         
         logger.info(f"✅ SAM segmentation complete!")

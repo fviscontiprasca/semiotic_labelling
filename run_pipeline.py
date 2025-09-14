@@ -38,8 +38,8 @@ def setup_environment():
          "Verify FiftyOne installation"),
         ("python -c \"from transformers import BlipProcessor; print('BLIP-2 available')\"", 
          "Verify BLIP-2 availability"),
-        ("python -c \"from ultralytics import YOLO; print('YOLO11 available')\"", 
-         "Verify YOLO11 availability")
+        ("python -c \"from segment_anything import sam_model_registry; print('SAM available')\"", 
+         "Verify SAM availability")
     ]
     
     print("Setting up environment...")
@@ -65,10 +65,10 @@ def run_blip_captioning_export(input_dir: str, output_dir: str):
     command = f"python scripts/02b_blip2_captioner_export.py --input {input_dir} --output {output_dir}"
     return run_command(command, "Enhance captions with BLIP-2 export (02b)")
 
-def run_yolo_segmentation(input_images_dir, output_dir):
-    """Extract architectural elements with YOLO11 (03)."""
-    command = f"python scripts/03_yolo_segmenter.py --input_dir {input_images_dir} --output_dir {output_dir}"
-    return run_command(command, "Extract architectural elements with YOLO11 (03)")
+def run_sam_segmentation(input_images_dir, output_dir):
+    """Extract architectural elements with SAM (03)."""
+    command = f"python scripts/03_sam_segmenter.py --input_dir {input_images_dir} --output_dir {output_dir}"
+    return run_command(command, "Extract architectural elements with SAM (03)")
 
 def run_feature_extraction(input_data, output_features):
     """Extract multi-modal semiotic features (04)."""
@@ -128,7 +128,7 @@ def main():
     dp_out = outputs_root / "01_data_pipeline"
     cap02_out = outputs_root / "02_blip2_captioner"
     cap02b_out = outputs_root / "02b_blip2_captioner_export"
-    yolo_out = outputs_root / "03_yolo_segmentation"
+    sam_out = outputs_root / "03_sam_segmentation"
     features_out = outputs_root / "04_semiotic_features"
     training_out = outputs_root / "05_flux_training_data"
     model_output = "models/semiotic_flux"
@@ -152,9 +152,9 @@ def main():
                 if run_blip_captioning_export(str(dp_out), str(cap02b_out)):
                     success_steps.append("BLIP-2 Captioning Export (02b)")
             
-            # Step 3: YOLO segmentation
-            if run_yolo_segmentation(str(dp_out / "images"), str(yolo_out)):
-                success_steps.append("YOLO11 Segmentation")
+            # Step 3: SAM segmentation
+            if run_sam_segmentation(str(dp_out / "images"), str(sam_out)):
+                success_steps.append("SAM Segmentation")
             
             # Step 4: Feature extraction
             if run_feature_extraction(str(dp_out), str(features_out / "features.pkl")):
@@ -174,7 +174,7 @@ def main():
         
         else:
             print("\n🚀 Running quick demo mode...")
-            success_steps.extend(["Data Pipeline", "BLIP-2 Captioning", "YOLO11 Segmentation", 
+            success_steps.extend(["Data Pipeline", "BLIP-2 Captioning", "SAM Segmentation", 
                                 "Feature Extraction", "Flux Data Preparation", "Model Training (Skipped)"])
         
         # Step 7: Model evaluation (if model exists)

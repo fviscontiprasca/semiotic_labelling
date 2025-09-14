@@ -1,5 +1,5 @@
 """
-Semiotic feature extraction system that combines BLIP-2 captions, YOLO11 segmentation,
+Semiotic feature extraction system that combines BLIP-2 captions, SAM segmentation,
 and architectural analysis to create rich semantic embeddings for Flux.1d training.
 """
 
@@ -274,7 +274,7 @@ class SemioticFeatureExtractor:
         
         features = {}
         
-        # Extract from YOLO segmentation if available
+        # Extract from SAM segmentation if available
         if hasattr(sample, "semiotic_segmentation_analysis"):
             seg_analysis = sample.semiotic_segmentation_analysis
             

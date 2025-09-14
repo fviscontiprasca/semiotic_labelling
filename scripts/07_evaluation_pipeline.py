@@ -51,7 +51,15 @@ except Exception as e:
 # Import pipeline components with error handling
 try:
     from blip2_captioner import SemioticBLIPCaptioner
-    from yolo_segmenter import UrbanYOLOSegmenter
+    # from yolo_segmenter import UrbanYOLOSegmenter  # Replaced with SAM
+    # Note: SAM segmenter must be imported as a module due to filename starting with number
+    import sys
+    sys.path.append('scripts')
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("sam_segmenter", "scripts/03_sam_segmenter.py")
+    sam_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(sam_module)
+    SAMArchitecturalSegmenter = sam_module.SAMArchitecturalSegmenter
     from semiotic_extractor import SemioticFeatureExtractor
     PIPELINE_AVAILABLE = True
 except ImportError as e:
