@@ -47,9 +47,15 @@ class UrbanYOLOSegmenter:
             self.model = YOLO(model_path)
             logger.info(f"Loaded custom YOLO11 model from {model_path}")
         else:
-            # Use pre-trained YOLO11 segmentation model
-            self.model = YOLO('yolo11n-seg.pt')  # nano version for speed
-            logger.info("Loaded pre-trained YOLO11n-seg model")
+            # Use pre-trained YOLO11 segmentation model from models folder
+            default_model_path = Path(__file__).parent.parent / "models" / "YOLO" / "yolo11n-seg.pt"
+            if default_model_path.exists():
+                self.model = YOLO(str(default_model_path))
+                logger.info(f"Loaded pre-trained YOLO11n-seg model from {default_model_path}")
+            else:
+                # Fallback to auto-download if not found in models folder
+                self.model = YOLO('yolo11n-seg.pt')  # nano version for speed
+                logger.info("Loaded pre-trained YOLO11n-seg model (auto-downloaded)")
         
         # Urban class mapping for semiotic analysis
         self.urban_class_mapping = {

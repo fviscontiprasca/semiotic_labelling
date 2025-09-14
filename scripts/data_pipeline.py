@@ -64,7 +64,11 @@ class SemioticDataPipeline:
     def _load_oid_data(self, max_samples: int = 1000) -> List[fo.Sample]:
         """Load OpenImages v7 data for urban classes."""
         try:
-            # Load OID dataset through FiftyOne zoo
+            # Ensure destination directory exists
+            oid_images_dir = self.oid_path / "images"
+            oid_images_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Load OID dataset through FiftyOne zoo with specific destination
             oid_dataset = foz.load_zoo_dataset(
                 "open-images-v7",
                 split="train",
@@ -72,7 +76,8 @@ class SemioticDataPipeline:
                 classes=self.urban_classes,
                 max_samples=max_samples,
                 shuffle=True,
-                dataset_name="temp_oid_urban"
+                dataset_name="temp_oid_urban",
+                dataset_dir=str(oid_images_dir)
             )
             
             samples = []
