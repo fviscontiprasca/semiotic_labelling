@@ -42,11 +42,16 @@ class SAMArchitecturalSegmenter:
             # Load SAM model
             if checkpoint_path and Path(checkpoint_path).exists():
                 sam = sam_model_registry[model_type](checkpoint=checkpoint_path)
+                logger.info(f"Loaded SAM from specified checkpoint: {checkpoint_path}")
             else:
-                # Provide guidance for downloading SAM
-                logger.warning("SAM checkpoint not found. Please download from:")
-                logger.warning("https://github.com/facebookresearch/segment-anything#model-checkpoints")
-                sam = None
+                # Try to load from models/SAM directory
+                default_checkpoint = Path(__file__).parent.parent / "models" / "SAM" / "sam_vit_h_4b8939.pth"
+                if default_checkpoint.exists():
+                    sam = sam_model_registry[model_type](checkpoint=str(default_checkpoint))
+                    logger.info(f"Loaded SAM from local models directory: {default_checkpoint}")
+                else:
+                    logger.error("SAM checkpoint not found. Please ensure sam_vit_h_4b8939.pth is in models/SAM/")
+                    sam = None
             
             if sam:
                 sam.to(device=self.device)
