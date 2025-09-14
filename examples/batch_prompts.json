@@ -1,0 +1,32 @@
+{
+  "prompts": [
+    "Modern glass office building with clean geometric lines in downtown urban setting",
+    "Brutalist concrete housing complex with massive geometric forms and dramatic lighting",
+    "Minimalist white residential building with pure geometric forms and natural surroundings",
+    "Gothic cathedral with pointed arches and vertical emphasis in historic city center",
+    "Industrial warehouse conversion with exposed structural elements and utilitarian aesthetic",
+    "Art Deco skyscraper with streamlined forms and geometric patterns at golden hour",
+    "Postmodern mixed-use building with eclectic mix of styles and colorful facade",
+    "Baroque palace with ornate decoration and curved forms in contemplative setting",
+    "Contemporary sustainable building with glass and steel integration at dawn",
+    "Futuristic residential tower with dynamic composition and energetic atmosphere"
+  ],
+  "config": {
+    "height": 1024,
+    "width": 1024,
+    "num_inference_steps": 25,
+    "guidance_scale": 7.5,
+    "num_images": 1,
+    "use_semiotic_conditioning": true,
+    "architectural_style": null,
+    "urban_mood": null,
+    "time_period": null,
+    "materials": null
+  },
+  "metadata": {
+    "description": "Batch generation example for architectural styles",
+    "total_prompts": 10,
+    "estimated_time_minutes": 15,
+    "quality_settings": "high"
+  }
+}
