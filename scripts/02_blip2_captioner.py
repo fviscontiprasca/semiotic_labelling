@@ -15,6 +15,7 @@ import json
 import re
 from dataclasses import dataclass
 import numpy as np
+import argparse
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -260,6 +261,36 @@ class SemioticBLIPCaptioner:
                 found_terms.append(term)
         
         return found_terms
+
+    def caption_directory(self, input_dir: str, output_file: str, recursive: bool = True) -> None:
+        """Caption all images under input_dir and write a JSON file.
+
+        The JSON maps relative image paths (from input_dir) to the generated
+        semiotic captions dictionary (including unified_caption).
+        """
+        img_exts = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".tif", ".tiff"}
+        base = Path(input_dir)
+        files = (base.rglob("*") if recursive else base.glob("*"))
+        images = [p for p in files if p.suffix.lower() in img_exts]
+
+        logger.info(f"Found {len(images)} images under {base}")
+        captions: Dict[str, Dict[str, str]] = {}
+
+        for idx, img_path in enumerate(images, 1):
+            try:
+                caps = self.generate_semiotic_caption(str(img_path))
+                rel = str(img_path.relative_to(base))
+                captions[rel] = caps
+                if idx % 25 == 0:
+                    logger.info(f"Captioned {idx}/{len(images)} images")
+            except Exception as e:
+                logger.error(f"Failed to caption {img_path}: {e}")
+
+        out_path = Path(output_file)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        with out_path.open("w", encoding="utf-8") as f:
+            json.dump(captions, f, ensure_ascii=False, indent=2)
+        logger.info(f"Wrote captions JSON: {out_path} ({len(captions)} items)")
     
     def process_dataset(self, dataset: fo.Dataset, 
                        output_field: str = "semiotic_captions",
@@ -325,30 +356,38 @@ class SemioticBLIPCaptioner:
         return f"{original} This scene demonstrates {semiotic.lower()}"
 
 def main():
-    """Main execution for testing captioning system."""
-    
-    # Initialize captioner
-    captioner = SemioticBLIPCaptioner()
-    
-    # Load dataset
+    """CLI: caption an image directory into a captions.json; fallback to demo."""
+    parser = argparse.ArgumentParser(description="BLIP-2 Semiotic Captioner (02)")
+    parser.add_argument("--input_dir", default=None, help="Directory with images to caption")
+    parser.add_argument("--output_file", default=None, help="Output JSON path for captions")
+    parser.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"], help="Compute device")
+    parser.add_argument("--model", default="Salesforce/blip2-opt-2.7b", help="HF model id")
+    parser.add_argument("--no-recursive", action="store_true", help="Do not recurse into subdirectories")
+    args = parser.parse_args()
+
+    # If CLI paths provided, run directory mode
+    if args.input_dir:
+        default_out = Path(__file__).parent.parent / "data" / "outputs" / "02_blip2_captioner" / "captions.json"
+        output_file = args.output_file if args.output_file else str(default_out)
+        captioner = SemioticBLIPCaptioner(model_name=args.model, device=args.device)
+        captioner.caption_directory(args.input_dir, output_file, recursive=(not args.no_recursive))
+        return
+
+    # Fallback: small demo using FiftyOne dataset if available
+    captioner = SemioticBLIPCaptioner(model_name=args.model, device=args.device)
     dataset_name = "semiotic_urban_combined"
     if fo.dataset_exists(dataset_name):
         dataset = fo.load_dataset(dataset_name)
-        
-        # Process subset for testing
         test_view = dataset.take(5)
         captioner.process_dataset(test_view)
-        
-        # Launch FiftyOne to view results
         session = fo.launch_app(dataset, port=5151)
         print("Semiotic captions generated. View results at http://localhost:5151")
-        
         try:
             session.wait()
         except KeyboardInterrupt:
             print("Shutting down...")
     else:
-        print(f"Dataset {dataset_name} not found. Run data_pipeline.py first.")
+        print(f"Dataset {dataset_name} not found. Provide --input_dir to caption a folder.")
 
 if __name__ == "__main__":
     main()

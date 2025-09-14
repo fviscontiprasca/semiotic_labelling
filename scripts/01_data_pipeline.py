@@ -8,6 +8,7 @@ import json
 import pandas as pd
 import fiftyone as fo
 import fiftyone.zoo as foz
+import fiftyone.core.labels as fol
 from pathlib import Path
 import logging
 from typing import Dict, List, Tuple
@@ -269,8 +270,12 @@ class SemioticDataPipeline:
             dir_path.mkdir(parents=True, exist_ok=True)
         
         # Split dataset using FiftyOne's take/skip method
-        total_samples = dataset.count()
-        train_count = int(total_samples * split_ratio[0])
+        try:
+            # Pylance can misinfer the return type; explicit int + ignore
+            total_samples = int(dataset.count())  # type: ignore[arg-type]
+        except Exception:
+            total_samples = 0
+        train_count = int(total_samples * float(split_ratio[0]))
         
         # Create train and validation views
         train_samples = dataset.take(train_count)
@@ -329,8 +334,12 @@ class SemioticDataPipeline:
             # Use original prompt as base
             base_caption = getattr(sample, 'original_prompt', "")
         else:
-            # For OID images, create caption from detected objects
-            base_caption = f"Urban scene with {', '.join(self.urban_classes)}"
+            # For OID images, build caption from detected objects on this image
+            obj_labels = self._extract_oid_objects(sample, top_k=4)
+            if obj_labels:
+                base_caption = f"Urban scene with {', '.join(obj_labels)}"
+            else:
+                base_caption = "Urban scene with architectural elements"
         
         # Add semiotic descriptors
         semiotic_parts = []
@@ -350,6 +359,14 @@ class SemioticDataPipeline:
         material = getattr(sample, "primary_material", None)
         if material:
             semiotic_parts.append(f"featuring {material} materials")
+
+        season = getattr(sample, "season", None)
+        if season:
+            semiotic_parts.append(f"in {season}")
+
+        city = getattr(sample, "referenced_city", None)
+        if city:
+            semiotic_parts.append(f"inspired by {city}")
         
         # Combine base caption with semiotic features
         if semiotic_parts:
@@ -358,6 +375,85 @@ class SemioticDataPipeline:
             enhanced_caption = base_caption
         
         return enhanced_caption
+
+    def _extract_oid_objects(self, sample: fo.Sample, top_k: int = 4) -> List[str]:
+        """Extract top object labels from a sample's detections for OID images.
+
+        Attempts common label fields ('detections', 'ground_truth'), and falls
+        back to scanning all fields for a fol.Detections container. Returns a
+        list of unique labels, prioritized by highest confidence and frequency.
+        """
+        labels: List[Tuple[str, float]] = []  # (label, confidence)
+
+        def collect_from(field_name: str) -> None:
+            try:
+                val = sample[field_name]
+            except Exception:
+                return
+            if isinstance(val, fol.Detections):
+                dets_obj = getattr(val, 'detections', None)
+                try:
+                    dets_list = list(dets_obj) if dets_obj is not None else []  # normalize to list
+                except Exception:
+                    dets_list = []
+                for det in dets_list:
+                    if det is None:
+                        continue
+                    lbl = getattr(det, 'label', None)
+                    if not lbl:
+                        continue
+                    conf = getattr(det, 'confidence', None)
+                    labels.append((str(lbl), float(conf) if conf is not None else 0.0))
+
+        # Try common fields first
+        for fname in ("detections", "ground_truth", "objects"):
+            collect_from(fname)
+
+        # If still empty, scan all fields for a Detections container
+        if not labels:
+            field_names = list(getattr(sample, 'field_names', []) or [])
+            for fname in field_names:
+                try:
+                    val = sample[fname]
+                except Exception:
+                    continue
+                if isinstance(val, fol.Detections):
+                    dets_obj = getattr(val, 'detections', None)
+                    try:
+                        dets_list = list(dets_obj) if dets_obj is not None else []
+                    except Exception:
+                        dets_list = []
+                    for det in dets_list:
+                        if det is None:
+                            continue
+                        lbl = getattr(det, 'label', None)
+                        if not lbl:
+                            continue
+                        conf = getattr(det, 'confidence', None)
+                        labels.append((str(lbl), float(conf) if conf is not None else 0.0))
+
+        if not labels:
+            return []
+
+        # Aggregate by label: keep max confidence and count occurrences
+        from collections import defaultdict
+        max_conf: Dict[str, float] = defaultdict(float)
+        counts: Dict[str, int] = defaultdict(int)
+        for lbl, conf in labels:
+            counts[lbl] += 1
+            if conf > max_conf[lbl]:
+                max_conf[lbl] = conf
+
+        # Rank by (max_conf, count), then alphabetically for stability
+        ranked = sorted(max_conf.keys(), key=lambda k: (max_conf[k], counts[k], k), reverse=True)
+        # Deduplicate and take top_k
+        unique_top = []
+        for lbl in ranked:
+            if lbl not in unique_top:
+                unique_top.append(lbl)
+            if len(unique_top) >= top_k:
+                break
+        return unique_top
 
 def main():
     """Main execution function."""
