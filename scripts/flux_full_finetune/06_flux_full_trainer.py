@@ -275,19 +275,39 @@ class SemioticFluxFullTrainer:
         train_samples = []
         val_samples = []
         
-        # Load from directory structure
+        # Load from flux data prep structure
         if dataset_path.is_dir():
-            # Look for train/val structure
-            train_dir = dataset_path / "train" 
-            val_dir = dataset_path / "val"
+            # Check if this is our flux training data structure
+            images_dir = dataset_path / "images"
+            captions_dir = dataset_path / "captions"
             
-            if train_dir.exists():
-                train_samples = self._load_samples_from_dir(train_dir)
-                logger.info(f"Loaded {len(train_samples)} training samples")
-            
-            if val_dir.exists():
-                val_samples = self._load_samples_from_dir(val_dir)
-                logger.info(f"Loaded {len(val_samples)} validation samples")
+            if images_dir.exists() and captions_dir.exists():
+                # Our flux data prep structure
+                train_images_dir = images_dir / "train"
+                val_images_dir = images_dir / "val"
+                
+                if train_images_dir.exists():
+                    train_samples = self._load_samples_from_dir(train_images_dir)
+                    logger.info(f"Loaded {len(train_samples)} training samples from flux data prep structure")
+                
+                if val_images_dir.exists():
+                    val_samples = self._load_samples_from_dir(val_images_dir)
+                    logger.info(f"Loaded {len(val_samples)} validation samples from flux data prep structure")
+            else:
+                # Fallback to original train/val directory structure
+                train_dir = dataset_path / "train" 
+                val_dir = dataset_path / "val"
+                
+                if train_dir.exists():
+                    train_samples = self._load_samples_from_dir(train_dir)
+                    logger.info(f"Loaded {len(train_samples)} training samples from standard structure")
+                
+                if val_dir.exists():
+                    val_samples = self._load_samples_from_dir(val_dir)
+                    logger.info(f"Loaded {len(val_samples)} validation samples from standard structure")
+        
+        if not train_samples:
+            raise ValueError(f"No training samples found in {dataset_path}")
         
         # Create datasets
         train_dataset = Dataset.from_list(train_samples)
@@ -296,50 +316,99 @@ class SemioticFluxFullTrainer:
         return train_dataset, val_dataset
     
     def _load_samples_from_dir(self, data_dir: Path) -> List[Dict[str, str]]:
-        """Load samples from directory structure."""
+        """Load samples from flux data prep directory structure."""
         
         samples = []
         
-        # Look for images and metadata
+        # Look for our specific flux training data structure
+        # data_dir should be the split directory (train or val)
+        
+        # Check if this is our flux training data structure
+        # data_dir is images/train or images/val, so parent.parent is the root flux data dir
+        flux_data_root = data_dir.parent.parent
+        captions_dir = flux_data_root / "captions" / data_dir.name
+        images_dir = data_dir  # data_dir IS the images/train or images/val directory
+        metadata_dir = flux_data_root / "metadata"
+        
+        # Load metadata if available
+        metadata = {}
+        metadata_file = metadata_dir / "training_metadata.json"
+        if metadata_file.exists():
+            with open(metadata_file, 'r', encoding='utf-8') as f:
+                full_metadata = json.load(f)
+                # Extract split-specific metadata
+                if data_dir.name in full_metadata.get('splits', {}):
+                    metadata = full_metadata['splits'][data_dir.name]
+        
+        # Look for images and corresponding captions
         image_extensions = {'.jpg', '.jpeg', '.png', '.webp'}
         
-        # Try to find metadata file
-        metadata_file = None
-        for meta_name in ['metadata.json', 'captions.json', 'data.json']:
-            if (data_dir / meta_name).exists():
-                metadata_file = data_dir / meta_name
-                break
-        
-        metadata = {}
-        if metadata_file:
-            with open(metadata_file, 'r', encoding='utf-8') as f:
-                metadata = json.load(f)
-        
-        # Collect image files
-        for image_path in data_dir.rglob('*'):
-            if image_path.suffix.lower() in image_extensions:
-                
-                # Get caption and semiotic features
-                caption = ""
-                semiotic_features = {}
-                
-                # Try to get from metadata
-                rel_path = str(image_path.relative_to(data_dir))
-                if rel_path in metadata:
-                    item_data = metadata[rel_path]
-                    caption = item_data.get('caption', '')
-                    semiotic_features = item_data.get('semiotic_features', {})
-                
-                # Enhanced caption generation for full fine-tuning
-                if not caption:
-                    caption = self._generate_enhanced_caption_from_filename(image_path.name)
-                
-                samples.append({
-                    "image_path": str(image_path),
-                    "caption": caption,
-                    "semiotic_features": semiotic_features,
-                    "filename": image_path.name
-                })
+        if images_dir.exists() and captions_dir.exists():
+            # Use our flux data prep structure
+            for image_path in images_dir.rglob('*'):
+                if image_path.suffix.lower() in image_extensions:
+                    
+                    # Find corresponding caption file
+                    caption_file = captions_dir / f"{image_path.stem}.txt"
+                    
+                    caption = ""
+                    if caption_file.exists():
+                        with open(caption_file, 'r', encoding='utf-8') as f:
+                            caption = f.read().strip()
+                    
+                    # For now, we don't have semiotic features in separate files
+                    # They were used during caption generation in the data prep step
+                    semiotic_features = {}
+                    
+                    # Enhanced caption generation fallback
+                    if not caption:
+                        caption = self._generate_enhanced_caption_from_filename(image_path.name)
+                    
+                    samples.append({
+                        "image_path": str(image_path),
+                        "caption": caption,
+                        "semiotic_features": semiotic_features,
+                        "filename": image_path.name
+                    })
+        else:
+            # Fallback to original logic for other data structures
+            # Try to find metadata file
+            metadata_file = None
+            for meta_name in ['metadata.json', 'captions.json', 'data.json']:
+                if (data_dir / meta_name).exists():
+                    metadata_file = data_dir / meta_name
+                    break
+            
+            file_metadata = {}
+            if metadata_file:
+                with open(metadata_file, 'r', encoding='utf-8') as f:
+                    file_metadata = json.load(f)
+            
+            # Collect image files
+            for image_path in data_dir.rglob('*'):
+                if image_path.suffix.lower() in image_extensions:
+                    
+                    # Get caption and semiotic features
+                    caption = ""
+                    semiotic_features = {}
+                    
+                    # Try to get from metadata
+                    rel_path = str(image_path.relative_to(data_dir))
+                    if rel_path in file_metadata:
+                        item_data = file_metadata[rel_path]
+                        caption = item_data.get('caption', '')
+                        semiotic_features = item_data.get('semiotic_features', {})
+                    
+                    # Enhanced caption generation for full fine-tuning
+                    if not caption:
+                        caption = self._generate_enhanced_caption_from_filename(image_path.name)
+                    
+                    samples.append({
+                        "image_path": str(image_path),
+                        "caption": caption,
+                        "semiotic_features": semiotic_features,
+                        "filename": image_path.name
+                    })
         
         return samples
     

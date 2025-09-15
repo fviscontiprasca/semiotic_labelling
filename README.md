@@ -14,7 +14,7 @@
 
 This repository implements a modular, reproducible pipeline for producing semiotic‑aware architectural images from textual prompts and for preparing semiotic conditioning information for downstream 3D generation. The approach combines multi‑modal feature extraction (captioning, segmentation, semantic embeddings), curated real and synthetic datasets, and fine‑tuning of diffusion models (Flux.1d) through both LoRA adapters and full model fine-tuning approaches.
 
-The codebase supports: dataset preparation and unification, BLIP‑2 captioning, segmentation with SAM (and optional YOLO variants), multi‑modal semiotic feature extraction, Flux.1d data preparation with both LoRA and full fine‑tuning variants, evaluation, and inference (CLI and optional Gradio UI).
+The codebase supports: dataset preparation and unification, BLIP‑2 captioning, segmentation with SAM (and optional YOLO variants), comprehensive semiotic feature extraction with architectural style and urban mood analysis, Flux.1d data preparation with both LoRA and full fine‑tuning variants, evaluation, and inference (CLI and optional Gradio UI).
 
 ---
 
@@ -81,7 +81,7 @@ Model weights (Flux.1d, BLIP‑2, SAM/YOLO variants) are not included in the rep
 1. **Data ingestion & unification** — combine OpenImages urban classes and the synthetic Imaginary Cities set into a standardized FiftyOne dataset, deduplicate and normalize metadata.
 2. **Captioning** — generate descriptive, semiotic‑oriented captions using BLIP‑2 with structured prompts.
 3. **Segmentation** — extract masks and regions of architectural relevance using SAM (or YOLO as an alternative).
-4. **Semiotic feature extraction** — compute CLIP and sentence‑transformer embeddings, derive style/mood/material tags and other conditioning vectors.
+4. **Semiotic feature extraction** — compute sentence‑transformer embeddings from centralized BLIP-2 captions, integrate SAM segmentation metadata (architectural elements, complexity metrics), and derive comprehensive style/mood/material conditioning vectors.
 5. **Flux data preparation** — format images, captions and metadata for LoRA fine‑tuning of Flux.1d.
 6. **Training (LoRA)** — fine‑tune Flux.1d adapters with the prepared dataset, supporting mixed precision and distributed modes.
 7. **Evaluation** — quantitative (CLIP, style/mood accuracy) and qualitative reporting.
@@ -126,7 +126,7 @@ flowchart LR
 - `scripts/01_data_pipeline.py` — unify datasets into a FiftyOne collection.
 - `scripts/02_blip2_captioner.py` and `02b_blip2_captioner_export.py` — caption generation with advanced device/dtype options.
 - `scripts/03_sam_segmenter.py` — segmentation, mask extraction and export.
-- `scripts/04_semiotic_extractor.py` — embeddings, token extraction and feature export.
+- `scripts/04_semiotic_extractor.py` — comprehensive semiotic analysis with architectural style classification, urban mood detection, and multi-modal feature extraction for Flux.1d compatibility.
 - `scripts/05_flux_data_prep.py` — build Flux.1d training corpus (images + prompts + metadata).
 - `scripts/06_flux_trainer.py` — LoRA adapter training and checkpointing.
 - `scripts/07_evaluation_pipeline.py` — evaluation metrics and report generation.
@@ -182,12 +182,30 @@ python scripts/03_sam_segmenter.py --input_dir data/unified/images --output_dir 
 ```
 
 ### 04_semiotic_extractor.py — multi‑modal features
-- Scope: Fuse captions, SAM analysis, and visual embeddings (CLIP, sentence transformers) into a single semiotic feature payload.
-- Inputs: unified dataset metadata + SAM outputs
-- Outputs: features JSON (per image: textual, visual, spatial, interpretations, unified embedding, score)
-- Key args: `--input_data`, `--segmentation_dir`, `--output_features`
+- **Scope**: Comprehensive semiotic analysis combining captions, SAM segmentation, and visual embeddings into rich architectural feature representations with downstream compatibility for Flux.1d training.
+- **Inputs**: 
+  - Images from `data/outputs/01_data_pipeline/images/{train,val}/`
+  - Centralized captions from `data/outputs/02_blip2_captioner/captions.json`
+  - SAM analysis files from `data/outputs/03_sam_segmentation/analysis/`
+- **Outputs**: Individual JSON files per image containing:
+  - **Textual features**: Multiple caption types (architectural_analysis, mood_atmosphere, technical_analysis), embeddings, semantic analysis
+  - **Visual features**: Color palettes, texture analysis, composition metrics
+  - **Segmentation features**: Architectural segment counts, complexity metrics, element type detection
+  - **Spatial features**: Layout analysis, symmetry, edge density
+  - **Architectural analysis**: Style classification (modern, brutalist, classical, etc.), urban mood detection (vibrant, serene, dramatic, etc.)
+  - **Downstream compatibility**: All required fields for flux_data_prep.py including semiotic_score, materials, cultural_context
+- **Core features**: 
+  - 🏗️ **Architectural style extraction** from caption analysis (9 style categories)
+  - 🌆 **Urban mood detection** from textual content (6 mood categories)
+  - 📊 **Comprehensive semiotic scoring** with quality thresholds
+  - 🔗 **Full pipeline integration** with flux training preparation
+- **Usage**: Run directly (auto-detects data paths) or specify custom paths
 - Example:
 ```powershell
+# Auto-detection mode (recommended)
+python scripts/04_semiotic_extractor.py
+
+# Custom paths mode
 python scripts/04_semiotic_extractor.py --input_data data/unified --segmentation_dir data/outputs/sam_segments --output_features data/outputs/semiotic_features.json
 ```
 

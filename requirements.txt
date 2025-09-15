@@ -33,7 +33,7 @@ opencv-python==4.10.0  # CV operations and image preprocessing
 Pillow==11.3.0  # Image manipulation and format conversion
 
 # Text-Image Alignment & Embeddings (both pipelines)
-sentence-transformers==5.1.0  # Semiotic feature extraction and embeddings
+sentence-transformers==5.1.0  # Semiotic feature extraction, architectural style analysis, and semantic embeddings
 
 # Dataset Management (both pipelines)
 # FiftyOne is heavy; prefer pip and allow minor drift across Python 3.13 builds

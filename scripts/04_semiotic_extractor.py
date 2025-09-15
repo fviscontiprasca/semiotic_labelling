@@ -1,848 +1,777 @@
+#!/usr/bin/env python3
 """
-Semiotic feature extraction system that combines BLIP-2 captions, SAM segmentation,
-and architectural analysis to create rich semantic embeddings for Flux.1d training.
+Simple Semiotic Feature Extractor for Urban Architecture Dataset
+Processes images directly from filesystem without problematic dependencies
 """
 
-import numpy as np
-import torch
-import torch.nn.functional as F
-from transformers import CLIPProcessor, CLIPModel, AutoTokenizer, AutoModel
-import fiftyone as fo
-import cv2
-from PIL import Image
+import os
 import json
 import logging
+import warnings
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional, Any, Union
-from dataclasses import dataclass, asdict
-from collections import defaultdict
-import re
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+from typing import Dict, List, Any, Optional, Tuple
+import numpy as np
+from PIL import Image
+import torch
 from sentence_transformers import SentenceTransformer
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import normalize
+from sklearn.exceptions import ConvergenceWarning
+import cv2
 
-logging.basicConfig(level=logging.INFO)
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
-@dataclass
-class SemioticFeatures:
-    """Container for comprehensive semiotic feature representation."""
-    
-    # Textual features
-    caption_embedding: np.ndarray
-    architectural_style: Optional[str] = None
-    urban_mood: Optional[str] = None
-    time_period: Optional[str] = None
-    season: Optional[str] = None
-    materials: List[str] = None
-    
-    # Visual features
-    clip_embedding: np.ndarray = None
-    color_palette: List[Tuple[int, int, int]] = None
-    composition_features: Dict[str, float] = None
-    
-    # Spatial features
-    object_density: float = 0.0
-    spatial_hierarchy: str = None
-    dominant_elements: List[str] = None
-    
-    # Semiotic interpretations
-    cultural_context: Optional[str] = None
-    social_implications: List[str] = None
-    symbolic_meaning: Optional[str] = None
-    architectural_typology: Optional[str] = None
-    
-    # Multi-modal fusion
-    unified_embedding: np.ndarray = None
-    semiotic_score: float = 0.0
+# Suppress sklearn warnings
+warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
-class SemioticFeatureExtractor:
-    """Advanced semiotic feature extraction for architectural images."""
+class SimpleSemioticExtractor:
+    """Extract basic semiotic features from urban architecture images."""
     
     def __init__(self, device: str = "auto"):
-        """Initialize feature extraction models and vocabularies."""
+        """Initialize the semiotic extractor."""
         
+        # Set device
         if device == "auto":
             self.device = "cuda" if torch.cuda.is_available() else "cpu"
         else:
             self.device = device
+            
+        logger.info(f"Using device: {self.device}")
         
-        logger.info(f"Initializing semiotic feature extractor on {self.device}")
-        
-        # Load multi-modal models
+        # Initialize models
         self._load_models()
         
-        # Initialize semiotic vocabularies
-        self._init_semiotic_vocabularies()
-        
-        # Feature weights for fusion
-        self.feature_weights = {
-            "textual": 0.4,
-            "visual": 0.3,
-            "spatial": 0.2,
-            "semiotic": 0.1
-        }
-    
     def _load_models(self):
-        """Load required models for feature extraction."""
+        """Load required models."""
+        logger.info("Loading models...")
         
-        # CLIP for visual-textual alignment
-        self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
-        self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(self.device)
-        
-        # Sentence transformer for text embeddings
+        # Load sentence transformer for textual analysis
         self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
+        logger.info("✓ Sentence Transformer loaded")
         
-        # TF-IDF for keyword extraction
-        self.tfidf_vectorizer = TfidfVectorizer(
-            max_features=1000,
-            stop_words='english',
-            ngram_range=(1, 3)
-        )
+        # Define architectural concepts for analysis
+        self._define_architectural_concepts()
         
-        logger.info("Models loaded successfully")
+        logger.info("✓ All models loaded successfully")
     
-    def _init_semiotic_vocabularies(self):
-        """Initialize comprehensive semiotic vocabularies."""
+    def _define_architectural_concepts(self):
+        """Define architectural concepts and terms for analysis."""
         
-        self.semiotic_vocab = {
-            "architectural_styles": {
-                "modernist": ["clean lines", "minimal", "geometric", "functional", "glass", "steel"],
-                "brutalist": ["concrete", "massive", "angular", "fortress-like", "monumental"],
-                "postmodern": ["eclectic", "playful", "colorful", "decorative", "historical references"],
-                "baroque": ["ornate", "dramatic", "curved", "decorative", "gilded"],
-                "minimalist": ["simple", "pure", "essential", "white", "sparse"],
-                "industrial": ["exposed", "metal", "brick", "utilitarian", "raw"],
-                "gothic": ["pointed arches", "vertical", "ornate", "stone", "religious"],
-                "art deco": ["streamlined", "geometric patterns", "luxury", "metallic", "stylized"]
-            },
-            
-            "urban_moods": {
-                "contemplative": ["peaceful", "quiet", "reflective", "serene", "meditative"],
-                "vibrant": ["energetic", "colorful", "dynamic", "bustling", "lively"],
-                "tense": ["dramatic", "conflict", "pressure", "stress", "anxiety"],
-                "melancholic": ["nostalgic", "sad", "lonely", "abandoned", "decay"],
-                "imposing": ["monumental", "powerful", "dominant", "overwhelming", "authoritative"],
-                "intimate": ["cozy", "human-scale", "personal", "comfortable", "welcoming"]
-            },
-            
-            "spatial_qualities": {
-                "monumental": ["large scale", "impressive", "towering", "grand", "massive"],
-                "intimate": ["small scale", "cozy", "personal", "human-sized", "approachable"],
-                "hierarchical": ["ordered", "structured", "layered", "ranked", "organized"],
-                "fragmented": ["broken", "disconnected", "scattered", "divided", "partial"],
-                "flowing": ["continuous", "smooth", "organic", "curved", "seamless"],
-                "rigid": ["structured", "angular", "geometric", "fixed", "systematic"]
-            },
-            
-            "cultural_contexts": {
-                "european": ["classical", "historical", "stone", "tradition", "heritage"],
-                "american": ["modern", "commercial", "glass", "innovation", "efficiency"],
-                "asian": ["harmony", "balance", "nature", "wood", "spirituality"],
-                "mediterranean": ["warm", "earthy", "courtyard", "outdoor living", "community"],
-                "nordic": ["minimal", "natural", "wood", "light", "sustainability"]
-            }
-        }
+        self.architectural_styles = [
+            "modernist", "brutalist", "classical", "gothic", "baroque", "art deco",
+            "international style", "bauhaus", "postmodern", "deconstructivist",
+            "vernacular", "traditional", "contemporary", "minimalist", "industrial"
+        ]
         
-        # Compile patterns for text analysis
-        self.style_patterns = {}
-        for style, keywords in self.semiotic_vocab["architectural_styles"].items():
-            pattern = "|".join([re.escape(kw) for kw in keywords])
-            self.style_patterns[style] = re.compile(pattern, re.IGNORECASE)
+        self.urban_elements = [
+            "residential building", "office tower", "commercial center", "public space",
+            "transportation hub", "cultural building", "educational facility",
+            "healthcare building", "religious building", "mixed-use development"
+        ]
+        
+        self.materials = [
+            "concrete", "glass", "steel", "brick", "stone", "wood", "metal",
+            "composite", "ceramic", "plastic", "fabric", "membrane"
+        ]
+        
+        self.spatial_qualities = [
+            "open", "enclosed", "transparent", "opaque", "vertical", "horizontal",
+            "monumental", "intimate", "dynamic", "static", "fragmented", "unified"
+        ]
+        
+        self.cultural_indicators = [
+            "luxury", "affordable", "institutional", "commercial", "domestic",
+            "sacred", "secular", "public", "private", "formal", "informal"
+        ]
+        
+    def convert_numpy_types(self, obj):
+        """Convert numpy types to native Python types for JSON serialization."""
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, dict):
+            return {key: self.convert_numpy_types(value) for key, value in obj.items()}
+        elif isinstance(obj, list):
+            return [self.convert_numpy_types(item) for item in obj]
+        else:
+            return obj
     
-    def extract_features(self, sample: fo.Sample) -> SemioticFeatures:
-        """Extract comprehensive semiotic features from a FiftyOne sample."""
+    def safe_normalize(self, vector, epsilon=1e-8):
+        """Safely normalize a vector, handling zero vectors."""
+        norm = np.linalg.norm(vector)
+        if norm < epsilon:
+            return vector
+        return vector / norm
+    
+    def process_images_direct(self, data_dir: str, output_dir: str):
+        """Process images directly from data directory."""
+        
+        data_path = Path(data_dir)
+        output_path = Path(output_dir)
+        output_path.mkdir(parents=True, exist_ok=True)
+        
+        # Find all image files
+        image_files = []
+        for split in ['train', 'val']:
+            split_dir = data_path / 'outputs' / '01_data_pipeline' / 'images' / split
+            if split_dir.exists():
+                for img_file in split_dir.glob('*.jpg'):
+                    image_files.append((img_file, split))
+                for img_file in split_dir.glob('*.png'):
+                    image_files.append((img_file, split))
+        
+        logger.info(f"Found {len(image_files)} images to process")
+        
+        if len(image_files) == 0:
+            logger.error("No images found in the data directory")
+            return
+        
+        # Process each image
+        all_results = []
+        
+        for i, (img_path, split) in enumerate(image_files):
+            try:
+                logger.info(f"Processing {i+1}/{len(image_files)}: {img_path.name}")
+                
+                # Load and process image
+                features = self._extract_features_from_image(img_path, split)
+                
+                if features:
+                    # Add metadata
+                    features['image_path'] = str(img_path)
+                    features['split'] = split
+                    features['filename'] = img_path.name
+                    
+                    all_results.append(features)
+                    
+                    # Save individual result
+                    result_file = output_path / f"{img_path.stem}_semiotic_features.json"
+                    with open(result_file, 'w') as f:
+                        json.dump(self.convert_numpy_types(features), f, indent=2)
+                
+                # Progress update every 50 images
+                if (i + 1) % 50 == 0:
+                    logger.info(f"Processed {i+1}/{len(image_files)} images")
+                    
+            except Exception as e:
+                logger.error(f"Error processing {img_path}: {e}")
+                continue
+        
+        # Save combined results
+        if all_results:
+            combined_file = output_path / "all_semiotic_features.json"
+            with open(combined_file, 'w') as f:
+                json.dump(self.convert_numpy_types(all_results), f, indent=2)
+            
+            logger.info(f"✓ Processing complete! Saved {len(all_results)} results to {output_path}")
+            
+            # Generate summary statistics
+            self._generate_summary_stats(all_results, output_path)
+        else:
+            logger.error("No results generated")
+    
+    def _extract_features_from_image(self, img_path: Path, split: str) -> Optional[Dict[str, Any]]:
+        """Extract semiotic features from a single image."""
         
         try:
             # Load image
-            image = Image.open(sample.filepath).convert("RGB")
+            image = Image.open(img_path).convert('RGB')
             
-            # Extract textual features
-            textual_features = self._extract_textual_features(sample)
-            
-            # Extract visual features
+            # Extract visual features (without CLIP)
             visual_features = self._extract_visual_features(image)
             
+            # Extract textual features (from captions)
+            textual_features = self._extract_textual_features(img_path, split)
+            
+            # Extract segmentation features (from SAM analysis)
+            segmentation_features = self._extract_segmentation_features(img_path, split)
+            
             # Extract spatial features
-            spatial_features = self._extract_spatial_features(sample)
+            spatial_features = self._extract_spatial_features(image)
             
             # Perform semiotic analysis
             semiotic_analysis = self._perform_semiotic_analysis(
-                textual_features, visual_features, spatial_features
+                textual_features, visual_features, spatial_features, segmentation_features
             )
             
-            # Create unified embedding
-            unified_embedding = self._create_unified_embedding(
-                textual_features, visual_features, spatial_features, semiotic_analysis
-            )
+            # Combine all features
+            combined_features = {
+                "visual": visual_features,
+                "textual": textual_features,
+                "segmentation": segmentation_features,
+                "spatial": spatial_features,
+                "semiotic_analysis": semiotic_analysis,
+                "metadata": {
+                    "image_size": image.size,
+                    "split": split,
+                    "processing_device": self.device
+                }
+            }
             
-            # Create semiotic features object
-            features = SemioticFeatures(
-                caption_embedding=textual_features["caption_embedding"],
-                architectural_style=textual_features.get("architectural_style"),
-                urban_mood=textual_features.get("urban_mood"),
-                time_period=textual_features.get("time_period"),
-                season=textual_features.get("season"),
-                materials=textual_features.get("materials", []),
-                
-                clip_embedding=visual_features["clip_embedding"],
-                color_palette=visual_features.get("color_palette", []),
-                composition_features=visual_features.get("composition_features", {}),
-                
-                object_density=spatial_features.get("density", 0.0),
-                spatial_hierarchy=spatial_features.get("hierarchy"),
-                dominant_elements=spatial_features.get("dominant_elements", []),
-                
-                cultural_context=semiotic_analysis.get("cultural_context"),
-                social_implications=semiotic_analysis.get("social_implications", []),
-                symbolic_meaning=semiotic_analysis.get("symbolic_meaning"),
-                architectural_typology=semiotic_analysis.get("typology"),
-                
-                unified_embedding=unified_embedding,
-                semiotic_score=semiotic_analysis.get("semiotic_score", 0.0)
-            )
-            
-            return features
+            return combined_features
             
         except Exception as e:
-            logger.error(f"Error extracting features from {sample.filepath}: {e}")
-            return self._create_empty_features()
-    
-    def _extract_textual_features(self, sample: fo.Sample) -> Dict[str, Any]:
-        """Extract features from textual descriptions and captions."""
-        
-        features = {}
-        
-        # Gather all available text
-        text_sources = []
-        
-        if hasattr(sample, "original_prompt") and sample.original_prompt:
-            text_sources.append(sample.original_prompt)
-        
-        if hasattr(sample, "semiotic_captions") and sample.semiotic_captions:
-            captions = sample.semiotic_captions
-            if isinstance(captions, dict):
-                for caption in captions.values():
-                    if isinstance(caption, str):
-                        text_sources.append(caption)
-        
-        # Combine all text
-        combined_text = " ".join(text_sources) if text_sources else ""
-        
-        if not combined_text:
-            return self._create_empty_textual_features()
-        
-        # Generate sentence embedding
-        features["caption_embedding"] = self.sentence_model.encode(combined_text)
-        
-        # Extract architectural style
-        features["architectural_style"] = self._extract_architectural_style(combined_text)
-        
-        # Extract mood
-        features["urban_mood"] = self._extract_urban_mood(combined_text)
-        
-        # Extract temporal features
-        features["time_period"] = self._extract_time_period(combined_text)
-        features["season"] = self._extract_season(combined_text)
-        
-        # Extract materials
-        features["materials"] = self._extract_materials(combined_text)
-        
-        return features
+            logger.error(f"Error extracting features from {img_path}: {e}")
+            return None
     
     def _extract_visual_features(self, image: Image.Image) -> Dict[str, Any]:
-        """Extract visual features using CLIP and image analysis."""
+        """Extract visual features without CLIP."""
         
         features = {}
         
-        # CLIP embedding
-        inputs = self.clip_processor(images=image, return_tensors="pt").to(self.device)
-        with torch.no_grad():
-            image_features = self.clip_model.get_image_features(**inputs)
-            features["clip_embedding"] = image_features.cpu().numpy().flatten()
-        
-        # Color analysis
-        features["color_palette"] = self._extract_color_palette(image)
-        
-        # Composition analysis
-        features["composition_features"] = self._analyze_composition(image)
-        
-        return features
-    
-    def _extract_spatial_features(self, sample: fo.Sample) -> Dict[str, Any]:
-        """Extract spatial features from segmentation and detection data."""
-        
-        features = {}
-        
-        # Extract from SAM segmentation if available
-        if hasattr(sample, "semiotic_segmentation_analysis"):
-            seg_analysis = sample.semiotic_segmentation_analysis
+        try:
+            # Extract color palette
+            features["color_palette"] = self._extract_color_palette(image)
             
-            if isinstance(seg_analysis, dict):
-                features["density"] = seg_analysis.get("density_analysis", {}).get("total_coverage", 0.0)
-                features["hierarchy"] = seg_analysis.get("architectural_hierarchy", {}).get("hierarchy_type")
-                features["dominant_elements"] = seg_analysis.get("architectural_hierarchy", {}).get("dominant_elements", [])
-                features["functional_composition"] = seg_analysis.get("functional_composition", {})
-        
+            # Extract basic visual statistics
+            img_array = np.array(image)
+            features["brightness"] = float(np.mean(img_array))
+            features["contrast"] = float(np.std(img_array))
+            
+            # Channel statistics
+            if len(img_array.shape) == 3:
+                features["color_channels"] = {
+                    "red_mean": float(np.mean(img_array[:,:,0])),
+                    "green_mean": float(np.mean(img_array[:,:,1])),
+                    "blue_mean": float(np.mean(img_array[:,:,2])),
+                    "red_std": float(np.std(img_array[:,:,0])),
+                    "green_std": float(np.std(img_array[:,:,1])),
+                    "blue_std": float(np.std(img_array[:,:,2]))
+                }
+                
+        except Exception as e:
+            logger.error(f"Error in visual feature extraction: {e}")
+            features["error"] = str(e)
+            
         return features
     
-    def _perform_semiotic_analysis(self, textual: Dict, visual: Dict, spatial: Dict) -> Dict[str, Any]:
-        """Perform high-level semiotic analysis combining all features."""
+    def _extract_textual_features(self, img_path: Path, split: str) -> Dict[str, Any]:
+        """Extract textual features from image metadata and captions."""
+        
+        features = {}
+        
+        try:
+            # Basic metadata
+            features["filename"] = img_path.name
+            features["split"] = split
+            
+            # Load captions from centralized JSON file
+            captions_path = Path("data/outputs/02_blip2_captioner/captions.json")
+            
+            if captions_path.exists():
+                # Load captions if not already cached
+                if not hasattr(self, '_captions_cache'):
+                    with open(captions_path, 'r', encoding='utf-8') as f:
+                        self._captions_cache = json.load(f)
+                
+                # Construct the key as it appears in the captions file
+                img_key = f"{split}/{img_path.name}"
+                
+                if img_key in self._captions_cache:
+                    caption_data = self._captions_cache[img_key]
+                    
+                    # Extract the main caption (architectural_analysis seems to be the primary one)
+                    if 'architectural_analysis' in caption_data:
+                        caption = caption_data['architectural_analysis']
+                        features["caption"] = caption
+                        features["caption_embedding"] = self.sentence_model.encode(caption).tolist()
+                        features["semantic_analysis"] = self._analyze_semantic_content(caption)
+                        
+                        # Store additional caption types
+                        features["architectural_analysis"] = caption
+                        if 'mood_atmosphere' in caption_data:
+                            features["mood_atmosphere"] = caption_data['mood_atmosphere']
+                        if 'technical_analysis' in caption_data:
+                            features["technical_analysis"] = caption_data['technical_analysis']
+                        if 'urban_context' in caption_data:
+                            features["urban_context"] = caption_data['urban_context']
+                    else:
+                        features["caption"] = None
+                        logger.debug(f"No architectural_analysis caption found for {img_path.name}")
+                else:
+                    features["caption"] = None
+                    logger.debug(f"No caption data found for key {img_key}")
+                    
+            else:
+                features["caption"] = None
+                logger.warning(f"Captions file not found at {captions_path}")
+                
+        except Exception as e:
+            logger.error(f"Error in textual feature extraction: {e}")
+            features["error"] = str(e)
+            
+        return features
+    
+    def _extract_segmentation_features(self, img_path: Path, split: str) -> Dict[str, Any]:
+        """Extract features from SAM segmentation analysis."""
+        
+        features = {
+            'total_segments': 0,
+            'architectural_segments': 0,
+            'segmentation_complexity': 0.0,
+            'average_segment_size': 0.0,
+            'segment_size_variance': 0.0,
+            'architectural_types': [],
+            'segment_analysis': None
+        }
+        
+        try:
+            # Construct path to SAM analysis file
+            sam_analysis_path = Path("data/outputs/03_sam_segmentation/analysis") / f"{img_path.stem}_sam_analysis.json"
+            
+            if sam_analysis_path.exists():
+                with open(sam_analysis_path, 'r', encoding='utf-8') as f:
+                    sam_data = json.load(f)
+                
+                # Extract basic segmentation statistics
+                if 'segment_analysis' in sam_data:
+                    segment_analysis = sam_data['segment_analysis']
+                    features['total_segments'] = segment_analysis.get('total_segments', 0)
+                    features['architectural_segments'] = segment_analysis.get('architectural_count', 0)
+                    
+                    # Extract architectural types from segments
+                    architectural_types = []
+                    segment_areas = []
+                    
+                    if 'architectural_segments' in segment_analysis:
+                        for segment in segment_analysis['architectural_segments']:
+                            if 'architectural_type' in segment:
+                                arch_type = segment['architectural_type']
+                                if arch_type not in architectural_types:
+                                    architectural_types.append(arch_type)
+                            
+                            # Collect segment areas for statistics
+                            if 'area' in segment:
+                                segment_areas.append(segment['area'])
+                    
+                    features['architectural_types'] = architectural_types
+                    
+                    # Calculate segmentation complexity and statistics
+                    if segment_areas:
+                        features['average_segment_size'] = float(np.mean(segment_areas))
+                        features['segment_size_variance'] = float(np.var(segment_areas))
+                        features['segmentation_complexity'] = len(segment_areas) / max(segment_areas) if segment_areas else 0.0
+                    
+                    # Store the full segment analysis for detailed analysis
+                    features['segment_analysis'] = segment_analysis
+                    
+                else:
+                    logger.debug(f"No segment_analysis found in SAM data for {img_path.name}")
+                    
+            else:
+                logger.debug(f"No SAM analysis file found for {img_path.name}")
+                
+        except Exception as e:
+            logger.error(f"Error extracting segmentation features for {img_path}: {e}")
+            features["error"] = str(e)
+            
+        return features
+    
+    def _extract_spatial_features(self, image: Image.Image) -> Dict[str, Any]:
+        """Extract spatial and compositional features."""
+        
+        features = {}
+        
+        try:
+            # Convert to numpy array
+            img_array = np.array(image)
+            
+            # Basic spatial properties
+            height, width = img_array.shape[:2]
+            features["aspect_ratio"] = width / height
+            features["dimensions"] = {"width": width, "height": height}
+            
+            # Edge detection for complexity analysis
+            gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
+            edges = cv2.Canny(gray, 50, 150)
+            edge_density = np.sum(edges > 0) / (height * width)
+            features["edge_density"] = edge_density
+            
+            # Composition analysis
+            features["composition"] = self._analyze_composition(img_array)
+            
+        except Exception as e:
+            logger.error(f"Error in spatial feature extraction: {e}")
+            features["error"] = str(e)
+            
+        return features
+    
+    def _extract_color_palette(self, image: Image.Image, n_colors: int = 5) -> Dict[str, Any]:
+        """Extract dominant color palette."""
+        
+        try:
+            # Downsize image for faster processing
+            small_image = image.resize((150, 150))
+            img_array = np.array(small_image)
+            
+            # Reshape for clustering
+            pixels = img_array.reshape(-1, 3)
+            
+            # Sample pixels to speed up clustering
+            n_samples = min(1000, len(pixels))
+            sampled_pixels = pixels[np.random.choice(len(pixels), n_samples, replace=False)]
+            
+            # Perform k-means clustering
+            try:
+                kmeans = KMeans(n_clusters=n_colors, random_state=42, n_init=10, max_iter=100)
+                kmeans.fit(sampled_pixels)
+                
+                colors = kmeans.cluster_centers_.astype(int)
+                labels = kmeans.labels_
+                
+                # Calculate color frequencies
+                unique_labels, counts = np.unique(labels, return_counts=True)
+                frequencies = counts / len(labels)
+                
+                palette = []
+                for i, (color, freq) in enumerate(zip(colors, frequencies)):
+                    palette.append({
+                        "color": color.tolist(),
+                        "frequency": float(freq),
+                        "hex": f"#{color[0]:02x}{color[1]:02x}{color[2]:02x}"
+                    })
+                
+                return {
+                    "palette": palette,
+                    "dominant_color": colors[0].tolist(),
+                    "color_diversity": float(len(unique_labels))
+                }
+                
+            except Exception as e:
+                logger.warning(f"K-means clustering failed: {e}")
+                return {"error": "Color extraction failed"}
+                
+        except Exception as e:
+            logger.error(f"Error in color palette extraction: {e}")
+            return {"error": str(e)}
+    
+    def _analyze_composition(self, img_array: np.ndarray) -> Dict[str, Any]:
+        """Analyze image composition and spatial layout."""
+        
+        composition = {}
+        
+        try:
+            height, width = img_array.shape[:2]
+            
+            # Rule of thirds analysis
+            third_h = height // 3
+            third_w = width // 3
+            
+            # Convert to grayscale for analysis
+            gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
+            
+            # Calculate intensity in different regions
+            regions = {
+                "top_left": gray[:third_h, :third_w],
+                "top_center": gray[:third_h, third_w:2*third_w],
+                "top_right": gray[:third_h, 2*third_w:],
+                "center_left": gray[third_h:2*third_h, :third_w],
+                "center": gray[third_h:2*third_h, third_w:2*third_w],
+                "center_right": gray[third_h:2*third_h, 2*third_w:],
+                "bottom_left": gray[2*third_h:, :third_w],
+                "bottom_center": gray[2*third_h:, third_w:2*third_w],
+                "bottom_right": gray[2*third_h:, 2*third_w:]
+            }
+            
+            region_stats = {}
+            for region_name, region in regions.items():
+                region_stats[region_name] = {
+                    "mean_intensity": float(np.mean(region)),
+                    "std_intensity": float(np.std(region))
+                }
+            
+            composition["regions"] = region_stats
+            
+            # Overall composition metrics
+            composition["overall_brightness"] = float(np.mean(gray))
+            composition["contrast"] = float(np.std(gray))
+            
+        except Exception as e:
+            logger.error(f"Error in composition analysis: {e}")
+            composition["error"] = str(e)
+            
+        return composition
+    
+    def _analyze_semantic_content(self, caption: str) -> Dict[str, Any]:
+        """Analyze semantic content of caption."""
         
         analysis = {}
         
-        # Cultural context analysis
-        analysis["cultural_context"] = self._analyze_cultural_context(textual)
-        
-        # Social implications
-        analysis["social_implications"] = self._analyze_social_implications(textual, spatial)
-        
-        # Symbolic meaning
-        analysis["symbolic_meaning"] = self._analyze_symbolic_meaning(textual, visual)
-        
-        # Architectural typology
-        analysis["typology"] = self._determine_architectural_typology(textual, spatial)
-        
-        # Calculate semiotic richness score
-        analysis["semiotic_score"] = self._calculate_semiotic_score(textual, visual, spatial)
-        
+        try:
+            # Basic text analysis
+            words = caption.lower().split()
+            analysis["word_count"] = len(words)
+            analysis["unique_words"] = len(set(words))
+            
+            # Check for architectural terms
+            arch_terms = []
+            all_arch_terms = [term.lower() for term in self.architectural_styles + self.urban_elements + self.materials]
+            
+            for word in words:
+                if word in all_arch_terms:
+                    arch_terms.append(word)
+            
+            analysis["architectural_terms"] = arch_terms
+            analysis["architectural_density"] = len(arch_terms) / len(words) if words else 0
+            
+            # Style indicators
+            style_indicators = []
+            for style in self.architectural_styles:
+                if style.lower() in caption.lower():
+                    style_indicators.append(style)
+            analysis["style_indicators"] = style_indicators
+            
+            # Material indicators
+            material_indicators = []
+            for material in self.materials:
+                if material.lower() in caption.lower():
+                    material_indicators.append(material)
+            analysis["material_indicators"] = material_indicators
+            
+        except Exception as e:
+            logger.error(f"Error in semantic analysis: {e}")
+            analysis["error"] = str(e)
+            
         return analysis
     
-    def _create_unified_embedding(self, textual: Dict, visual: Dict, 
-                                spatial: Dict, semiotic: Dict) -> np.ndarray:
-        """Create unified multi-modal embedding."""
+    def _perform_semiotic_analysis(self, textual: Dict, visual: Dict, spatial: Dict, segmentation: Dict) -> Dict[str, Any]:
+        """Perform comprehensive semiotic analysis."""
         
-        # Normalize and combine embeddings
-        embeddings = []
-        
-        # Textual embedding
-        if "caption_embedding" in textual:
-            text_emb = textual["caption_embedding"]
-            text_emb = text_emb / np.linalg.norm(text_emb)
-            embeddings.append(text_emb * self.feature_weights["textual"])
-        
-        # Visual embedding
-        if "clip_embedding" in visual:
-            vis_emb = visual["clip_embedding"]
-            vis_emb = vis_emb / np.linalg.norm(vis_emb)
-            embeddings.append(vis_emb * self.feature_weights["visual"])
-        
-        # Spatial features as embedding
-        spatial_vec = self._vectorize_spatial_features(spatial)
-        if spatial_vec is not None:
-            spatial_vec = spatial_vec / np.linalg.norm(spatial_vec)
-            embeddings.append(spatial_vec * self.feature_weights["spatial"])
-        
-        # Semiotic features as embedding
-        semiotic_vec = self._vectorize_semiotic_features(semiotic)
-        if semiotic_vec is not None:
-            semiotic_vec = semiotic_vec / np.linalg.norm(semiotic_vec)
-            embeddings.append(semiotic_vec * self.feature_weights["semiotic"])
-        
-        # Concatenate or average embeddings
-        if embeddings:
-            # Pad to same length if needed
-            max_len = max(emb.shape[0] for emb in embeddings)
-            padded_embeddings = []
-            for emb in embeddings:
-                if emb.shape[0] < max_len:
-                    padded = np.pad(emb, (0, max_len - emb.shape[0]), 'constant')
-                    padded_embeddings.append(padded)
-                else:
-                    padded_embeddings.append(emb[:max_len])
-            
-            unified = np.mean(padded_embeddings, axis=0)
-            return unified / np.linalg.norm(unified)
-        
-        return np.zeros(512)  # Default embedding size
-    
-    def _extract_architectural_style(self, text: str) -> Optional[str]:
-        """Extract architectural style from text."""
-        text_lower = text.lower()
-        
-        for style, pattern in self.style_patterns.items():
-            if pattern.search(text_lower):
-                return style
-        
-        return None
-    
-    def _extract_urban_mood(self, text: str) -> Optional[str]:
-        """Extract urban mood from text."""
-        text_lower = text.lower()
-        
-        for mood, keywords in self.semiotic_vocab["urban_moods"].items():
-            if any(keyword in text_lower for keyword in keywords):
-                return mood
-        
-        return None
-    
-    def _extract_time_period(self, text: str) -> Optional[str]:
-        """Extract time period from text."""
-        time_patterns = {
-            "dawn": r"\b(dawn|sunrise|early morning)\b",
-            "morning": r"\b(morning)\b",
-            "afternoon": r"\b(afternoon|midday)\b",
-            "evening": r"\b(evening|dusk|sunset)\b",
-            "night": r"\b(night|nighttime)\b"
-        }
-        
-        text_lower = text.lower()
-        for period, pattern in time_patterns.items():
-            if re.search(pattern, text_lower):
-                return period
-        
-        return None
-    
-    def _extract_season(self, text: str) -> Optional[str]:
-        """Extract season from text."""
-        seasons = ["spring", "summer", "autumn", "fall", "winter"]
-        
-        text_lower = text.lower()
-        for season in seasons:
-            if season in text_lower:
-                return season
-        
-        return None
-    
-    def _extract_materials(self, text: str) -> List[str]:
-        """Extract mentioned materials from text."""
-        materials = [
-            "concrete", "glass", "steel", "stone", "brick", "wood",
-            "limestone", "marble", "metal", "stucco", "granite"
-        ]
-        
-        found_materials = []
-        text_lower = text.lower()
-        
-        for material in materials:
-            if material in text_lower:
-                found_materials.append(material)
-        
-        return found_materials
-    
-    def _extract_color_palette(self, image: Image.Image) -> List[Tuple[int, int, int]]:
-        """Extract dominant color palette from image."""
-        # Convert to numpy array
-        img_array = np.array(image)
-        
-        # Reshape to list of pixels
-        pixels = img_array.reshape(-1, 3)
-        
-        # Simple color quantization using k-means clustering
-        from sklearn.cluster import KMeans
-        
-        kmeans = KMeans(n_clusters=5, random_state=42)
-        kmeans.fit(pixels)
-        
-        colors = kmeans.cluster_centers_.astype(int)
-        return [tuple(color) for color in colors]
-    
-    def _analyze_composition(self, image: Image.Image) -> Dict[str, float]:
-        """Analyze image composition features."""
-        # Convert to grayscale for analysis
-        gray = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2GRAY)
-        
-        # Calculate basic composition metrics
-        features = {}
-        
-        # Contrast
-        features["contrast"] = gray.std()
-        
-        # Brightness
-        features["brightness"] = gray.mean()
-        
-        # Edge density (complexity)
-        edges = cv2.Canny(gray, 50, 150)
-        features["edge_density"] = np.sum(edges > 0) / (gray.shape[0] * gray.shape[1])
-        
-        # Symmetry (simplified)
-        left_half = gray[:, :gray.shape[1]//2]
-        right_half = gray[:, gray.shape[1]//2:]
-        right_half_flipped = np.fliplr(right_half)
-        
-        if left_half.shape == right_half_flipped.shape:
-            features["horizontal_symmetry"] = np.corrcoef(
-                left_half.flatten(), right_half_flipped.flatten()
-            )[0, 1]
-        else:
-            features["horizontal_symmetry"] = 0.0
-        
-        return features
-    
-    def _analyze_cultural_context(self, textual: Dict) -> Optional[str]:
-        """Analyze cultural context from textual features."""
-        # Simple rule-based analysis
-        style = textual.get("architectural_style")
-        
-        if style in ["baroque", "gothic", "neoclassical"]:
-            return "european"
-        elif style in ["modernist", "art deco"]:
-            return "american"
-        elif style == "minimalist":
-            return "nordic"
-        
-        return None
-    
-    def _analyze_social_implications(self, textual: Dict, spatial: Dict) -> List[str]:
-        """Analyze social implications from features."""
-        implications = []
-        
-        # From architectural style
-        style = textual.get("architectural_style")
-        if style == "brutalist":
-            implications.append("institutional_power")
-        elif style == "minimalist":
-            implications.append("exclusivity")
-        elif style == "vernacular":
-            implications.append("community_oriented")
-        
-        # From spatial features
-        density = spatial.get("density", 0)
-        if density > 0.6:
-            implications.append("urban_intensity")
-        elif density < 0.2:
-            implications.append("spacious_living")
-        
-        return implications
-    
-    def _analyze_symbolic_meaning(self, textual: Dict, visual: Dict) -> Optional[str]:
-        """Analyze symbolic meaning from combined features."""
-        style = textual.get("architectural_style")
-        mood = textual.get("urban_mood")
-        
-        if style == "gothic" and mood == "contemplative":
-            return "spiritual_transcendence"
-        elif style == "brutalist" and mood == "imposing":
-            return "institutional_authority"
-        elif style == "modernist" and mood == "vibrant":
-            return "progressive_optimism"
-        
-        return None
-    
-    def _determine_architectural_typology(self, textual: Dict, spatial: Dict) -> Optional[str]:
-        """Determine architectural typology from features."""
-        dominant_elements = spatial.get("dominant_elements", [])
-        
-        if "skyscraper" in dominant_elements:
-            return "high_rise_commercial"
-        elif "house" in dominant_elements:
-            return "residential"
-        elif "building" in dominant_elements:
-            return "mixed_use"
-        
-        return None
-    
-    def _calculate_semiotic_score(self, textual: Dict, visual: Dict, spatial: Dict) -> float:
-        """Calculate overall semiotic richness score."""
-        score = 0.0
-        
-        # Points for textual richness
-        if textual.get("architectural_style"):
-            score += 0.2
-        if textual.get("urban_mood"):
-            score += 0.2
-        if textual.get("materials"):
-            score += 0.1 * len(textual["materials"])
-        
-        # Points for visual complexity
-        if visual.get("composition_features", {}).get("edge_density", 0) > 0.1:
-            score += 0.2
-        
-        # Points for spatial complexity
-        if spatial.get("density", 0) > 0:
-            score += 0.1
-        
-        return min(score, 1.0)  # Cap at 1.0
-    
-    def _vectorize_spatial_features(self, spatial: Dict) -> Optional[np.ndarray]:
-        """Convert spatial features to vector representation."""
-        features = []
-        
-        features.append(spatial.get("density", 0.0))
-        
-        # Encode hierarchy as one-hot
-        hierarchy_types = ["strong_hierarchy", "moderate_hierarchy", "uniform_scale"]
-        hierarchy = spatial.get("hierarchy", "uniform_scale")
-        hierarchy_vec = [1.0 if h == hierarchy else 0.0 for h in hierarchy_types]
-        features.extend(hierarchy_vec)
-        
-        return np.array(features) if features else None
-    
-    def _vectorize_semiotic_features(self, semiotic: Dict) -> Optional[np.ndarray]:
-        """Convert semiotic features to vector representation."""
-        features = []
-        
-        features.append(semiotic.get("semiotic_score", 0.0))
-        
-        # Encode cultural context as one-hot
-        contexts = ["european", "american", "asian", "mediterranean", "nordic"]
-        context = semiotic.get("cultural_context")
-        context_vec = [1.0 if c == context else 0.0 for c in contexts]
-        features.extend(context_vec)
-        
-        return np.array(features) if features else None
-    
-    def _create_empty_features(self) -> SemioticFeatures:
-        """Create empty feature object for error cases."""
-        return SemioticFeatures(
-            caption_embedding=np.zeros(384),  # sentence-transformers default
-            clip_embedding=np.zeros(512),     # CLIP default
-            unified_embedding=np.zeros(512)
-        )
-    
-    def _create_empty_textual_features(self) -> Dict[str, Any]:
-        """Create empty textual features."""
-        return {
-            "caption_embedding": np.zeros(384),
-            "architectural_style": None,
-            "urban_mood": None,
-            "time_period": None,
-            "season": None,
-            "materials": []
-        }
-    
-    def process_dataset(self, dataset: fo.Dataset, 
-                       features_field: str = "semiotic_features") -> None:
-        """Process entire dataset to extract semiotic features."""
-        
-        logger.info(f"Processing {len(dataset)} samples for semiotic feature extraction")
-        
-        processed = 0
-        for sample in dataset.iter_samples(progress=True):
-            try:
-                # Extract features
-                features = self.extract_features(sample)
-                
-                # Convert to serializable format
-                features_dict = asdict(features)
-                
-                # Convert numpy arrays to lists for JSON serialization
-                for key, value in features_dict.items():
-                    if isinstance(value, np.ndarray):
-                        features_dict[key] = value.tolist()
-                
-                # Add to sample
-                sample[features_field] = features_dict
-                sample.save()
-                
-                processed += 1
-                
-                if processed % 10 == 0:
-                    logger.info(f"Processed {processed}/{len(dataset)} samples")
-                    
-            except Exception as e:
-                logger.error(f"Error processing {sample.filepath}: {e}")
-                continue
-        
-        logger.info(f"Completed feature extraction for {processed} samples")
-    
-    def _extract_features_from_data(self, image_path: Path, seg_analysis: Dict, captions: Optional[Dict]) -> SemioticFeatures:
-        """Extract features directly from image path and analysis data."""
+        analysis = {}
         
         try:
-            # Load image
-            image = Image.open(image_path).convert("RGB")
+            # Complexity assessment
+            complexity_score = 0.0
+            if "edge_density" in spatial:
+                complexity_score += spatial["edge_density"]
+            if "color_palette" in visual and "color_diversity" in visual["color_palette"]:
+                complexity_score += visual["color_palette"]["color_diversity"] / 10
+            if "segmentation_complexity" in segmentation:
+                complexity_score += segmentation["segmentation_complexity"] / 10
             
-            # Extract textual features
-            text_sources = []
-            if captions:
-                if isinstance(captions, dict):
-                    for caption_type, caption_text in captions.items():
-                        if caption_text:
-                            text_sources.append(caption_text)
-                elif isinstance(captions, str):
-                    text_sources.append(captions)
+            analysis["complexity_score"] = complexity_score
             
-            combined_text = " ".join(text_sources) if text_sources else "architectural building urban scene"
+            # Segmentation-based analysis
+            if segmentation.get("architectural_types"):
+                analysis["architectural_types_detected"] = segmentation["architectural_types"]
+            if segmentation.get("total_segments"):
+                analysis["segmentation_density"] = segmentation["total_segments"]
+            if segmentation.get("architectural_segments"):
+                analysis["architectural_segment_ratio"] = (
+                    segmentation["architectural_segments"] / max(segmentation["total_segments"], 1)
+                )
             
-            # Generate text embedding
-            caption_embedding = self.sentence_model.encode(combined_text)
+            # Style analysis from text
+            if textual.get("semantic_analysis") and "style_indicators" in textual["semantic_analysis"]:
+                analysis["detected_styles"] = textual["semantic_analysis"]["style_indicators"]
             
-            # Extract visual features
-            visual_features = self._extract_visual_features(image)
+            # Material analysis from text
+            if textual.get("semantic_analysis") and "material_indicators" in textual["semantic_analysis"]:
+                analysis["detected_materials"] = textual["semantic_analysis"]["material_indicators"]
             
-            # Extract spatial features from segmentation analysis
-            spatial_features = {}
-            if seg_analysis:
-                spatial_features["density"] = seg_analysis.get("density_analysis", {}).get("total_coverage", 0.0)
-                spatial_features["hierarchy"] = seg_analysis.get("architectural_hierarchy", {}).get("hierarchy_type")
-                spatial_features["dominant_elements"] = seg_analysis.get("architectural_hierarchy", {}).get("dominant_elements", [])
-                spatial_features["functional_composition"] = seg_analysis.get("functional_composition", {})
+            # Extract architectural style and mood for downstream compatibility
+            if textual.get("caption"):
+                architectural_style = self._extract_architectural_style(textual["caption"])
+                if architectural_style:
+                    analysis["architectural_style"] = architectural_style
+                
+                urban_mood = self._extract_urban_mood(textual["caption"])
+                if urban_mood:
+                    analysis["urban_mood"] = urban_mood
+                    
+                # Add other semiotic features for downstream compatibility
+                analysis["semiotic_score"] = complexity_score
+                analysis["architectural_typology"] = "building"  # Default value
+                analysis["time_period"] = "daytime"  # Default value
+                analysis["materials"] = analysis.get("detected_materials", ["concrete", "glass"])
+                analysis["cultural_context"] = "urban"  # Default value
+                analysis["symbolic_meaning"] = "architectural expression"  # Default value
             
-            # Perform semiotic analysis
-            textual_dict = {"caption_embedding": caption_embedding}
-            semiotic_analysis = self._perform_semiotic_analysis(textual_dict, visual_features, spatial_features)
+            # Cultural context (simplified)
+            if textual.get("caption"):
+                analysis["cultural_indicators"] = self._extract_cultural_indicators(textual["caption"])
             
-            # Create SemioticFeatures object
-            features = SemioticFeatures(
-                caption_embedding=caption_embedding if isinstance(caption_embedding, np.ndarray) else np.array(caption_embedding),
-                clip_embedding=np.array(visual_features.get("clip_embedding")) if visual_features.get("clip_embedding") is not None else np.zeros(512),
-                color_palette=visual_features.get("color_palette", []),
-                composition_features=visual_features.get("composition_features", {}),
-                object_density=float(spatial_features.get("density", 0.0)),
-                spatial_hierarchy=spatial_features.get("hierarchy") or "uniform_scale",
-                dominant_elements=spatial_features.get("dominant_elements", []),
-                cultural_context=semiotic_analysis.get("cultural_context"),
-                architectural_style=semiotic_analysis.get("typology"),
-                materials=semiotic_analysis.get("materials", [])
-            )
+            # Visual-textual consistency
+            if textual.get("caption"):
+                analysis["description_length"] = len(textual["caption"].split())
+                analysis["descriptive_richness"] = textual.get("semantic_analysis", {}).get("architectural_density", 0.0)
             
-            return features
+            # Color analysis
+            if "color_palette" in visual and "palette" in visual["color_palette"]:
+                dominant_colors = visual["color_palette"]["palette"][:3]  # Top 3 colors
+                analysis["dominant_colors"] = [color["hex"] for color in dominant_colors]
+                
+                # Simple color temperature analysis
+                avg_color = np.mean([color["color"] for color in dominant_colors], axis=0)
+                if avg_color[0] > avg_color[2]:  # More red than blue
+                    analysis["color_temperature"] = "warm"
+                else:
+                    analysis["color_temperature"] = "cool"
             
         except Exception as e:
-            logger.error(f"Error extracting features from {image_path}: {e}")
-            # Return minimal features object
-            return SemioticFeatures(
-                caption_embedding=np.zeros(384),  # Default sentence transformer size
-                object_density=0.0,
-                dominant_elements=[]
-            )
-
-def process_sam_outputs(input_dir: str, output_dir: str):
-    """Process SAM segmentation outputs directly without FiftyOne."""
+            logger.error(f"Error in semiotic analysis: {e}")
+            analysis["error"] = str(e)
+            
+        return analysis
     
-    import argparse
-    from pathlib import Path
-    import json
+    def _extract_cultural_indicators(self, caption: str) -> List[str]:
+        """Extract cultural indicators from caption."""
+        
+        indicators = []
+        caption_lower = caption.lower()
+        
+        for indicator in self.cultural_indicators:
+            if indicator in caption_lower:
+                indicators.append(indicator)
+                
+        return indicators
     
-    input_path = Path(input_dir)
-    output_path = Path(output_dir)
-    output_path.mkdir(parents=True, exist_ok=True)
+    def _extract_architectural_style(self, caption: str) -> str:
+        """Extract architectural style from caption text for downstream compatibility."""
+        style_keywords = {
+            "modern": ["modern", "contemporary", "sleek", "minimalist", "clean lines"],
+            "brutalist": ["brutalist", "concrete", "massive", "monumental", "raw"],
+            "classical": ["classical", "neoclassical", "columns", "symmetrical"],
+            "gothic": ["gothic", "pointed arches", "flying buttresses", "cathedral"],
+            "baroque": ["baroque", "ornate", "decorative", "elaborate"],
+            "art_deco": ["art deco", "geometric", "streamlined", "stylized"],
+            "industrial": ["industrial", "factory", "warehouse", "steel", "brick"],
+            "postmodern": ["postmodern", "eclectic", "playful", "mixed styles"],
+            "traditional": ["traditional", "vernacular", "local style", "heritage"],
+            "futuristic": ["futuristic", "sci-fi", "avant-garde", "experimental"]
+        }
+        
+        caption_lower = caption.lower()
+        detected_styles = []
+        
+        for style, keywords in style_keywords.items():
+            for keyword in keywords:
+                if keyword in caption_lower:
+                    detected_styles.append(style)
+                    break
+        
+        # Return the most specific style found, or the first one
+        return detected_styles[0] if detected_styles else "contemporary"
     
-    # Initialize feature extractor
-    extractor = SemioticFeatureExtractor()
+    def _extract_urban_mood(self, caption: str) -> str:
+        """Extract urban mood from caption text for downstream compatibility."""
+        mood_keywords = {
+            "vibrant": ["vibrant", "lively", "energetic", "bustling", "dynamic"],
+            "serene": ["serene", "peaceful", "calm", "quiet", "tranquil"],
+            "dystopian": ["dystopian", "dark", "gritty", "bleak", "oppressive"],
+            "nostalgic": ["nostalgic", "vintage", "retro", "historical", "timeless"],
+            "futuristic": ["futuristic", "high-tech", "advanced", "cutting-edge"],
+            "melancholic": ["melancholic", "somber", "moody", "atmospheric"],
+            "dramatic": ["dramatic", "striking", "bold", "imposing", "monumental"],
+            "intimate": ["intimate", "cozy", "human-scale", "neighborhood"],
+            "industrial": ["industrial", "urban", "metropolitan", "city"],
+            "organic": ["organic", "natural", "flowing", "curved", "biomorphic"]
+        }
+        
+        caption_lower = caption.lower()
+        detected_moods = []
+        
+        for mood, keywords in mood_keywords.items():
+            for keyword in keywords:
+                if keyword in caption_lower:
+                    detected_moods.append(mood)
+                    break
+        
+        # Return the most specific mood found, or a default
+        return detected_moods[0] if detected_moods else "urban"
     
-    # Load SAM segmentation summary
-    segmentation_summary_file = input_path / "segmentation_summary.json"
-    if not segmentation_summary_file.exists():
-        logger.error(f"Segmentation summary not found: {segmentation_summary_file}")
-        return
-    
-    with open(segmentation_summary_file, 'r') as f:
-        segmentation_data = json.load(f)
-    
-    # Load BLIP-2 captions if available
-    blip_captions = {}
-    blip_dir = input_path.parent / "02_blip2_captioner"
-    if blip_dir.exists():
-        blip_files = list(blip_dir.glob("*.json"))
-        for blip_file in blip_files:
-            with open(blip_file, 'r') as f:
-                blip_data = json.load(f)
-                blip_captions.update(blip_data)
-    
-    logger.info(f"Processing {len(segmentation_data)} images with semiotic analysis")
-    
-    results = {}
-    processed = 0
-    
-    for image_key, seg_analysis in segmentation_data.items():
+    def _generate_summary_stats(self, results: List[Dict], output_path: Path):
+        """Generate summary statistics for the processed dataset."""
+        
         try:
-            # Get image path
-            if "/" in image_key:
-                split, image_name = image_key.split("/", 1)
-                image_path = input_path.parent / "01_data_pipeline" / "images" / split / image_name
-            else:
-                image_path = input_path.parent / "01_data_pipeline" / "images" / "train" / image_key
-            
-            if not image_path.exists():
-                logger.warning(f"Image not found: {image_path}")
-                continue
-            
-            # Extract features directly from data
-            features = extractor._extract_features_from_data(
-                image_path=image_path,
-                seg_analysis=seg_analysis.get("semiotic_segmentation_analysis", {}),
-                captions=blip_captions.get(image_path.name, None)
-            )
-            
-            # Convert to serializable format
-            features_dict = asdict(features)
-            for key, value in features_dict.items():
-                if isinstance(value, np.ndarray):
-                    features_dict[key] = value.tolist()
-            
-            results[image_key] = {
-                "image_path": str(image_path),
-                "semiotic_features": features_dict,
-                "segmentation_summary": seg_analysis,
-                "timestamp": seg_analysis.get("timestamp")
+            stats = {
+                "total_images": len(results),
+                "splits": {},
+                "style_distribution": {},
+                "material_distribution": {},
+                "complexity_stats": [],
+                "color_temperature_distribution": {}
             }
             
-            processed += 1
-            if processed % 5 == 0:
-                logger.info(f"Processed {processed}/{len(segmentation_data)} images")
+            # Collect statistics
+            for result in results:
+                # Split distribution
+                split = result.get("split", "unknown")
+                stats["splits"][split] = stats["splits"].get(split, 0) + 1
                 
+                # Style distribution
+                if "semiotic_analysis" in result and "detected_styles" in result["semiotic_analysis"]:
+                    for style in result["semiotic_analysis"]["detected_styles"]:
+                        stats["style_distribution"][style] = stats["style_distribution"].get(style, 0) + 1
+                
+                # Material distribution
+                if "semiotic_analysis" in result and "detected_materials" in result["semiotic_analysis"]:
+                    for material in result["semiotic_analysis"]["detected_materials"]:
+                        stats["material_distribution"][material] = stats["material_distribution"].get(material, 0) + 1
+                
+                # Complexity scores
+                if "semiotic_analysis" in result and "complexity_score" in result["semiotic_analysis"]:
+                    stats["complexity_stats"].append(result["semiotic_analysis"]["complexity_score"])
+                
+                # Color temperature
+                if "semiotic_analysis" in result and "color_temperature" in result["semiotic_analysis"]:
+                    temp = result["semiotic_analysis"]["color_temperature"]
+                    stats["color_temperature_distribution"][temp] = stats["color_temperature_distribution"].get(temp, 0) + 1
+            
+            # Calculate complexity statistics
+            if stats["complexity_stats"]:
+                stats["complexity_summary"] = {
+                    "mean": float(np.mean(stats["complexity_stats"])),
+                    "std": float(np.std(stats["complexity_stats"])),
+                    "min": float(np.min(stats["complexity_stats"])),
+                    "max": float(np.max(stats["complexity_stats"]))
+                }
+            
+            # Save statistics
+            stats_file = output_path / "dataset_statistics.json"
+            with open(stats_file, 'w') as f:
+                json.dump(stats, f, indent=2)
+            
+            logger.info(f"✓ Summary statistics saved to {stats_file}")
+            
+            # Print summary
+            logger.info(f"Dataset Summary:")
+            logger.info(f"  Total images: {stats['total_images']}")
+            logger.info(f"  Splits: {stats['splits']}")
+            if stats["complexity_stats"]:
+                logger.info(f"  Complexity: mean={stats['complexity_summary']['mean']:.3f}, std={stats['complexity_summary']['std']:.3f}")
+            logger.info(f"  Top styles: {dict(list(sorted(stats['style_distribution'].items(), key=lambda x: x[1], reverse=True))[:5])}")
+            logger.info(f"  Top materials: {dict(list(sorted(stats['material_distribution'].items(), key=lambda x: x[1], reverse=True))[:5])}")
+            
         except Exception as e:
-            logger.error(f"Error processing {image_key}: {e}")
-            continue
-    
-    # Save results
-    output_file = output_path / "semiotic_features.json"
-    with open(output_file, 'w') as f:
-        json.dump(results, f, indent=2)
-    
-    # Save summary
-    summary = {
-        "timestamp": results[list(results.keys())[0]]["timestamp"] if results else None,
-        "total_images": len(segmentation_data),
-        "processed_images": processed,
-        "failed_images": len(segmentation_data) - processed,
-        "output_file": str(output_file),
-        "feature_types": ["caption_embedding", "clip_embedding", "color_palette", "composition_features", "object_density", "spatial_hierarchy", "dominant_elements", "cultural_context", "architectural_style", "materials"] if processed > 0 else []
-    }
-    
-    summary_file = output_path / "semiotic_features_summary.json"
-    with open(summary_file, 'w') as f:
-        json.dump(summary, f, indent=2)
-    
-    logger.info(f"✅ Semiotic feature extraction complete!")
-    logger.info(f"Processed: {processed}/{len(segmentation_data)} images")
-    logger.info(f"Features saved to: {output_file}")
-    logger.info(f"Summary saved to: {summary_file}")
-    
-    return results
+            logger.error(f"Error generating summary statistics: {e}")
+
 
 def main():
-    """Main execution with command-line interface."""
+    """Main execution function."""
     
-    import argparse
+    # Configuration
+    data_dir = "data"
+    output_dir = "data/outputs/04_semiotic_features"
     
-    parser = argparse.ArgumentParser(description="Semiotic Feature Extraction")
-    parser.add_argument("--input_data", help="Input directory with SAM segmentation data")
-    parser.add_argument("--output_features", help="Output directory for semiotic features")
-    parser.add_argument("--fiftyone_mode", action="store_true", help="Use FiftyOne dataset mode (default)")
+    # Initialize extractor
+    logger.info("Initializing Simple Semiotic Extractor...")
+    extractor = SimpleSemioticExtractor()
     
-    args = parser.parse_args()
+    # Process images
+    logger.info("Starting image processing...")
+    extractor.process_images_direct(data_dir, output_dir)
     
-    if args.input_data and args.output_features:
-        # Process SAM outputs directly
-        process_sam_outputs(args.input_data, args.output_features)
-        
-    else:
-        # Original FiftyOne mode
-        # Initialize feature extractor
-        extractor = SemioticFeatureExtractor()
+    logger.info("✓ Semiotic feature extraction complete!")
 
-        # Load dataset
-        dataset_name = "semiocity_urban"
-        if fo.dataset_exists(dataset_name):
-            dataset = fo.load_dataset(dataset_name)
-
-            # Process subset for testing
-            test_view = dataset.take(3)
-            extractor.process_dataset(test_view)
-
-            # Launch FiftyOne to view results
-            session = fo.launch_app(dataset, port=5151)
-            print("Semiotic features extracted. View results at http://localhost:5151")
-
-            try:
-                session.wait()
-            except KeyboardInterrupt:
-                print("Shutting down...")
-        else:
-            print(f"Dataset {dataset_name} not found. Run the full pipeline first.")
 
 if __name__ == "__main__":
     main()

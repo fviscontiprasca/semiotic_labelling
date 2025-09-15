@@ -1,0 +1,15 @@
+{
+  "output_path": "data/outputs/test_enhanced_captions",
+  "min_semiotic_score": 0.5,
+  "min_image_size": [512, 512],
+  "max_image_size": [2048, 2048],
+  "target_resolution": 1024,
+  "use_webp_compression": false,
+  "webp_quality": 90,
+  "enhanced_prompt_templates": true,
+  "use_caption_augmentation": true,
+  "max_samples_per_split": 5,
+  "train_split_ratio": 0.8,
+  "require_architectural_style": false,
+  "require_urban_mood": false
+}
