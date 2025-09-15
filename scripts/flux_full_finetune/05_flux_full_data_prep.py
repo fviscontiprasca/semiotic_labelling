@@ -70,52 +70,50 @@ class FileBasedFluxDataPreparator:
         for dir_path in [self.images_dir, self.captions_dir, self.metadata_dir]:
             dir_path.mkdir(parents=True, exist_ok=True)
         
-        # Enhanced semiotic prompt templates utilizing comprehensive analysis data
+        # Enhanced semiotic prompt templates utilizing natural language descriptions
         self.enhanced_prompt_templates = {
             "comprehensive_semiotic": (
-                "{architectural_style} architecture from {time_period} with {dominant_colors} {color_temperature} palette, "
+                "{architectural_style} architecture from {time_period} with {dominant_colors} {color_temperature} tones, "
                 "featuring {segmentation_count} distinct elements: {architectural_elements_detailed}, "
-                "conveying {symbolic_meaning} in {urban_mood} {cultural_context} setting"
+                "conveying {symbolic_meaning} in a {urban_mood} {cultural_context} setting"
             ),
             "detailed_segmentation": (
-                "{architectural_style} building with {segmentation_density} segmented components including {element_types}, "
-                "{dominant_colors} {color_temperature} tones expressing {urban_mood} atmosphere, "
-                "architectural ratio {architectural_ratio} with {cultural_indicators}"
+                "{architectural_style} building with {segmentation_density} components including {element_types}, "
+                "{dominant_colors} {color_temperature} surfaces expressing a {urban_mood} atmosphere, "
+                "displaying {aspect_ratio} proportions with {cultural_indicators}"
             ),
             "color_and_elements": (
                 "{color_temperature} {dominant_colors} architectural composition showing {architectural_style} design, "
-                "{segmentation_count} segmented elements ({architectural_elements_detailed}) in {time_period} lighting, "
-                "complexity score {complexity_score} reflecting {symbolic_meaning}"
+                "{segmentation_count} elements ({architectural_elements_detailed}) in {time_period} lighting, "
+                "{complexity_score} design reflecting {symbolic_meaning}"
             ),
             "spatial_detailed": (
-                "Geometric {architectural_style} composition with {spatial_qualities} and {aspect_ratio} aspect ratio, "
-                "featuring {element_types} across {segmentation_density} segments, "
-                "{color_temperature} {dominant_colors} palette in {urban_mood} {cultural_context}"
+                "{aspect_ratio} {architectural_style} composition with {spatial_qualities}, "
+                "featuring {element_types} in a {segmentation_density} arrangement, "
+                "{color_temperature} {dominant_colors} palette in a {urban_mood} {cultural_context}"
             ),
             "semiotic_comprehensive": (
-                "Comprehensive semiotic analysis: {architectural_style} architecture with {complexity_score} complexity, "
+                "{architectural_style} architecture with {complexity_score} design, "
                 "{segmentation_count} elements ({architectural_elements_detailed}), {dominant_colors} {color_temperature} palette, "
-                "expressing {symbolic_meaning} through {urban_mood} atmosphere in {cultural_context} setting"
+                "expressing {symbolic_meaning} through a {urban_mood} atmosphere in a {cultural_context} setting"
             ),
             "material_and_mood": (
                 "{architectural_style} building from {time_period} featuring {materials} construction, "
-                "{color_temperature} {dominant_colors} surfaces with {segmentation_density} architectural segments, "
+                "{color_temperature} {dominant_colors} surfaces in a {segmentation_density} composition, "
                 "conveying {symbolic_meaning} through {urban_mood} material expression"
             ),
-            "technical_analysis": (
-                "Technical architectural analysis: {architectural_style} design with {architectural_ratio} architectural ratio, "
-                "{segmentation_count} segmented components including {element_types}, "
-                "{complexity_score} complexity in {color_temperature} {dominant_colors} {time_period} setting"
+            "natural_description": (
+                "{aspect_ratio} {architectural_style} design with {segmentation_count} components including {element_types}, "
+                "{complexity_score} architectural composition in {color_temperature} {dominant_colors} during {time_period}"
             ),
             "cultural_context": (
                 "{cultural_context} {architectural_style} architecture expressing {symbolic_meaning}, "
                 "featuring {segmentation_count} elements ({architectural_elements_detailed}) with {cultural_indicators}, "
-                "{dominant_colors} {color_temperature} palette creating {urban_mood} atmosphere"
+                "{dominant_colors} {color_temperature} palette creating a {urban_mood} atmosphere"
             ),
             "visual_richness": (
-                "Visually rich {architectural_style} composition with {descriptive_richness} richness score, "
-                "{segmentation_density} architectural segments including {element_types}, "
-                "{color_temperature} {dominant_colors} tones in {urban_mood} {time_period} lighting"
+                "Visually {descriptive_richness} {architectural_style} composition with {segmentation_density} architectural segments including {element_types}, "
+                "{color_temperature} {dominant_colors} tones in a {urban_mood} {time_period} setting"
             ),
             "narrative_architectural": (
                 "{time_period} {architectural_style} architecture telling the story of {symbolic_meaning}, "
@@ -136,6 +134,21 @@ class FileBasedFluxDataPreparator:
                 "industrial", "residential", "commercial", "historic", "futuristic",
                 "abandoned", "bustling", "quiet", "dramatic", "peaceful"
             ]
+        }
+        
+        # Natural language conversion mappings
+        self.color_name_mapping = {
+            # Basic colors
+            '#FF0000': 'red', '#00FF00': 'green', '#0000FF': 'blue',
+            '#FFFF00': 'yellow', '#FF00FF': 'magenta', '#00FFFF': 'cyan',
+            '#FFFFFF': 'white', '#000000': 'black', '#808080': 'gray',
+            '#800000': 'maroon', '#008000': 'dark green', '#000080': 'navy',
+            '#808000': 'olive', '#800080': 'purple', '#008080': 'teal',
+            '#C0C0C0': 'silver', '#FFA500': 'orange', '#A52A2A': 'brown',
+            '#FFC0CB': 'pink', '#FFD700': 'gold', '#E6E6FA': 'lavender',
+            '#F0E68C': 'khaki', '#DDA0DD': 'plum', '#98FB98': 'pale green',
+            '#F5DEB3': 'wheat', '#D2691E': 'chocolate', '#CD853F': 'peru',
+            '#DEB887': 'burlywood', '#BC8F8F': 'rosy brown', '#778899': 'light slate gray'
         }
     
     def prepare_training_data(self) -> Dict[str, Any]:
@@ -177,6 +190,111 @@ class FileBasedFluxDataPreparator:
         logger.info(f"📊 Validation samples: {metadata.get('val_samples', 0)}")
         
         return metadata
+    
+    def _hex_to_color_name(self, hex_color: str) -> str:
+        """Convert hex color to natural color name."""
+        hex_color = hex_color.upper()
+        
+        # Direct mapping first
+        if hex_color in self.color_name_mapping:
+            return self.color_name_mapping[hex_color]
+        
+        # Convert hex to RGB for color approximation
+        try:
+            hex_color = hex_color.lstrip('#')
+            if len(hex_color) == 6:
+                r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+                return self._rgb_to_color_name(r, g, b)
+        except ValueError:
+            pass
+        
+        return "neutral"
+    
+    def _rgb_to_color_name(self, r: int, g: int, b: int) -> str:
+        """Convert RGB values to approximate color names."""
+        # Simple color approximation based on dominant channels
+        if r > 200 and g > 200 and b > 200:
+            return "white"
+        elif r < 50 and g < 50 and b < 50:
+            return "black"
+        elif r > 150 and g < 100 and b < 100:
+            return "red"
+        elif r < 100 and g > 150 and b < 100:
+            return "green"
+        elif r < 100 and g < 100 and b > 150:
+            return "blue"
+        elif r > 150 and g > 150 and b < 100:
+            return "yellow"
+        elif r > 150 and g < 100 and b > 150:
+            return "purple"
+        elif r < 100 and g > 150 and b > 150:
+            return "cyan"
+        elif r > 150 and g > 100 and b < 100:
+            return "orange"
+        elif r > 100 and g > 100 and b > 100:
+            return "gray"
+        else:
+            return "neutral"
+    
+    def _complexity_to_natural(self, complexity_score: float) -> str:
+        """Convert complexity score to natural language."""
+        if complexity_score >= 0.8:
+            return "highly complex"
+        elif complexity_score >= 0.6:
+            return "richly detailed"
+        elif complexity_score >= 0.4:
+            return "moderately complex"
+        elif complexity_score >= 0.2:
+            return "simple"
+        else:
+            return "minimalist"
+    
+    def _ratio_to_descriptive(self, ratio: float) -> str:
+        """Convert aspect ratio to descriptive terms."""
+        if ratio >= 2.0:
+            return "very wide"
+        elif ratio >= 1.5:
+            return "wide"
+        elif ratio >= 1.2:
+            return "moderately wide"
+        elif ratio >= 0.8:
+            return "balanced"
+        elif ratio >= 0.6:
+            return "tall"
+        elif ratio >= 0.4:
+            return "very tall"
+        else:
+            return "elongated"
+    
+    def _count_to_descriptive(self, count: int) -> str:
+        """Convert numeric counts to descriptive terms."""
+        if count >= 10:
+            return "numerous"
+        elif count >= 7:
+            return "many"
+        elif count >= 5:
+            return "several"
+        elif count >= 3:
+            return "a few"
+        elif count >= 2:
+            return "a couple of"
+        elif count == 1:
+            return "a single"
+        else:
+            return "minimal"
+    
+    def _density_to_natural(self, density: float) -> str:
+        """Convert segmentation density to natural language."""
+        if density >= 100:
+            return "densely packed"
+        elif density >= 75:
+            return "highly detailed"
+        elif density >= 50:
+            return "moderately detailed"
+        elif density >= 25:
+            return "simply composed"
+        else:
+            return "minimally detailed"
     
     def _prepare_split(self, semiotic_files: List[Path], split_name: str) -> Dict[str, Any]:
         """Prepare data split from semiotic feature files."""
@@ -469,8 +587,9 @@ class FileBasedFluxDataPreparator:
         segmentation_density = semiotic_analysis.get('segmentation_density', 0)
         architectural_ratio = semiotic_analysis.get('architectural_segment_ratio', 0.0)
         
-        # Count of segmented elements
+        # Count of segmented elements - convert to natural language
         segmentation_count = len(architectural_types_detected)
+        segmentation_count_natural = self._count_to_descriptive(segmentation_count)
         
         # Element types description
         element_types = self._format_architectural_types(architectural_types_detected)
@@ -482,16 +601,22 @@ class FileBasedFluxDataPreparator:
         cultural_indicators = semiotic_analysis.get('cultural_indicators', [])
         cultural_indicators_str = ', '.join(cultural_indicators) if cultural_indicators else 'urban cultural elements'
         
-        # Complexity and richness scores
-        complexity_score = round(semiotic_analysis.get('complexity_score', 0.0), 2)
-        descriptive_richness = round(semiotic_analysis.get('descriptive_richness', 0.0), 2)
+        # Complexity and richness scores - convert to natural language
+        complexity_score_raw = semiotic_analysis.get('complexity_score', 0.0)
+        complexity_natural = self._complexity_to_natural(complexity_score_raw)
+        descriptive_richness_raw = semiotic_analysis.get('descriptive_richness', 0.0)
+        richness_natural = self._complexity_to_natural(descriptive_richness_raw)
         
-        # Spatial analysis
+        # Spatial analysis - convert to natural language
         spatial_info = features.get('spatial', {})
-        aspect_ratio = round(spatial_info.get('aspect_ratio', 1.0), 2)
+        aspect_ratio_raw = spatial_info.get('aspect_ratio', 1.0)
+        aspect_ratio_natural = self._ratio_to_descriptive(aspect_ratio_raw)
         dimensions = spatial_info.get('dimensions', {})
         width = dimensions.get('width', 0)
         height = dimensions.get('height', 0)
+        
+        # Convert segmentation density to natural language
+        segmentation_density_natural = self._density_to_natural(segmentation_density)
         
         # Generate descriptions
         spatial_qualities = self._generate_spatial_description_enhanced(spatial_info, architectural_ratio)
@@ -518,15 +643,15 @@ class FileBasedFluxDataPreparator:
             'time_period': time_period,
             'dominant_colors': dominant_colors,
             'color_temperature': color_temperature,
-            'segmentation_count': str(segmentation_count),
-            'segmentation_density': str(segmentation_density),
+            'segmentation_count': segmentation_count_natural,
+            'segmentation_density': segmentation_density_natural,
             'architectural_ratio': f"{architectural_ratio:.2f}",
             'element_types': element_types,
             'architectural_elements_detailed': architectural_elements_detailed,
             'cultural_indicators': cultural_indicators_str,
-            'complexity_score': str(complexity_score),
-            'descriptive_richness': str(descriptive_richness),
-            'aspect_ratio': f"{aspect_ratio}:1",
+            'complexity_score': complexity_natural,
+            'descriptive_richness': richness_natural,
+            'aspect_ratio': aspect_ratio_natural,
             'spatial_qualities': spatial_qualities,
             'architectural_elements': architectural_elements,
             'color_description': color_description,
@@ -537,13 +662,20 @@ class FileBasedFluxDataPreparator:
         }
     
     def _extract_color_description(self, features: Dict, semiotic_analysis: Optional[Dict]) -> str:
-        """Extract rich color description from visual analysis."""
+        """Extract rich color description from visual analysis with natural color names."""
         
         # Try to get from semiotic analysis first
         if semiotic_analysis and 'dominant_colors' in semiotic_analysis:
             colors = semiotic_analysis['dominant_colors']
             if isinstance(colors, list) and colors:
-                return ', '.join(colors[:3])  # Top 3 colors
+                # Convert to natural color names if they're hex codes
+                natural_colors = []
+                for color in colors[:3]:  # Top 3 colors
+                    if color.startswith('#'):
+                        natural_colors.append(self._hex_to_color_name(color))
+                    else:
+                        natural_colors.append(color)
+                return ', '.join(natural_colors)
         
         # Fallback to visual analysis
         if 'visual' in features and 'color_palette' in features['visual']:
@@ -553,7 +685,7 @@ class FileBasedFluxDataPreparator:
                 for color_info in palette[:3]:  # Top 3 colors
                     hex_color = color_info.get('hex', '')
                     if hex_color:
-                        color_names.append(hex_color)
+                        color_names.append(self._hex_to_color_name(hex_color))
                 return ', '.join(color_names) if color_names else 'mixed colors'
         
         return 'mixed colors'
@@ -636,33 +768,32 @@ class FileBasedFluxDataPreparator:
         return ', '.join(elements_detail)
     
     def _generate_spatial_description_enhanced(self, spatial_info: Dict, architectural_ratio: float) -> str:
-        """Generate enhanced spatial description with architectural ratio."""
+        """Generate enhanced spatial description with natural language."""
         
         descriptions = []
         
-        # Aspect ratio analysis
+        # Aspect ratio analysis with natural language
         aspect_ratio = spatial_info.get('aspect_ratio', 1.0)
-        if aspect_ratio > 1.5:
-            descriptions.append('horizontal emphasis')
-        elif aspect_ratio < 0.7:
-            descriptions.append('vertical emphasis')
+        aspect_desc = self._ratio_to_descriptive(aspect_ratio)
+        if aspect_desc != 'balanced':
+            descriptions.append(f'{aspect_desc} proportions')
         else:
-            descriptions.append('balanced proportions')
+            descriptions.append('harmonious proportions')
         
-        # Architectural ratio analysis
+        # Architectural ratio analysis with natural language
         if architectural_ratio > 0.8:
-            descriptions.append('architecturally dominant composition')
+            descriptions.append('architecturally dominant')
         elif architectural_ratio > 0.5:
-            descriptions.append('moderate architectural presence')
+            descriptions.append('architecturally prominent')
         else:
-            descriptions.append('contextual architectural integration')
+            descriptions.append('contextually integrated')
         
-        # Edge density for complexity
+        # Edge density for complexity with natural language
         edge_density = spatial_info.get('edge_density', 0)
         if edge_density > 0.3:
-            descriptions.append('high geometric complexity')
+            descriptions.append('richly detailed geometry')
         elif edge_density > 0.15:
-            descriptions.append('moderate structural detail')
+            descriptions.append('moderately detailed structure')
         else:
             descriptions.append('clean geometric forms')
         
@@ -691,20 +822,24 @@ class FileBasedFluxDataPreparator:
         return conversion_map.get(technical_term, technical_term.replace('_', ' '))
     
     def _generate_complexity_description(self, features: Dict, semiotic_analysis: Optional[Dict]) -> str:
-        """Generate description of visual complexity."""
+        """Generate description of visual complexity using natural language."""
         
         if not semiotic_analysis:
             return 'architectural composition'
         
-        # Check segmentation density
+        # Check segmentation density and convert to natural language
         seg_density = semiotic_analysis.get('segmentation_density', 0)
+        density_desc = self._density_to_natural(seg_density)
         
-        if seg_density > 100:
-            return 'highly detailed composition'
-        elif seg_density > 50:
-            return 'moderately complex design'
-        else:
-            return 'simplified geometric forms'
+        complexity_map = {
+            'densely packed': 'intricately detailed composition',
+            'highly detailed': 'richly complex design',
+            'moderately detailed': 'thoughtfully composed structure',
+            'simply composed': 'elegantly simple design',
+            'minimally detailed': 'cleanly minimal forms'
+        }
+        
+        return complexity_map.get(density_desc, 'architectural composition')
     
     def _generate_spatial_description(self, features: Dict, semiotic_analysis: Optional[Dict]) -> str:
         """Generate spatial qualities description."""
@@ -777,7 +912,7 @@ class FileBasedFluxDataPreparator:
         return 'architectural components'
     
     def _assess_visual_complexity(self, features: Dict, semiotic_analysis: Optional[Dict]) -> str:
-        """Assess overall visual complexity level."""
+        """Assess overall visual complexity level using natural language."""
         
         complexity_factors = 0
         
@@ -800,12 +935,16 @@ class FileBasedFluxDataPreparator:
             if palette_count > 6:
                 complexity_factors += 1
         
-        if complexity_factors >= 3:
-            return 'high visual complexity'
-        elif complexity_factors >= 2:
-            return 'moderate complexity'
-        else:
-            return 'visual simplicity'
+        # Natural language mapping
+        complexity_map = {
+            0: 'elegantly simple',
+            1: 'thoughtfully composed', 
+            2: 'richly detailed',
+            3: 'intricately complex',
+            4: 'highly sophisticated'
+        }
+        
+        return complexity_map.get(min(complexity_factors, 4), 'architecturally composed')
     
     def _select_optimal_template(self, template_data: Dict, semiotic_analysis: Optional[Dict]) -> str:
         """Select the best template based on available data and variety needs."""
@@ -822,34 +961,40 @@ class FileBasedFluxDataPreparator:
         return template_options[template_index]
     
     def _generate_fallback_caption(self, template_data: Dict) -> str:
-        """Generate a reliable fallback caption when template formatting fails."""
+        """Generate a reliable fallback caption with natural language when template formatting fails."""
         
         return (f"{template_data.get('architectural_style', 'contemporary')} architecture "
-                f"with {template_data.get('dominant_colors', 'mixed colors')} palette, "
+                f"with {template_data.get('dominant_colors', 'mixed colors')} tones, "
                 f"featuring {template_data.get('architectural_elements', 'structural elements')} "
-                f"in {template_data.get('urban_mood', 'urban')} atmosphere")
+                f"in a {template_data.get('urban_mood', 'urban')} atmosphere")
     
     def _generate_caption_variations(self, template_data: Dict, semiotic_analysis: Optional[Dict]) -> Dict[str, str]:
-        """Generate additional caption variations for training diversity."""
+        """Generate additional caption variations with natural language for training diversity."""
         
         variations = {}
         
-        # Style-focused variation
+        # Style-focused variation with natural language
         variations['style_focused'] = (
             f"{template_data['architectural_style']} architecture with "
-            f"{template_data['visual_complexity']}, featuring {template_data['architectural_elements']}"
+            f"{template_data['visual_complexity']} design, featuring {template_data['architectural_elements']}"
         )
         
-        # Color-focused variation  
+        # Color-focused variation with natural descriptions
         variations['color_focused'] = (
-            f"Architectural photography with {template_data['color_description']} tones, "
+            f"Architectural composition with {template_data['color_description']} palette, "
             f"showcasing {template_data['architectural_style']} design elements"
         )
         
-        # Context-focused variation
+        # Context-focused variation with natural spatial descriptions
         variations['contextual'] = (
             f"{template_data['cultural_context']} architectural scene with "
-            f"{template_data['spatial_qualities']}, {template_data['time_period']} lighting"
+            f"{template_data['spatial_qualities']} during {template_data['time_period']}"
+        )
+        
+        # Complexity-focused variation
+        variations['complexity_focused'] = (
+            f"{template_data['complexity_score']} {template_data['architectural_style']} building "
+            f"with {template_data['segmentation_count']} architectural elements"
         )
         
         return variations
