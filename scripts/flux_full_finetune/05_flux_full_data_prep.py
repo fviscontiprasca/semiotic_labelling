@@ -506,6 +506,9 @@ class FileBasedFluxDataPreparator:
         # Complexity description
         complexity_description = self._generate_complexity_description(features, semiotic_analysis)
         
+        # Visual complexity assessment
+        visual_complexity = self._assess_visual_complexity(features, semiotic_analysis)
+        
         return {
             'architectural_style': architectural_style,
             'urban_mood': urban_mood,
@@ -528,6 +531,7 @@ class FileBasedFluxDataPreparator:
             'architectural_elements': architectural_elements,
             'color_description': color_description,
             'visual_elements': visual_elements,
+            'visual_complexity': visual_complexity,
             'complexity_description': complexity_description,
             'filename': semiotic_analysis.get('filename', features.get('filename', 'default'))
         }
