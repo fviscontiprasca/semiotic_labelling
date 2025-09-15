@@ -1,0 +1,81 @@
+{
+  "creation_timestamp": "2025-09-15T17:09:59.404368",
+  "config": {
+    "min_semiotic_score": 0.3,
+    "min_image_size": [
+      512,
+      512
+    ],
+    "max_image_size": [
+      1536,
+      1536
+    ],
+    "target_resolution": 1024,
+    "use_webp_compression": false,
+    "webp_quality": 95,
+    "enhanced_prompt_templates": true
+  },
+  "splits": {
+    "train": {
+      "total_samples": 1201,
+      "skipped_samples": 0,
+      "semiotic_score_stats": {
+        "mean": 0.6245604678594169,
+        "std": 0.05111932985863132,
+        "min": 0.5068393834654071,
+        "max": 0.8260718050320083
+      },
+      "quality_score_stats": {
+        "mean": 0.5398241871437668,
+        "std": 0.020447731943452535,
+        "min": 0.4927357533861629,
+        "max": 0.6204287220128033
+      },
+      "architectural_styles": [
+        "contemporary"
+      ],
+      "urban_moods": [
+        "industrial"
+      ],
+      "style_distribution": {
+        "contemporary": 1201
+      },
+      "mood_distribution": {
+        "industrial": 1201
+      }
+    },
+    "val": {
+      "total_samples": 301,
+      "skipped_samples": 0,
+      "semiotic_score_stats": {
+        "mean": 0.6210291238586018,
+        "std": 0.061695263752131975,
+        "min": 0.5104629084843616,
+        "max": 0.8260718050320083
+      },
+      "quality_score_stats": {
+        "mean": 0.5384116495434408,
+        "std": 0.024678105500852802,
+        "min": 0.49418516339374463,
+        "max": 0.6204287220128033
+      },
+      "architectural_styles": [
+        "contemporary"
+      ],
+      "urban_moods": [
+        "industrial"
+      ],
+      "style_distribution": {
+        "contemporary": 301
+      },
+      "mood_distribution": {
+        "industrial": 301
+      }
+    }
+  },
+  "summary": {
+    "total_samples": 1502,
+    "total_skipped": 0,
+    "processing_success_rate": 1.0
+  }
+}
