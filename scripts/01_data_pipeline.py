@@ -461,7 +461,7 @@ def main():
     pipeline = SemioticDataPipeline(str(base_path))
     
     # Create unified dataset with full synthetic data and more OID samples
-    dataset = pipeline.create_unified_dataset(max_oid_samples=751)
+    dataset = pipeline.create_unified_dataset(max_oid_samples=1000)
     
     # Export for training
     pipeline.export_for_training(dataset)
